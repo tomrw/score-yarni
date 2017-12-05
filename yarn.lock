@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@tom.rw/eslint-config-tomrw@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@tom.rw/eslint-config-tomrw/-/eslint-config-tomrw-0.2.0.tgz#a2c65fddea54b7ce901cd3a55aafd6b305bdcd59"
+
 "@types/events@*":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-1.1.0.tgz#93b1be91f63c184450385272c47b6496fd028e02"
