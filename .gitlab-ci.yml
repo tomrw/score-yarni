@@ -1,0 +1,18 @@
+image: node:8.6.0
+
+before_script:
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+cache:
+  paths:
+  - node_modules/
+
+tests:
+  script:
+   - yarn install
+   - yarn run lint
+   - yarn test
