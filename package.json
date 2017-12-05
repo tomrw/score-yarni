@@ -1,0 +1,21 @@
+{
+	"name": "card-game-scorer-native",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"test": "jest tests"
+	},
+	"dependencies": {
+		"react": "16.0.0",
+		"react-dom": "16",
+		"react-native": "0.50.4"
+	},
+	"devDependencies": {
+		"babel-jest": "^21.2.0",
+		"babel-preset-react-native": "4.0.0",
+		"enzyme": "^3.2.0",
+		"enzyme-adapter-react-16": "^1.1.0",
+		"jest": "21.2.1"
+	}
+}
