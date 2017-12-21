@@ -1,0 +1,8 @@
+export const NAVIGATE_TO = 'NAVIGATE_TO';
+
+export const types = {
+	HOME: 'HOME',
+	NEW_GAME: 'NEW_GAME',
+	GAME_CONFIG: 'GAME_CONFIG',
+	GAME_IN_PROGRESS: 'GAME_IN_PROGRESS'
+};

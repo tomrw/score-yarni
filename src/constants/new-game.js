@@ -1,0 +1,11 @@
+export const ADD_PLAYER = 'ADD_PLAYER';
+export const REMOVE_PLAYER = 'REMOVE_PLAYER';
+export const RESET_GAME = 'RESET_GAME';
+export const SET_GAME_CONFIG = 'SET_GAME_CONFIG';
+export const TOTAL_NEW_GAME_STEPS = 3;
+export const NEW_GAME_PROGRESS_STEPS = {
+	NO_PLAYERS: 0,
+	PLAYERS_ADDED: 1,
+	INVALID_CONFIG: 2,
+	COMPLETE: 3
+};
