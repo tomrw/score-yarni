@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import NewPlayerForm from '../../../../src/components/new-game/game-setup/new-player-form';
+import newPlayerFormStyles from '../../../../src/components/new-game/game-setup/styles/new-player-form';
 
 describe('Given <NewPlayerForm />', () => {
 	const sandbox = sinon.sandbox.create();
@@ -18,6 +19,10 @@ describe('Given <NewPlayerForm />', () => {
 
 	it('should be a `View`', () => {
 		expect(renderedComponent.is('View')).toBe(true);
+	});
+
+	it('should have the `container` styles', () => {
+		expect(renderedComponent.prop('style')).toEqual(newPlayerFormStyles.container);
 	});
 
 	describe('and its first child', () => {
@@ -44,6 +49,10 @@ describe('Given <NewPlayerForm />', () => {
 		it('should have an `blurOnSubmit/false` prop', () => {
 			expect(playerInput.prop('blurOnSubmit')).toBe(false);
 		});
+
+		it('should have the `textInput` styles', () => {
+			expect(playerInput.prop('style')).toEqual(newPlayerFormStyles.textInput);
+		});
 	});
 
 	describe('and its second child', () => {
@@ -53,10 +62,24 @@ describe('Given <NewPlayerForm />', () => {
 			expect(inputButton.is('TouchableOpacity')).toBe(true);
 		});
 
-		it('should have the expected text', () => {
+		it('should have an `activeOpacity` prop', () => {
+			expect(inputButton.prop('activeOpacity')).toEqual(0.8);
+		});
+
+		it('should have the `button` styles', () => {
+			expect(inputButton.prop('style')).toEqual(newPlayerFormStyles.button);
+		});
+
+		describe('and its first child', () => {
 			const text = inputButton.childAt(0);
 
-			expect(text.props().children).toEqual('Add');
+			it('should have the expected text', () => {
+				expect(text.props().children).toEqual('Add');
+			});
+
+			it('should have the `buttonText` styles on its first child', () => {
+				expect(text.prop('style')).toEqual(newPlayerFormStyles.buttonText);
+			});
 		});
 	});
 

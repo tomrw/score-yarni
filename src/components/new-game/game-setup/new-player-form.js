@@ -7,6 +7,8 @@ import {
 	View
 } from 'react-native';
 
+import styles from './styles/new-player-form';
+
 class NewPlayerForm extends Component {
 	constructor() {
 		super();
@@ -21,7 +23,7 @@ class NewPlayerForm extends Component {
 
 	render() {
 		return (
-			<View>
+			<View style={ styles.container }>
 				<TextInput
 					autoCorrect={ false }
 					autoFocus
@@ -29,10 +31,13 @@ class NewPlayerForm extends Component {
 					onChangeText={ this.updateName }
 					onSubmitEditing={ this.addNewPlayer }
 					placeholder="Enter player name..."
+					style={ styles.textInput }
 					value={ this.state.name } />
 				<TouchableOpacity
-					onPress={ this.addNewPlayer }>
-					<Text>Add</Text>
+					activeOpacity={ 0.8 }
+					onPress={ this.addNewPlayer }
+					style={ styles.button }>
+					<Text style={ styles.buttonText }>Add</Text>
 				</TouchableOpacity>
 			</View>
 		);
