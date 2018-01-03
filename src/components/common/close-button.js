@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-	Text,
+	View,
 	TouchableOpacity,
 	ViewPropTypes
 } from 'react-native';
@@ -9,13 +9,15 @@ import {
 import styles from './styles/close-button';
 
 const CloseButton = ({ onClose, style }) => {
-	const onPress = () => {
-		onClose();
-	};
+	const onPress = () => onClose();
 
 	return (
-		<TouchableOpacity onPress={ onPress } style={ [ styles, style ] } >
-			<Text>x</Text>
+		<TouchableOpacity
+			activeOpacity={ 0.8 }
+			onPress={ onPress }
+			style={ [ styles.container, style ] } >
+			<View style={ [ styles.arrow, styles.first ] } />
+			<View style={ [ styles.arrow, styles.second ] } />
 		</TouchableOpacity>
 	);
 };
