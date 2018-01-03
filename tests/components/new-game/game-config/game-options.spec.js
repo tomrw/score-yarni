@@ -27,10 +27,6 @@ describe('Given <GameOptions />', () => {
 		expect(renderedComponent.is('View')).toBe(true);
 	});
 
-	xit('should have a `game-options', () => {
-		expect(renderedComponent.hasClass('game-options')).toBe(true);
-	});
-
 	describe('and its first child', () => {
 		const label = renderedComponent.childAt(0);
 
