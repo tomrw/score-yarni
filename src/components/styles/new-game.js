@@ -8,10 +8,6 @@ export default StyleSheet.create({
 		flex: 1,
 		marginTop: 22
 	},
-	header: {
-		fontSize: 20,
-		textAlign: 'center'
-	},
 	closeButton: {
 		position: 'absolute',
 		top: 0,

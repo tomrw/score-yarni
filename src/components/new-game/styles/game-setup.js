@@ -4,10 +4,6 @@ export default StyleSheet.create({
 	container: {
 		height: '100%'
 	},
-	header: {
-		fontSize: 20,
-		textAlign: 'center'
-	},
 	closeButton: {
 		position: 'absolute',
 		right: 0,
