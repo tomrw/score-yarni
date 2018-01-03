@@ -15,6 +15,7 @@ const Player = ({ id, name, removePlayer }) => {
 		<View style={ styles.container }>
 			<Text style={ styles.playerName }>{ name }</Text>
 			<TouchableOpacity
+				activeOpacity={ 0.8 }
 				style={ styles.removePlayerContainer }
 				onPress={ onPress }>
 				<Text style={ styles.removePlayerText }>x</Text>

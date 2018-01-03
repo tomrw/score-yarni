@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 const { width: windowWidth } = Dimensions.get('window');
 const sidePadding = 10;
 const containerWidth = windowWidth - (sidePadding * 2);
-const playerRemoveButtonWidth = 20;
+const playerRemoveButtonWidth = 30;
 const playerRemoveNameMargin = 10;
 const removeButtonHeight = 30;
 

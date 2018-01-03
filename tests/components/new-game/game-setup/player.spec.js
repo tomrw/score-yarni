@@ -48,6 +48,10 @@ describe('Given <Player />', () => {
 			expect(style).toEqual(playerStyles.removePlayerContainer);
 		});
 
+		it('should have an `activeOpacity` prop', () => {
+			expect(removePlayerButton.prop('activeOpacity')).toEqual(0.8);
+		});
+
 		describe('and its text', () => {
 			const text = removePlayerButton.childAt(0);
 
