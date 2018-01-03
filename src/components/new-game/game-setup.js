@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
+import Header from '../common/header';
 import NewPlayerForm from './game-setup/new-player-form';
 import PlayerList from './game-setup/player-list';
 
@@ -10,7 +11,7 @@ import styles from './styles/game-setup';
 const GameSetup = ({ addPlayer, removePlayer, players }) => {
 	return (
 		<View style={ styles.container }>
-			<Text style={ styles.header }>Start a new game...</Text>
+			<Header text="Add Players" />
 			<NewPlayerForm playerAdded={ addPlayer } />
 			<View style={ styles.playerListWrapper }>
 				<PlayerList playerList={ players } removePlayer={ removePlayer } />
