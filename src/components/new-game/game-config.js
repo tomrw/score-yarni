@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
+import Header from '../common/header';
 import GameOptions from './game-config/game-options';
 
 const GameConfig = ({ gameConfig, onChange }) => {
 	return (
 		<View>
-			<Text>Game Config...</Text>
+			<Header text="Game Config" />
 			<GameOptions gameConfig={ gameConfig } onChange={ onChange } />
 		</View>
 	);

@@ -2,6 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import Header from '../../../src/components/common/header';
 import GameConfig from '../../../src/components/new-game/game-config';
 import GameOptions from '../../../src/components/new-game/game-config/game-options';
 
@@ -23,12 +24,12 @@ describe('Given <GameConfig />', () => {
 	describe('and its header', () => {
 		const header = renderedComponent.childAt(0);
 
-		it('should be a `Text`', () => {
-			expect(header.is('Text')).toBe(true);
+		it('should be a `Header`', () => {
+			expect(header.is(Header)).toBe(true);
 		});
 
-		it('should have some text', () => {
-			expect(header.text()).not.toEqual('');
+		it('should have a `text` prop', () => {
+			expect(header.prop('text')).not.toEqual('');
 		});
 	});
 
