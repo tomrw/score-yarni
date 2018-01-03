@@ -4,9 +4,7 @@ const { width: windowWidth } = Dimensions.get('window');
 
 export default StyleSheet.create({
 	container: {
-		height: '100%',
-		flex: 1,
-		marginTop: 22
+		flex: 1
 	},
 	closeButton: {
 		position: 'absolute',

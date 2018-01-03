@@ -7,7 +7,19 @@ import HomePage from './home-page';
 import NewGame from './new-game';
 import { types } from '../constants/layout';
 
+import styles from './styles/app';
+
 export const App = ({ view }) => {
+	const component = getChildView(view);
+
+	return (
+		<View style={ styles }>
+			{ component }
+		</View>
+	);
+};
+
+const getChildView = view => {
 	let component = <HomePage />;
 
 	if (view === types.NEW_GAME || view === types.GAME_CONFIG) {
