@@ -17,7 +17,7 @@ export default StyleSheet.create({
 	backButton: {
 		position: 'absolute',
 		top: 0,
-		right: 25,
+		right: 35,
 		zIndex: 2
 	},
 	setupProgress: {
