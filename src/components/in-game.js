@@ -8,13 +8,15 @@ import Header from './common/header';
 import { navigateTo } from '../action-creators/layout';
 import { types } from '../constants/layout';
 
+import styles from './styles/in-game';
+
 export const InGame = ({ navigateTo }) => {
 	const onClose = () => navigateTo(types.HOME);
 
 	return (
 		<View>
 			<Header text="Game in Progress" />
-			<CloseButton onClose={ onClose } />
+			<CloseButton onClose={ onClose } style={ styles.closeButton } />
 			<Text>game in progress!</Text>
 		</View>
 	);

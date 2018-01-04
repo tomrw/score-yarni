@@ -6,6 +6,8 @@ import CloseButton from '../../src/components/common/close-button';
 import Header from '../../src/components/common/header';
 import { InGame } from '../../src/components/in-game';
 
+import inGameStyles from '../../src/components/styles/in-game';
+
 describe('Given <InGame />', () => {
 	const navigateTo = sinon.stub();
 	const props = {
@@ -34,6 +36,10 @@ describe('Given <InGame />', () => {
 
 		it('should be a `CloseButton`', () => {
 			expect(closeButton.is(CloseButton)).toBe(true);
+		});
+
+		it('should have the `closeButton` styles', () => {
+			expect(closeButton.prop('style')).toEqual(inGameStyles.closeButton);
 		});
 
 		it('should call `navigateTo` when the `onClose` prop is triggered', () => {
