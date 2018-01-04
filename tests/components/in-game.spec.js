@@ -10,8 +10,10 @@ import inGameStyles from '../../src/components/styles/in-game';
 
 describe('Given <InGame />', () => {
 	const navigateTo = sinon.stub();
+	const resetGame = sinon.stub();
 	const props = {
-		navigateTo
+		navigateTo,
+		resetGame
 	};
 	const renderedComponent = shallow(<InGame { ...props } />);
 
@@ -42,12 +44,18 @@ describe('Given <InGame />', () => {
 			expect(closeButton.prop('style')).toEqual(inGameStyles.closeButton);
 		});
 
-		it('should call `navigateTo` when the `onClose` prop is triggered', () => {
+		describe('when the `onClose` prop is triggered', () => {
 			const onClose = closeButton.prop('onClose');
 
 			onClose();
 
-			expect(navigateTo.withArgs('HOME').calledOnce).toBe(true);
+			it('should call `navigateTo` when the `onClose` prop is triggered', () => {
+				expect(navigateTo.withArgs('HOME').calledOnce).toBe(true);
+			});
+
+			it('should call `resetGame`', () => {
+				expect(resetGame.calledOnce).toBe(true);
+			});
 		});
 	});
 });
