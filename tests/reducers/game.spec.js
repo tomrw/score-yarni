@@ -1,5 +1,5 @@
 import reduce from '../../src/reducers/game';
-import { resetGame, setGameConfig } from '../../src/action-creators/new-game';
+import { resetGame, setGameConfig } from '../../src/action-creators/game';
 
 describe('Given the game reducer', () => {
 	const unknownAction = {

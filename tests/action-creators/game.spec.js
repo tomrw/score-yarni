@@ -4,7 +4,7 @@ import {
 	resetGame,
 	resetPlayerId,
 	setGameConfig
-} from '../../src/action-creators/new-game';
+} from '../../src/action-creators/game';
 
 describe('Given the `newGame` action creators', () => {
 	beforeEach(resetPlayerId);

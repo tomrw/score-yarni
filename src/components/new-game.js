@@ -11,13 +11,13 @@ import ProgressBar from './common/progress-bar';
 import SetupProgress from './new-game/game-setup/setup-progress';
 import { navigateTo } from '../action-creators/layout';
 import { types } from '../constants/layout';
-import { NEW_GAME_PROGRESS_STEPS, TOTAL_NEW_GAME_STEPS } from '../constants/new-game';
+import { NEW_GAME_PROGRESS_STEPS, TOTAL_NEW_GAME_STEPS } from '../constants/game';
 import {
 	addPlayer,
 	removePlayer,
 	resetGame,
 	setGameConfig
-} from '../action-creators/new-game';
+} from '../action-creators/game';
 
 import styles from './styles/new-game';
 

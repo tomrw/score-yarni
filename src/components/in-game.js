@@ -6,7 +6,7 @@ import { Text, View } from 'react-native';
 import CloseButton from './common/close-button';
 import Header from './common/header';
 import { navigateTo } from '../action-creators/layout';
-import { resetGame } from '../action-creators/new-game';
+import { resetGame } from '../action-creators/game';
 import { types } from '../constants/layout';
 
 import styles from './styles/in-game';

@@ -3,7 +3,7 @@ import {
 	REMOVE_PLAYER,
 	RESET_GAME,
 	SET_GAME_CONFIG
-} from '../constants/new-game';
+} from '../constants/game';
 
 let playerId = 1;
 
