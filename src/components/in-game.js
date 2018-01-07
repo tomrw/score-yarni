@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import CloseButton from './common/close-button';
 import Header from './common/header';
+import Leaderboard from './in-game/leaderboard';
 import NavigationBar from './in-game/navigation-bar';
 import { navigateTo } from '../action-creators/layout';
 import { resetGame } from '../action-creators/game';
@@ -18,11 +19,17 @@ export const InGame = ({ navigateTo, resetGame }) => {
 		navigateTo(types.HOME);
 	};
 
+	const data = [
+		{ position: 1, name: 'Tom', score: 12 },
+		{ position: 2, name: 'Chloe', score: 13 },
+		{ position: 3, name: 'Fred', score: 20 }
+	];
+
 	return (
 		<View style={ styles.container }>
 			<Header text="Game in Progress" />
 			<CloseButton onClose={ onClose } style={ styles.closeButton } />
-			<Text>game in progress!</Text>
+			<Leaderboard data={ data } />
 			<NavigationBar style={ styles.navigationBar } />
 		</View>
 	);
