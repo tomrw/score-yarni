@@ -10,8 +10,8 @@ const NavigationBar = ({ style }) => {
 
 	return (
 		<View style={ [ styles.container, style ] }>
-			<NavButton text="lala" onSelect={ onSelect } active />
-			<NavButton text="lala 2" onSelect={ onSelect } />
+			<NavButton text="Leaderboard" onSelect={ onSelect } active />
+			<NavButton text="Add scores" onSelect={ onSelect } />
 		</View>
 	);
 };
