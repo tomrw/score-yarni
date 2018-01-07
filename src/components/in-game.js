@@ -5,6 +5,7 @@ import { Text, View } from 'react-native';
 
 import CloseButton from './common/close-button';
 import Header from './common/header';
+import NavigationBar from './in-game/navigation-bar';
 import { navigateTo } from '../action-creators/layout';
 import { resetGame } from '../action-creators/game';
 import { types } from '../constants/layout';
@@ -18,10 +19,11 @@ export const InGame = ({ navigateTo, resetGame }) => {
 	};
 
 	return (
-		<View>
+		<View style={ styles.container }>
 			<Header text="Game in Progress" />
 			<CloseButton onClose={ onClose } style={ styles.closeButton } />
 			<Text>game in progress!</Text>
+			<NavigationBar style={ styles.navigationBar } />
 		</View>
 	);
 };

@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 
 import CloseButton from '../../src/components/common/close-button';
 import Header from '../../src/components/common/header';
+import NavigationBar from '../../src/components/in-game/navigation-bar';
 import { InGame } from '../../src/components/in-game';
 
 import inGameStyles from '../../src/components/styles/in-game';
@@ -19,6 +20,10 @@ describe('Given <InGame />', () => {
 
 	it('should be a `View`', () => {
 		expect(renderedComponent.is('View')).toBe(true);
+	});
+
+	it('should have the `container` styles', () => {
+		expect(renderedComponent.prop('style')).toEqual(inGameStyles.container);
 	});
 
 	describe('and its first child', () => {
@@ -56,6 +61,18 @@ describe('Given <InGame />', () => {
 			it('should call `resetGame`', () => {
 				expect(resetGame.calledOnce).toBe(true);
 			});
+		});
+	});
+
+	describe('and its fourth child', () => {
+		const navBar = renderedComponent.childAt(3);
+
+		it('should be a `navigationBar`', () => {
+			expect(navBar.is(NavigationBar)).toBe(true);
+		});
+
+		it('should have the `navigationBar` styles', () => {
+			expect(navBar.prop('style')).toEqual(inGameStyles.navigationBar);
 		});
 	});
 });
