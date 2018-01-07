@@ -24,7 +24,7 @@ describe('Given <NavButton />', () => {
 	});
 
 	it('should have the `container` styles', () => {
-		expect(renderedComponent.prop('style')).toEqual(navButtonStyles.container);
+		expect(renderedComponent.prop('style')).toContain(navButtonStyles.container);
 	});
 
 	it('should call the `onSelect` function when pressed', () => {
@@ -41,11 +41,28 @@ describe('Given <NavButton />', () => {
 		});
 
 		it('should have the `text` styles', () => {
-			expect(textChild.prop('style')).toEqual(navButtonStyles.text);
+			expect(textChild.prop('style')).toContain(navButtonStyles.text);
 		});
 
 		it('should have the correct value', () => {
 			expect(textChild.props().children).toEqual(text);
+		});
+	});
+
+	describe('when active', () => {
+		const newProps = {
+			...props,
+			active: true
+		};
+		const renderedComponent = shallow(<NavButton { ...newProps } />);
+		const textChild = renderedComponent.childAt(0);
+
+		it('should have the `active` styles', () => {
+			expect(renderedComponent.prop('style')).toContain(navButtonStyles.active);
+		});
+
+		it('should have the `textActive` styles', () => {
+			expect(textChild.prop('style')).toContain(navButtonStyles.activeText);
 		});
 	});
 });

@@ -12,5 +12,11 @@ export default StyleSheet.create({
 	text: {
 		height,
 		lineHeight: height
+	},
+	active: {
+		backgroundColor: 'white'
+	},
+	activeText: {
+		color: 'red'
 	}
 });

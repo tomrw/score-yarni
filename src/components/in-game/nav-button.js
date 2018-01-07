@@ -4,20 +4,23 @@ import { Text, TouchableOpacity } from 'react-native';
 
 import styles from './styles/nav-button';
 
-const NavButton = ({ onSelect, text }) => {
+const NavButton = ({ active, onSelect, text }) => {
 	const onPress = () => onSelect();
+	const activeStyle = active && styles.active;
+	const activeTextStyle = active && styles.activeText;
 
 	return (
 		<TouchableOpacity
 			activeOpacity={ 0.8 }
 			onPress={ onPress }
-			style={ styles.container }>
-			<Text style={ styles.text }>{ text }</Text>
+			style={ [ styles.container, activeStyle ] }>
+			<Text style={ [ styles.text, activeTextStyle ] }>{ text }</Text>
 		</TouchableOpacity>
 	);
 };
 
 NavButton.propTypes = {
+	active: PropTypes.bool,
 	onSelect: PropTypes.func.isRequired,
 	text: PropTypes.string.isRequired
 };
