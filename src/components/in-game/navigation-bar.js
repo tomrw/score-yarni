@@ -6,10 +6,12 @@ import NavButton from './nav-button';
 import styles from './styles/navigation-bar';
 
 const NavigationBar = ({ style }) => {
+	const onSelect = () => console.log('select!');
+
 	return (
 		<View style={ [ styles.container, style ] }>
-			<NavButton text="lala" />
-			<NavButton text="lala 2" />
+			<NavButton text="lala" onSelect={ onSelect } />
+			<NavButton text="lala 2" onSelect={ onSelect } />
 		</View>
 	);
 };
