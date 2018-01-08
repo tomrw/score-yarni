@@ -11,9 +11,11 @@ import inGameStyles from '../../src/components/styles/in-game';
 
 describe('Given <InGame />', () => {
 	const navigateTo = sinon.stub();
+	const players = [];
 	const resetGame = sinon.stub();
 	const props = {
 		navigateTo,
+		players,
 		resetGame
 	};
 	const renderedComponent = shallow(<InGame { ...props } />);
