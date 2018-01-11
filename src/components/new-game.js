@@ -16,7 +16,8 @@ import {
 	addPlayer,
 	removePlayer,
 	resetGame,
-	setGameConfig
+	setGameConfig,
+	startGame
 } from '../action-creators/game';
 
 import styles from './styles/new-game';
@@ -126,12 +127,13 @@ export class NewGame extends Component {
 	}
 
 	onProgress() {
-		const { navigateTo, view } = this.props;
+		const { navigateTo, startGame, view } = this.props;
 
 		if (view === types.NEW_GAME) {
 			navigateTo(types.GAME_CONFIG);
 		}
 		else {
+			startGame();
 			navigateTo(types.GAME_IN_PROGRESS);
 		}
 	}
@@ -167,6 +169,7 @@ NewGame.propTypes = {
 	removePlayer: PropTypes.func.isRequired,
 	resetGame: PropTypes.func.isRequired,
 	setGameConfig: PropTypes.func.isRequired,
+	startGame: PropTypes.func.isRequired,
 	view: PropTypes.string.isRequired
 };
 
@@ -183,7 +186,8 @@ const mapDispatchToProps = {
 	removePlayer,
 	resetGame,
 	navigateTo,
-	setGameConfig
+	setGameConfig,
+	startGame
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewGame);

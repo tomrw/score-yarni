@@ -13,15 +13,16 @@ import { types } from '../constants/layout';
 
 import styles from './styles/in-game';
 
-export const InGame = ({ navigateTo, players, resetGame }) => {
+export const InGame = ({ navigateTo, players, resetGame, scores }) => {
 	const onClose = () => {
 		resetGame();
 		navigateTo(types.HOME);
 	};
+
 	const data = players.map(({ id, name }) => ({
 		position: id,
 		name,
-		score: Math.round(Math.random() * 100)
+		score: scores.find(el => el.id === id).score
 	}));
 
 	return (
@@ -37,11 +38,13 @@ export const InGame = ({ navigateTo, players, resetGame }) => {
 InGame.propTypes = {
 	navigateTo: PropTypes.func.isRequired,
 	players: PropTypes.array.isRequired,
-	resetGame: PropTypes.func.isRequired
+	resetGame: PropTypes.func.isRequired,
+	scores: PropTypes.array.isRequired
 };
 
-const mapStateToProps = ({ players }) => ({
-	players
+const mapStateToProps = ({ players, scores }) => ({
+	players,
+	scores
 });
 
 const mapDispatchToProps = {

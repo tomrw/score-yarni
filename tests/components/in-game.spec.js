@@ -13,10 +13,12 @@ describe('Given <InGame />', () => {
 	const navigateTo = sinon.stub();
 	const players = [];
 	const resetGame = sinon.stub();
+	const scores = [];
 	const props = {
 		navigateTo,
 		players,
-		resetGame
+		resetGame,
+		scores
 	};
 	const renderedComponent = shallow(<InGame { ...props } />);
 

@@ -1,3 +1,4 @@
+import { addScore } from './score';
 import {
 	ADD_PLAYER,
 	REMOVE_PLAYER,
@@ -36,3 +37,13 @@ export const setGameConfig = maxGameScore => ({
 export const resetGame = () => ({
 	type: RESET_GAME
 });
+
+export const startGame = () => {
+	return (dispatch, getState) => {
+		const { players } = getState();
+
+		players.forEach(({ id }) => {
+			dispatch(addScore(id, 0));
+		});
+	};
+};
