@@ -10,7 +10,17 @@ describe('Given the `layout` action creators', () => {
 
 		it('should return the correct payload', () => {
 			expect(action.payload).toEqual({
-				view: 'somewhere'
+				view: 'somewhere',
+				child: null
+			});
+		});
+
+		describe('with a child', () => {
+			const action = navigateTo('somewhere', 'child');
+
+			expect(action.payload).toEqual({
+				view: 'somewhere',
+				child: 'child'
 			});
 		});
 	});

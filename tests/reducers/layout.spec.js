@@ -20,5 +20,15 @@ describe('Given the layout reducer', () => {
 
 			expect(newState).toEqual(expectedState);
 		});
+
+		it('should set the states sub view if provided', () => {
+			const newState = reduce(initialState, navigateTo('a', 'b'));
+			const expectedState = {
+				view: 'a',
+				child: 'b'
+			};
+
+			expect(newState).toEqual(expectedState);
+		});
 	});
 });
