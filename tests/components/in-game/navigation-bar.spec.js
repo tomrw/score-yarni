@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 
 import NavigationBar from '../../../src/components/in-game/navigation-bar';
 import NavButton from '../../../src/components/in-game/nav-button';
-import { types } from '../../../src/constants/layout';
 
 import navigationBarStyles from '../../../src/components/in-game/styles/navigation-bar';
 
