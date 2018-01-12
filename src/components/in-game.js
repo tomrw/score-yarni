@@ -30,7 +30,7 @@ export const InGame = ({ navigateTo, players, resetGame, scores }) => {
 			<Header text="Game in Progress" />
 			<CloseButton onClose={ onClose } style={ styles.closeButton } />
 			<Leaderboard data={ data } />
-			<NavigationBar style={ styles.navigationBar } />
+			<NavigationBar style={ styles.navigationBar } navigateTo={ navigateTo } />
 		</View>
 	);
 };
