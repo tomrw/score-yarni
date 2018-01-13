@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import CloseButton from './common/close-button';
 import Header from './common/header';
@@ -13,23 +13,37 @@ import { types } from '../constants/layout';
 
 import styles from './styles/in-game';
 
-export const InGame = ({ navigateTo, players, resetGame, scores }) => {
+const getView = (view, players, scores) => {
+	let component;
+
+	if (view === 'addScores') {
+		component = <Text>Add scores!</Text>;
+	}
+	else {
+		const data = players.map(({ id, name }) => ({
+			position: id,
+			name,
+			score: scores.find(el => el.id === id).score
+		}));
+
+		component = <Leaderboard data={ data } /> ;
+	}
+
+	return component;
+};
+
+export const InGame = ({ navigateTo, players, resetGame, scores, view }) => {
 	const onClose = () => {
 		resetGame();
 		navigateTo(types.HOME);
 	};
-
-	const data = players.map(({ id, name }) => ({
-		position: id,
-		name,
-		score: scores.find(el => el.id === id).score
-	}));
+	const childView = getView(view, players, scores);
 
 	return (
 		<View style={ styles.container }>
 			<Header text="Game in Progress" />
 			<CloseButton onClose={ onClose } style={ styles.closeButton } />
-			<Leaderboard data={ data } />
+			{ childView }
 			<NavigationBar style={ styles.navigationBar } navigateTo={ navigateTo } />
 		</View>
 	);
@@ -39,10 +53,12 @@ InGame.propTypes = {
 	navigateTo: PropTypes.func.isRequired,
 	players: PropTypes.array.isRequired,
 	resetGame: PropTypes.func.isRequired,
-	scores: PropTypes.array.isRequired
+	scores: PropTypes.array.isRequired,
+	view: PropTypes.string
 };
 
-const mapStateToProps = ({ players, scores }) => ({
+const mapStateToProps = ({ layout, players, scores }) => ({
+	view: layout.child,
 	players,
 	scores
 });

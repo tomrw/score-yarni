@@ -4,16 +4,21 @@ import { shallow } from 'enzyme';
 
 import CloseButton from '../../src/components/common/close-button';
 import Header from '../../src/components/common/header';
+import Leaderboard from '../../src/components/in-game/leaderboard';
 import NavigationBar from '../../src/components/in-game/navigation-bar';
 import { InGame } from '../../src/components/in-game';
 
 import inGameStyles from '../../src/components/styles/in-game';
 
 describe('Given <InGame />', () => {
+	const player1 = { name: 'Tom', id: 1 };
+	const player2 = { name: 'Fred', id: 2 };
+	const players = [ player1, player2 ];
+	const score1 = { id: player1.id, score: 100 };
+	const score2 = { id: player2.id, score: 10 };
+	const scores = [ score1, score2 ];
 	const navigateTo = sinon.stub();
-	const players = [];
 	const resetGame = sinon.stub();
-	const scores = [];
 	const props = {
 		navigateTo,
 		players,
@@ -64,6 +69,38 @@ describe('Given <InGame />', () => {
 
 			it('should call `resetGame`', () => {
 				expect(resetGame.calledOnce).toBe(true);
+			});
+		});
+	});
+
+	describe('and its third child', () => {
+		describe('when no view is specified', () => {
+			const leaderboard = renderedComponent.childAt(2);
+
+			it('should be a <Leaderboard />', () => {
+				expect(leaderboard.is(Leaderboard)).toBe(true);
+			});
+
+			it('should have a `data` prop', () => {
+				const expectedData = [
+					{ position: player1.id, name: player1.name, score: score1.score },
+					{ position: player2.id, name: player2.name, score: score2.score }
+				];
+
+				expect(leaderboard.prop('data')).toEqual(expectedData);
+			});
+		});
+
+		describe('when the `addScores` view is specified', () => {
+			const newProps = {
+				...props,
+				view: 'addScores'
+			};
+			const renderedComponent = shallow(<InGame { ...newProps } />);
+			const addScores = renderedComponent.childAt(2);
+
+			it('should be a `Text`', () => {
+				expect(addScores.is('Text')).toBe(true);
 			});
 		});
 	});
