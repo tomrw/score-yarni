@@ -58,7 +58,7 @@ describe('Given <NavigationBar />', () => {
 
 			onSelect();
 
-			expect(navigateTo.withArgs('GAME_IN_PROGRESS', 'leaderboard').calledOnce).toBe(true);
+			expect(navigateTo.withArgs('GAME_IN_PROGRESS', 'LEADERBOARD').calledOnce).toBe(true);
 		});
 	});
 
@@ -84,7 +84,7 @@ describe('Given <NavigationBar />', () => {
 
 			onSelect();
 
-			expect(navigateTo.withArgs('GAME_IN_PROGRESS', 'addScores').calledOnce).toBe(true);
+			expect(navigateTo.withArgs('GAME_IN_PROGRESS', 'ADD_SCORES').calledOnce).toBe(true);
 		});
 	});
 

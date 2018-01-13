@@ -9,14 +9,14 @@ import Leaderboard from './in-game/leaderboard';
 import NavigationBar from './in-game/navigation-bar';
 import { navigateTo } from '../action-creators/layout';
 import { resetGame } from '../action-creators/game';
-import { types } from '../constants/layout';
+import { subTypes, types } from '../constants/layout';
 
 import styles from './styles/in-game';
 
 const getView = (view, players, scores) => {
 	let component;
 
-	if (view === 'addScores') {
+	if (view === subTypes.ADD_SCORES) {
 		component = <Text>Add scores!</Text>;
 	}
 	else {

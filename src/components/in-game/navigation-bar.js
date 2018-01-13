@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { View, ViewPropTypes } from 'react-native';
 
 import NavButton from './nav-button';
-import { types } from '../../constants/layout';
+import { subTypes, types } from '../../constants/layout';
 
 import styles from './styles/navigation-bar';
 
 const NavigationBar = ({ navigateTo, style }) => {
-	const onSelectLeaderboard = () => navigateTo(types.GAME_IN_PROGRESS, 'leaderboard');
-	const onSelectAddScores = () => navigateTo(types.GAME_IN_PROGRESS, 'addScores');
+	const goTo = view => navigateTo(types.GAME_IN_PROGRESS, view);
+	const onSelectLeaderboard = () => goTo(subTypes.LEADERBOARD);
+	const onSelectAddScores = () => goTo(subTypes.ADD_SCORES);
 
 	return (
 		<View style={ [ styles.container, style ] }>

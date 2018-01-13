@@ -94,7 +94,7 @@ describe('Given <InGame />', () => {
 		describe('when the `addScores` view is specified', () => {
 			const newProps = {
 				...props,
-				view: 'addScores'
+				view: 'ADD_SCORES'
 			};
 			const renderedComponent = shallow(<InGame { ...newProps } />);
 			const addScores = renderedComponent.childAt(2);
