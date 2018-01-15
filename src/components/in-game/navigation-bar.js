@@ -13,11 +13,14 @@ const NavigationBar = ({ activeButton, navigateTo, style }) => {
 	const onSelectAddScores = () => goTo(subTypes.ADD_SCORES);
 	const leaderboardActive = activeButton !== subTypes.ADD_SCORES;
 	const addScoresActive = activeButton === subTypes.ADD_SCORES;
+	const buttons = [
+		{ text: 'Leaderboard', onSelect: onSelectLeaderboard, active: leaderboardActive, key: 'leaderboard' },
+		{ text: 'Add Scores', onSelect: onSelectAddScores, active: addScoresActive, key: 'addScores' }
+	];
 
 	return (
 		<View style={ [ styles.container, style ] }>
-			<NavButton text="Leaderboard" onSelect={ onSelectLeaderboard } active={ leaderboardActive } />
-			<NavButton text="Add Scores" onSelect={ onSelectAddScores } active={ addScoresActive }/>
+			{ buttons.map(props => <NavButton { ...props } />) }
 		</View>
 	);
 };
