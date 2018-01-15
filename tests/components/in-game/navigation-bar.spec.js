@@ -8,11 +8,13 @@ import NavButton from '../../../src/components/in-game/nav-button';
 import navigationBarStyles from '../../../src/components/in-game/styles/navigation-bar';
 
 describe('Given <NavigationBar />', () => {
+	const activeButton = 'LEADERBOARD';
 	const navigateTo = sinon.stub();
 	const optionalStyles = {
 		position: 'absolute'
 	};
 	const props = {
+		activeButton,
 		navigateTo,
 		style: optionalStyles
 	};
@@ -49,16 +51,16 @@ describe('Given <NavigationBar />', () => {
 			expect(leaderboardButton.prop('text')).toEqual(expectedText);
 		});
 
-		it('should have an `active/true` prop', () => {
-			expect(leaderboardButton.prop('active')).toBe(true);
-		});
-
 		it('should call the `onNavigate` prop when its `onSelect` prop is called', () => {
 			const onSelect = leaderboardButton.prop('onSelect');
 
 			onSelect();
 
 			expect(navigateTo.withArgs('GAME_IN_PROGRESS', 'LEADERBOARD').calledOnce).toBe(true);
+		});
+
+		it('should have an `active/true` prop', () => {
+			expect(leaderboardButton.prop('active')).toBe(true);
 		});
 	});
 
@@ -88,4 +90,25 @@ describe('Given <NavigationBar />', () => {
 		});
 	});
 
+	describe('when the active button is `addScores`', () => {
+		const newProps = {
+			...props,
+			activeButton: 'ADD_SCORES'
+		};
+		const renderedComponent = shallow(<NavigationBar { ...newProps } />);
+		const leaderboardButton = renderedComponent.childAt(0);
+		const addScoresButton = renderedComponent.childAt(1);
+
+		describe('leaderboard', () => {
+			it('should NOT have an `active/true prop', () => {
+				expect(leaderboardButton.prop('active')).toBeFalsy();
+			});
+		});
+
+		describe('addScores', () => {
+			it('should have an `active/true prop', () => {
+				expect(addScoresButton.prop('active')).toBe(true);
+			});
+		});
+	});
 });
