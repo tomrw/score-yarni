@@ -13,18 +13,22 @@ import { subTypes, types } from '../constants/layout';
 
 import styles from './styles/in-game';
 
-const getView = (view, players, scores) => {
+const getView = (view, players, leaderboard) => {
 	let component;
 
 	if (view === subTypes.ADD_SCORES) {
 		component = <Text>Add scores!</Text>;
 	}
 	else {
-		const data = players.map(({ id, name }) => ({
-			position: id,
-			name,
-			score: scores.find(el => el.id === id).score
-		}));
+		const data = players.map(({ id, name }) => {
+			const { position, score } = leaderboard.find(el => el.id === id);
+
+			return {
+				name,
+				position,
+				score
+			};
+		});
 
 		component = <Leaderboard data={ data } /> ;
 	}
@@ -32,12 +36,12 @@ const getView = (view, players, scores) => {
 	return component;
 };
 
-export const InGame = ({ navigateTo, players, resetGame, scores, view }) => {
+export const InGame = ({ navigateTo, players, resetGame, leaderboard, view }) => {
 	const onClose = () => {
 		resetGame();
 		navigateTo(types.HOME);
 	};
-	const childView = getView(view, players, scores);
+	const childView = getView(view, players, leaderboard);
 
 	return (
 		<View style={ styles.container }>
@@ -52,17 +56,17 @@ export const InGame = ({ navigateTo, players, resetGame, scores, view }) => {
 };
 
 InGame.propTypes = {
+	leaderboard: PropTypes.array.isRequired,
 	navigateTo: PropTypes.func.isRequired,
 	players: PropTypes.array.isRequired,
 	resetGame: PropTypes.func.isRequired,
-	scores: PropTypes.array.isRequired,
 	view: PropTypes.string
 };
 
-const mapStateToProps = ({ layout, players, scores }) => ({
-	view: layout.child,
+const mapStateToProps = ({ layout, leaderboard, players }) => ({
+	leaderboard,
 	players,
-	scores
+	view: layout.child
 });
 
 const mapDispatchToProps = {

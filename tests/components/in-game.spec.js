@@ -14,16 +14,16 @@ describe('Given <InGame />', () => {
 	const player1 = { name: 'Tom', id: 1 };
 	const player2 = { name: 'Fred', id: 2 };
 	const players = [ player1, player2 ];
-	const score1 = { id: player1.id, score: 100 };
-	const score2 = { id: player2.id, score: 10 };
-	const scores = [ score1, score2 ];
+	const score1 = { id: player1.id, position: 1, score: 100 };
+	const score2 = { id: player2.id, position: 2, score: 10 };
+	const leaderboard = [ score1, score2 ];
 	const navigateTo = sinon.stub();
 	const resetGame = sinon.stub();
 	const props = {
+		leaderboard,
 		navigateTo,
 		players,
-		resetGame,
-		scores
+		resetGame
 	};
 	const renderedComponent = shallow(<InGame { ...props } />);
 
