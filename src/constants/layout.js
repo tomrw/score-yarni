@@ -6,3 +6,8 @@ export const types = {
 	GAME_CONFIG: 'GAME_CONFIG',
 	GAME_IN_PROGRESS: 'GAME_IN_PROGRESS'
 };
+
+export const subTypes = {
+	LEADERBOARD: 'LEADERBOARD',
+	ADD_SCORES: 'ADD_SCORES'
+};

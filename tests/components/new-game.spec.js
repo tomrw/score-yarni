@@ -18,6 +18,7 @@ describe('Given <NewGame />', () => {
 	const removePlayer = sinon.stub();
 	const resetGame = sinon.stub();
 	const navigateTo = sinon.stub();
+	const startGame = sinon.stub();
 	const view = 'NEW_GAME';
 	const players = [
 		{ name: 'Player 1', id: 1 },
@@ -34,6 +35,7 @@ describe('Given <NewGame />', () => {
 		removePlayer,
 		resetGame,
 		setGameConfig: onChange,
+		startGame,
 		view
 	};
 	const renderedComponent = shallow(<NewGame { ...props } />);
@@ -256,9 +258,13 @@ describe('Given <NewGame />', () => {
 			});
 
 			describe('when pressed', () => {
-				it('should navigate to `GAME_IN_PROGRESS`', () => {
-					setupProgress.simulate('press');
+				setupProgress.simulate('press');
 
+				it('should call `startGame`', () => {
+					expect(startGame.calledOnce).toBe(true);
+				});
+
+				it('should navigate to `GAME_IN_PROGRESS`', () => {
 					expect(navigateTo.withArgs('GAME_IN_PROGRESS').calledOnce).toBe(true);
 				});
 			});

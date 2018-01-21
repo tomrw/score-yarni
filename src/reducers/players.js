@@ -2,7 +2,7 @@ import {
 	ADD_PLAYER,
 	REMOVE_PLAYER,
 	RESET_GAME
-} from '../constants/new-game';
+} from '../constants/game';
 
 const addPlayer = (players, { name, id }) => {
 	return [ ...players, { name, id } ];

@@ -5,8 +5,8 @@
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"ios": "react-native run-ios",
-		"test": "jest tests",
-		"watch-tests": "jest tests --watch",
+		"test": "jest",
+		"watch-tests": "jest --watchAll",
 		"lint": "eslint 'src/**/*.js' 'tests/**/*.js'"
 	},
 	"dependencies": {
@@ -20,14 +20,15 @@
 	},
 	"devDependencies": {
 		"@tom.rw/eslint-config-tomrw": "^0.2.0",
-		"babel-jest": "^21.2.0",
+		"babel-jest": "^22.0.4",
 		"babel-preset-react-native": "4.0.0",
 		"enzyme": "^3.2.0",
 		"enzyme-adapter-react-16": "^1.1.0",
 		"eslint": "^4.12.1",
 		"eslint-plugin-import": "^2.8.0",
 		"eslint-plugin-react": "^7.5.1",
-		"jest": "21.2.1",
+		"jest": "^22.0.5",
+		"redux-thunk": "^2.2.0",
 		"sinon": "^4.1.2"
 	}
 }

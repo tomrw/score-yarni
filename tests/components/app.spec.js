@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import NewGame from '../../src/components/new-game';
+import InGame from '../../src/components/in-game';
 import HomePage from '../../src/components/home-page';
+import NewGame from '../../src/components/new-game';
 import { App } from '../../src/components/app';
 
 import appStyles from '../../src/components/styles/app';
@@ -49,6 +50,21 @@ describe('Given <App />', () => {
 
 		it('should render the <NewGame />', () => {
 			expect(renderedComponent.find(NewGame).exists()).toBe(true);
+		});
+
+		it('should only render one child', () => {
+			expect(renderedComponent.children).toHaveLength(1);
+		});
+	});
+
+	describe('when rendered with the `GAME_IN_PROGRESS` view', () => {
+		const props = {
+			view: 'GAME_IN_PROGRESS'
+		};
+		const renderedComponent = shallow(<App { ...props } />);
+
+		it('should render the <InGame />', () => {
+			expect(renderedComponent.find(InGame).exists()).toBe(true);
 		});
 
 		it('should only render one child', () => {

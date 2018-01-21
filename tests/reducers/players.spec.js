@@ -4,7 +4,7 @@ import {
 	removePlayer,
 	resetGame,
 	resetPlayerId
-} from '../../src/action-creators/new-game';
+} from '../../src/action-creators/game';
 
 describe('Given the players reducer', () => {
 	const unknownAction = {

@@ -11,13 +11,14 @@ import ProgressBar from './common/progress-bar';
 import SetupProgress from './new-game/game-setup/setup-progress';
 import { navigateTo } from '../action-creators/layout';
 import { types } from '../constants/layout';
-import { NEW_GAME_PROGRESS_STEPS, TOTAL_NEW_GAME_STEPS } from '../constants/new-game';
+import { NEW_GAME_PROGRESS_STEPS, TOTAL_NEW_GAME_STEPS } from '../constants/game';
 import {
 	addPlayer,
 	removePlayer,
 	resetGame,
-	setGameConfig
-} from '../action-creators/new-game';
+	setGameConfig,
+	startGame
+} from '../action-creators/game';
 
 import styles from './styles/new-game';
 
@@ -126,12 +127,13 @@ export class NewGame extends Component {
 	}
 
 	onProgress() {
-		const { navigateTo, view } = this.props;
+		const { navigateTo, startGame, view } = this.props;
 
 		if (view === types.NEW_GAME) {
 			navigateTo(types.GAME_CONFIG);
 		}
 		else {
+			startGame();
 			navigateTo(types.GAME_IN_PROGRESS);
 		}
 	}
@@ -167,6 +169,7 @@ NewGame.propTypes = {
 	removePlayer: PropTypes.func.isRequired,
 	resetGame: PropTypes.func.isRequired,
 	setGameConfig: PropTypes.func.isRequired,
+	startGame: PropTypes.func.isRequired,
 	view: PropTypes.string.isRequired
 };
 
@@ -183,7 +186,8 @@ const mapDispatchToProps = {
 	removePlayer,
 	resetGame,
 	navigateTo,
-	setGameConfig
+	setGameConfig,
+	startGame
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewGame);

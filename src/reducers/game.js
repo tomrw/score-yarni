@@ -1,4 +1,4 @@
-import { RESET_GAME, SET_GAME_CONFIG } from '../constants/new-game';
+import { RESET_GAME, SET_GAME_CONFIG } from '../constants/game';
 
 const INITIAL_STATE = {
 	maxGameScore: 150

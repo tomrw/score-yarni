@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import HomePage from './home-page';
+import InGame from './in-game';
 import NewGame from './new-game';
 import { types } from '../constants/layout';
 
@@ -26,7 +27,7 @@ const getChildView = view => {
 		component = <NewGame />;
 	}
 	else if (view === types.GAME_IN_PROGRESS) {
-		return <View><Text>game in progress!</Text></View>;
+		component = <InGame />;
 	}
 
 	return component;
