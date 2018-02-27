@@ -2,6 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import AddScores from '../../src/components/in-game/add-scores';
 import CloseButton from '../../src/components/common/close-button';
 import Header from '../../src/components/common/header';
 import Leaderboard from '../../src/components/in-game/leaderboard';
@@ -17,11 +18,17 @@ describe('Given <InGame />', () => {
 	const score1 = { id: player1.id, position: 1, score: 100 };
 	const score2 = { id: player2.id, position: 2, score: 10 };
 	const leaderboard = [ score1, score2 ];
+	const pendingScores = [ { id: player1.id, score: 100 } ];
+	const addPendingScore = sinon.stub();
+	const confirmAllPendingScores = sinon.stub();
 	const navigateTo = sinon.stub();
 	const resetGame = sinon.stub();
 	const props = {
+		addPendingScore,
+		confirmAllPendingScores,
 		leaderboard,
 		navigateTo,
+		pendingScores,
 		players,
 		resetGame
 	};
@@ -99,8 +106,37 @@ describe('Given <InGame />', () => {
 			const renderedComponent = shallow(<InGame { ...newProps } />);
 			const addScores = renderedComponent.childAt(2);
 
-			it('should be a `Text`', () => {
-				expect(addScores.is('Text')).toBe(true);
+			it('should be a `<InGame />`', () => {
+				expect(addScores.is(AddScores)).toBe(true);
+			});
+
+			it('should have a `data` prop', () => {
+				const pendingScore1 = pendingScores[0];
+				const expectedData = [
+					{ id: player1.id, name: player1.name, score: pendingScore1.score },
+					{ id: player2.id, name: player2.name, score: 0 }
+				];
+
+				expect(addScores.prop('data')).toEqual(expectedData);
+			});
+
+			it('should have an `addPendingScore` prop', () => {
+				expect(addScores.prop('addPendingScore')).toEqual(addPendingScore);
+			});
+
+			describe('when the `confirmScores` prop is called', () => {
+				addScores.prop('confirmScores')();
+
+				it('should call `confirmAllPendingScores`', () => {
+					expect(confirmAllPendingScores.calledOnce).toBe(true);
+				});
+
+				it('should call `navigateTo` with the correct props', () => {
+					const expectedView = 'GAME_IN_PROGRESS';
+					const expectedChild = 'LEADERBOARD';
+
+					expect(navigateTo.withArgs(expectedView, expectedChild).calledOnce).toBe(true);
+				});
 			});
 		});
 	});
