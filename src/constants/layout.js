@@ -9,5 +9,6 @@ export const types = {
 
 export const subTypes = {
 	LEADERBOARD: 'LEADERBOARD',
-	ADD_SCORES: 'ADD_SCORES'
+	ADD_SCORES: 'ADD_SCORES',
+	ADD_PLAYER_SCORE: 'ADD_PLAYER_SCORE'
 };
