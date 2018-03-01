@@ -1,32 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-	Text,
-	TouchableOpacity,
-	ViewPropTypes
-} from 'react-native';
+import { Button } from 'react-native-elements';
 
 import styles from './styles/setup-progress';
 
-const SetupProgress = ({ active, complete, onPress, style }) => {
+const SetupProgress = ({ active, complete, onPress }) => {
 	const text = complete ? 'Start' : 'Next';
-	const activeStyle = active && styles.active;
 	const onSetupPress = () => active && onPress();
 
-	return (
-		<TouchableOpacity
-			onPress={ onSetupPress }
-			style={ [ styles.container, style ] }>
-			<Text style={ [ styles.text, activeStyle ] }>{ text.toUpperCase() }</Text>
-		</TouchableOpacity>
-	);
+	return <Button
+		containerViewStyle={ styles.container }
+		disabled={ !active }
+		disabledTextStyle={ styles.disabled }
+		onPress={ onSetupPress }
+		title={ text.toUpperCase() }
+	/>;
 };
 
 SetupProgress.propTypes = {
 	active: PropTypes.bool,
 	complete: PropTypes.bool,
-	onPress: PropTypes.func.isRequired,
-	style: ViewPropTypes.style
+	onPress: PropTypes.func.isRequired
 };
 
 export default SetupProgress;
