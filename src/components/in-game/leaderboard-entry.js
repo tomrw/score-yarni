@@ -1,9 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ListItem } from 'react-native-elements';
 import { Text } from 'react-native';
 
-const LeaderboardEntry = ({ position, name, score }) => {
-	return <Text>{ position } { name } { score }</Text>;
+import styles from './styles/leaderboard-entry';
+
+const LeaderboardEntry = ({ name, position, score }) => {
+	const leftIcon = <Text style={ styles.position }>{ position }</Text>;
+	const rightIcon = <Text>{ score }</Text>;
+
+	return <ListItem
+		wrapperStyle={ styles.container }
+		leftIcon={ leftIcon }
+		rightIcon={ rightIcon }
+		title={ name } />;
 };
 
 LeaderboardEntry.propTypes = {

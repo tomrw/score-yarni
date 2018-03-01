@@ -1,21 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FlatList } from 'react-native';
+import { List } from 'react-native-elements';
 
 import LeaderboardEntry from './leaderboard-entry';
 
 const Leaderboard = ({ data }) => {
-	return (
-		<FlatList
-			data={ data }
-			renderItem={ ({ item }) =>
-				<LeaderboardEntry
-					position={ item.position }
-					name={ item.name }
-					score={ item.score } />
-			}
-			keyExtractor={ (item, index) => index } />
-	);
+	return <List>
+		{
+			data.map(({ position, name, score }, i) => {
+				const props = {
+					name,
+					position,
+					score
+				};
+
+				return <LeaderboardEntry key={ i } { ...props } />;
+			})
+		}
+	</List>;
 };
 
 Leaderboard.propTypes = {

@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Leaderboard from '../../../src/components/in-game/leaderboard';
-import LeaderboardEntry from '../../../src/components/in-game/leaderboard-entry';
 
 describe('Given <Leaderboard />', () => {
 	const data = [
@@ -12,36 +11,35 @@ describe('Given <Leaderboard />', () => {
 	];
 	const renderedComponent = shallow(<Leaderboard data={ data } />);
 
-	it('should be a `FlatList`', () => {
-		expect(renderedComponent.is('FlatList')).toBe(true);
+	it('should be a `List`', () => {
+		expect(renderedComponent.is('List')).toBe(true);
 	});
 
-	it('should have a `data` prop', () => {
-		expect(renderedComponent.prop('data')).toEqual(data);
-	});
+	describe('when rendering the entries', () => {
+		it('should render the expected number of children', () => {
+			expect(renderedComponent.children()).toHaveLength(data.length);
+		});
 
-	it('should have a `keyExtractor` prop', () => {
-		const index = 1234;
-		const item = null;
-		const keyExtractor = renderedComponent.prop('keyExtractor')(item, index);
+		data.forEach((entry, i) => {
+			describe(`for the entry at position ${ entry.position }`, () => {
+				const renderedEntry = renderedComponent.childAt(i);
 
-		expect(keyExtractor).toEqual(index);
-	});
+				it('should be a `LeaderboardEntry`', () => {
+					expect(renderedEntry.is('LeaderboardEntry')).toBe(true);
+				});
 
-	describe('when rendering a <LeaderboardEntry />', () => {
-		const entry1 = data[0];
-		const args = {
-			item: entry1
-		};
-		const entry = renderedComponent.prop('renderItem')(args);
+				it('should have a `name` prop', () => {
+					expect(renderedEntry.prop('name')).toEqual(entry.name);
+				});
 
-		it('should render an entry correctly', () => {
-			const expectedEntry = <LeaderboardEntry
-				position={ entry1.position }
-				name={ entry1.name }
-				score={ entry1.score }/>;
+				it('should have a `position` prop', () => {
+					expect(renderedEntry.prop('position')).toEqual(entry.position);
+				});
 
-			expect(entry).toEqual(expectedEntry);
+				it('should have a `score` prop', () => {
+					expect(renderedEntry.prop('score')).toEqual(entry.score);
+				});
+			});
 		});
 	});
 });
