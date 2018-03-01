@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { View } from 'react-native';
 
 import AddScores from './in-game/add-scores';
-import CloseButton from './common/close-button';
 import Header from './common/header';
 import Leaderboard from './in-game/leaderboard';
 import NavigationBar from './in-game/navigation-bar';
@@ -67,8 +66,7 @@ export const InGame = ({ addPendingScore, confirmAllPendingScores, navigateTo, p
 
 	return (
 		<View style={ styles.container }>
-			<Header text="Game in Progress" />
-			<CloseButton onClose={ onClose } style={ styles.closeButton } />
+			<Header text="Game in Progress" onClose={ onClose } />
 			{ childView }
 			<NavigationBar activeButton={ view }
 				navigateTo={ navigateTo }

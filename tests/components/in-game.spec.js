@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import AddScores from '../../src/components/in-game/add-scores';
-import CloseButton from '../../src/components/common/close-button';
 import Header from '../../src/components/common/header';
 import Leaderboard from '../../src/components/in-game/leaderboard';
 import NavigationBar from '../../src/components/in-game/navigation-bar';
@@ -52,21 +51,9 @@ describe('Given <InGame />', () => {
 		it('should have a `text` prop', () => {
 			expect(header.prop('text')).not.toEqual('');
 		});
-	});
 
-	describe('and its second child', () => {
-		const closeButton = renderedComponent.childAt(1);
-
-		it('should be a `CloseButton`', () => {
-			expect(closeButton.is(CloseButton)).toBe(true);
-		});
-
-		it('should have the `closeButton` styles', () => {
-			expect(closeButton.prop('style')).toEqual(inGameStyles.closeButton);
-		});
-
-		describe('when the `onClose` prop is triggered', () => {
-			const onClose = closeButton.prop('onClose');
+		describe('when the `onClose` prop is called', () => {
+			const onClose = header.prop('onClose');
 
 			onClose();
 
@@ -80,9 +67,9 @@ describe('Given <InGame />', () => {
 		});
 	});
 
-	describe('and its third child', () => {
+	describe('and its second child', () => {
 		describe('when no view is specified', () => {
-			const leaderboard = renderedComponent.childAt(2);
+			const leaderboard = renderedComponent.childAt(1);
 
 			it('should be a <Leaderboard />', () => {
 				expect(leaderboard.is(Leaderboard)).toBe(true);
@@ -104,7 +91,7 @@ describe('Given <InGame />', () => {
 				view: 'ADD_SCORES'
 			};
 			const renderedComponent = shallow(<InGame { ...newProps } />);
-			const addScores = renderedComponent.childAt(2);
+			const addScores = renderedComponent.childAt(1);
 
 			it('should be a `<InGame />`', () => {
 				expect(addScores.is(AddScores)).toBe(true);
@@ -141,8 +128,8 @@ describe('Given <InGame />', () => {
 		});
 	});
 
-	describe('and its fourth child', () => {
-		const navBar = renderedComponent.childAt(3);
+	describe('and its third child', () => {
+		const navBar = renderedComponent.childAt(2);
 
 		it('should be a `navigationBar`', () => {
 			expect(navBar.is(NavigationBar)).toBe(true);
