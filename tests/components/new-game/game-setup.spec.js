@@ -13,8 +13,8 @@ describe('Given <GameSetup />', () => {
 	const addPlayer = sinon.stub();
 	const removePlayer = sinon.stub();
 	const players = [
-		{ name: 'Player 1' },
-		{ name: 'Player 2' }
+		{ id: 1, name: 'Player 1' },
+		{ id: 2, name: 'Player 2' }
 	];
 	const props = {
 		addPlayer,

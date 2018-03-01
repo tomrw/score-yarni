@@ -1,24 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FlatList } from 'react-native';
+import { List } from 'react-native-elements';
 
 import Player from './player';
 
 const PlayerList = ({ playerList, removePlayer }) => {
 	return (
-		<FlatList
-			data={ playerList }
-			renderItem = { ({ item }) =>
-				<Player id={ item.id }
-					name={ item.name }
-					removePlayer={ removePlayer } />
+		<List>
+			{
+				playerList.map(({ id, name }, i) => {
+					const props = {
+						id,
+						name,
+						removePlayer
+					};
+
+					return <Player key={ i } { ...props } />;
+				})
 			}
-			keyExtractor={ (item, index) => index } />
+		</List>
 	);
 };
 
 PlayerList.propTypes = {
-	playerList: PropTypes.array.isRequired,
+	playerList: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		name: PropTypes.string.isRequired
+	})).isRequired,
 	removePlayer: PropTypes.func.isRequired
 };
 

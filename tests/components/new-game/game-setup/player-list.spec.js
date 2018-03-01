@@ -2,43 +2,43 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import PlayerList from '../../../../src/components/new-game/game-setup/player-list';
-import Player from '../../../../src/components/new-game/game-setup/player';
 
 describe('Given <PlayerList />', () => {
-	const player1 = { name: 'Player 1', id: 1 };
-	const playerList = [ player1 ];
+	const player1 = { name: 'Tom', id: 1 };
+	const player2 = { name: 'Fred', id: 2 };
+	const playerList = [ player1, player2 ];
 	const removePlayer = () => {};
 	const renderedComponent = shallow(<PlayerList playerList={ playerList } removePlayer={ removePlayer } />);
 
-	it('should be a `FlatList`', () => {
-		expect(renderedComponent.is('FlatList')).toBe(true);
+	it('should be a `List`', () => {
+		expect(renderedComponent.is('List')).toBe(true);
 	});
 
-	it('should have a `data` prop', () => {
-		expect(renderedComponent.prop('data')).toEqual(playerList);
-	});
+	describe('when rendering the players', () => {
+		it('should render the expected number of children', () => {
+			expect(renderedComponent.children()).toHaveLength(playerList.length);
+		});
 
-	it('should have a `keyExtractor` prop', () => {
-		const index = 1234;
-		const item = player1;
-		const keyExtractor = renderedComponent.prop('keyExtractor')(item, index);
+		playerList.forEach((entry, i) => {
+			describe(`for the entry at position ${ i }`, () => {
+				const renderedEntry = renderedComponent.childAt(i);
 
-		expect(keyExtractor).toEqual(index);
-	});
+				it('should be a `Player`', () => {
+					expect(renderedEntry.is('Player')).toBe(true);
+				});
 
-	describe('when rendering a player', () => {
-		const args = {
-			item: player1
-		};
-		const player = renderedComponent.prop('renderItem')(args);
+				it('should have a `name` prop', () => {
+					expect(renderedEntry.prop('name')).toEqual(entry.name);
+				});
 
-		it('should render a player correctly', () => {
-			const expectedPlayer = <Player
-				id={ player1.id }
-				name={ player1.name }
-				removePlayer={ removePlayer } />;
+				it('should have a `id` prop', () => {
+					expect(renderedEntry.prop('id')).toEqual(entry.id);
+				});
 
-			expect(player).toEqual(expectedPlayer);
+				it('should have a `removePlayer` prop', () => {
+					expect(renderedEntry.prop('removePlayer')).toEqual(removePlayer);
+				});
+			});
 		});
 	});
 });

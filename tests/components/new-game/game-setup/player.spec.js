@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import Player from '../../../../src/components/new-game/game-setup/player';
-import playerStyles from '../../../../src/components/new-game/game-setup/styles/player';
 
 describe('Given <Player />', () => {
 	const id = 1;
@@ -11,71 +10,27 @@ describe('Given <Player />', () => {
 	const removePlayer = sinon.spy();
 	const renderedComponent = shallow(<Player id={ id } name={ name } removePlayer={ removePlayer } />);
 
-	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+	it('should be a `ListItem`', () => {
+		expect(renderedComponent.is('ListItem')).toBe(true);
 	});
 
-	it('should have the `player` styles', () => {
-		const style = renderedComponent.prop('style');
-
-		expect(style).toEqual(playerStyles.container);
+	it('should have the correct `title` prop', () => {
+		expect(renderedComponent.prop('title')).toEqual(name);
 	});
 
-	describe('and its first child', () => {
-		const playerName = renderedComponent.childAt(0);
+	it('should have the correct `rightIcon` prop', () => {
+		const expectedRightIcon = {
+			name: 'clear'
+		};
 
-		it('should display the players name', () => {
-			expect(playerName.props().children).toEqual(name);
-		});
-
-		it('should have the `player-name` styles', () => {
-			const style = playerName.prop('style');
-
-			expect(style).toEqual(playerStyles.playerName);
-		});
+		expect(renderedComponent.prop('rightIcon')).toEqual(expectedRightIcon);
 	});
 
-	describe('and its second child', () => {
-		const removePlayerButton = renderedComponent.childAt(1);
+	describe('when the right icon is pressed', () => {
+		it('should call the `removePlayer` prop with the correct `id`', () => {
+			renderedComponent.simulate('pressRightIcon');
 
-		it('should be a `TouchableOpacity`', () => {
-			expect(removePlayerButton.is('TouchableOpacity')).toBe(true);
-		});
-
-		it('should have the `remove-player-container` styles', () => {
-			const style = removePlayerButton.prop('style');
-
-			expect(style).toEqual(playerStyles.removePlayerContainer);
-		});
-
-		it('should have an `activeOpacity` prop', () => {
-			expect(removePlayerButton.prop('activeOpacity')).toEqual(0.8);
-		});
-
-		describe('and its text', () => {
-			const text = removePlayerButton.childAt(0);
-
-			it('should have a `Text` child', () => {
-				expect(text.is('Text')).toBe(true);
-			});
-
-			it('should have the correct text', () => {
-				expect(text.props().children).toEqual('x');
-			});
-
-			it('should have the `remove-player-text` styles', () => {
-				const style = text.prop('style');
-
-				expect(style).toEqual(playerStyles.removePlayerText);
-			});
-		});
-
-		describe('when pressed', () => {
-			it('should call its `removePlayer` prop with the correct `id`', () => {
-				removePlayerButton.simulate('press');
-
-				expect(removePlayer.withArgs(id).calledOnce).toBe(true);
-			});
+			expect(removePlayer.withArgs(id).calledOnce).toBe(true);
 		});
 	});
 });
