@@ -1,4 +1,7 @@
 import { ADD_SCORE } from '../constants/score';
+import { RESET_GAME } from '../constants/game';
+
+const INITIAL_STATE = [];
 
 const updateLeaderboard = (leaderboard, { id, score }) => {
 	const playerScore = leaderboard.find(el => el.id === id);
@@ -26,10 +29,14 @@ const updateLeaderboard = (leaderboard, { id, score }) => {
 		});
 };
 
-export default (state = [], action) => {
+const resetLeaderboard = () => INITIAL_STATE;
+
+export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case ADD_SCORE:
 			return updateLeaderboard(state, action.payload);
+		case RESET_GAME:
+			return resetLeaderboard(state);
 		default:
 			return state;
 	}

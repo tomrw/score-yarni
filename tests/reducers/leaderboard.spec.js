@@ -1,5 +1,6 @@
 import reduce from '../../src/reducers/leaderboard';
 import { addScore } from '../../src/action-creators/score';
+import { resetGame } from '../../src/action-creators/game';
 
 describe('Given the leaderboard reducer', () => {
 	const unknownAction = {
@@ -40,6 +41,15 @@ describe('Given the leaderboard reducer', () => {
 			];
 
 			expect(fourthState).toEqual(expectedState);
+		});
+	});
+
+	describe('when resetting the game', () => {
+		it('should reset the leaderboard', () => {
+			const newState = reduce(initialState, addScore(1, 100));
+			const nextState = reduce(newState, resetGame());
+
+			expect(nextState).toEqual([]);
 		});
 	});
 });
