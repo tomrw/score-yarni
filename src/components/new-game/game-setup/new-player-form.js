@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View
-} from 'react-native';
+import { FormInput, FormLabel } from 'react-native-elements';
+import { View } from 'react-native';
 
 import styles from './styles/new-player-form';
 
@@ -23,22 +19,17 @@ class NewPlayerForm extends Component {
 
 	render() {
 		return (
-			<View style={ styles.container }>
-				<TextInput
+			<View>
+				<FormLabel>Name</FormLabel>
+				<FormInput
 					autoCorrect={ false }
 					autoFocus
 					blurOnSubmit={ false }
+					inputStyle={ styles.textInput }
 					onChangeText={ this.updateName }
 					onSubmitEditing={ this.addNewPlayer }
 					placeholder="Enter player name..."
-					style={ styles.textInput }
 					value={ this.state.name } />
-				<TouchableOpacity
-					activeOpacity={ 0.8 }
-					onPress={ this.addNewPlayer }
-					style={ styles.button }>
-					<Text style={ styles.buttonText }>Add</Text>
-				</TouchableOpacity>
 			</View>
 		);
 	}

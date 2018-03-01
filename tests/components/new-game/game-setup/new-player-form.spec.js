@@ -21,15 +21,29 @@ describe('Given <NewPlayerForm />', () => {
 		expect(renderedComponent.is('View')).toBe(true);
 	});
 
-	it('should have the `container` styles', () => {
-		expect(renderedComponent.prop('style')).toEqual(newPlayerFormStyles.container);
+	describe('and its first child', () => {
+		const inputLabel = renderedComponent.childAt(0);
+
+		it('should be a `FormLabel`', () => {
+			expect(inputLabel.is('FormLabel')).toBe(true);
+		});
+
+		it('should have the correct text', () => {
+			const expectedText = 'Name';
+
+			expect(inputLabel.props().children).toEqual(expectedText);
+		});
 	});
 
-	describe('and its first child', () => {
-		const playerInput = renderedComponent.childAt(0);
+	describe('and its second child', () => {
+		const playerInput = renderedComponent.childAt(1);
 
-		it('should be a `TextInput`', () => {
-			expect(playerInput.is('TextInput')).toBe(true);
+		it('should be a `FormInput`', () => {
+			expect(playerInput.is('FormInput')).toBe(true);
+		});
+
+		it('should have the `textInput` styles', () => {
+			expect(playerInput.prop('inputStyle')).toEqual(newPlayerFormStyles.textInput);
 		});
 
 		it('should have the correct placeholder text', () => {
@@ -50,71 +64,38 @@ describe('Given <NewPlayerForm />', () => {
 			expect(playerInput.prop('blurOnSubmit')).toBe(false);
 		});
 
-		it('should have the `textInput` styles', () => {
-			expect(playerInput.prop('style')).toEqual(newPlayerFormStyles.textInput);
-		});
-	});
+		describe('when interacted with', () => {
+			const inputText = renderedComponent.childAt(1);
+			const name = 'tomrw';
 
-	describe('and its second child', () => {
-		const inputButton = renderedComponent.childAt(1);
+			it('should call the `playerAdded` prop with the players name', () => {
+				inputText.simulate('changeText', name);
+				inputText.simulate('SubmitEditing');
 
-		it('should be a `TouchableOpacity`', () => {
-			expect(inputButton.is('TouchableOpacity')).toBe(true);
-		});
-
-		it('should have an `activeOpacity` prop', () => {
-			expect(inputButton.prop('activeOpacity')).toEqual(0.8);
-		});
-
-		it('should have the `button` styles', () => {
-			expect(inputButton.prop('style')).toEqual(newPlayerFormStyles.button);
-		});
-
-		describe('and its first child', () => {
-			const text = inputButton.childAt(0);
-
-			it('should have the expected text', () => {
-				expect(text.props().children).toEqual('Add');
+				expect(playerAdded.withArgs(name).calledOnce).toBe(true);
 			});
 
-			it('should have the `buttonText` styles on its first child', () => {
-				expect(text.prop('style')).toEqual(newPlayerFormStyles.buttonText);
+			it('should clear the input', () => {
+				inputText.simulate('changeText', name);
+				inputText.simulate('press');
+
+				expect(inputText.prop('value')).toEqual('');
 			});
-		});
-	});
 
-	describe('when the add player button is interacted with', () => {
-		const inputText = renderedComponent.childAt(0);
-		const inputButton = renderedComponent.childAt(1);
-		const name = 'tomrw';
+			it('should NOT call the `playerAdded` prop if no player name is entered', () => {
+				inputText.simulate('press');
 
-		it('should call the `playerAdded` prop with the players name', () => {
-			inputText.simulate('changeText', name);
-			inputButton.simulate('press');
+				expect(playerAdded.notCalled).toBe(true);
+			});
 
-			expect(playerAdded.withArgs(name).calledOnce).toBe(true);
-		});
+			it('should NOT call the `playerAdded` prop if only whitespace is entered', () => {
+				const name = '    ';
 
-		it('should clear the input', () => {
-			inputText.simulate('changeText', name);
-			inputButton.simulate('press');
+				inputText.simulate('changeText', name);
+				inputText.simulate('press');
 
-			expect(inputText.prop('value')).toEqual('');
-		});
-
-		it('should NOT call the `playerAdded` prop if no player name is entered', () => {
-			inputButton.simulate('press');
-
-			expect(playerAdded.notCalled).toBe(true);
-		});
-
-		it('should NOT call the `playerAdded` prop if only whitespace is entered', () => {
-			const name = '    ';
-
-			inputText.simulate('changeText', name);
-			inputButton.simulate('press');
-
-			expect(playerAdded.notCalled).toBe(true);
+				expect(playerAdded.notCalled).toBe(true);
+			});
 		});
 	});
 });
