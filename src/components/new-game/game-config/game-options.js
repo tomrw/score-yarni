@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-	Text,
-	TextInput,
-	View
-} from 'react-native';
+import { FormInput, FormLabel } from 'react-native-elements';
+import { View } from 'react-native';
 
 const DEFAULT_MAX_GAME_SCORE = 150;
 
@@ -19,8 +16,8 @@ const GameOptions = ({ gameConfig, onChange }) => {
 
 	return (
 		<View>
-			<Text>Game Score:</Text>
-			<TextInput
+			<FormLabel>Game Score:</FormLabel>
+			<FormInput
 				keyboardType="numeric"
 				onChangeText={ onInputChange }
 				placeholder={ DEFAULT_MAX_GAME_SCORE.toString() }

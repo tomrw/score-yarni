@@ -30,20 +30,22 @@ describe('Given <GameOptions />', () => {
 	describe('and its first child', () => {
 		const label = renderedComponent.childAt(0);
 
-		it('should be a `Text`', () => {
-			expect(label.is('Text')).toBe(true);
+		it('should be a `FormLabel`', () => {
+			expect(label.is('FormLabel')).toBe(true);
 		});
 
-		it('should have some text', () => {
-			expect(label.text()).not.toEqual('');
+		it('should have the correct text', () => {
+			const expectedText = 'Game Score:';
+
+			expect(label.props().children).toEqual(expectedText);
 		});
 	});
 
 	describe('and its second child', () => {
 		const input = renderedComponent.childAt(1);
 
-		it('should be a `TextInput`', () => {
-			expect(input.is('TextInput')).toBe(true);
+		it('should be a `FormInput`', () => {
+			expect(input.is('FormInput')).toBe(true);
 		});
 
 		it('should have a `keyboardType` prop', () => {
