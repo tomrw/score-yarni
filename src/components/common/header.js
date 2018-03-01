@@ -1,12 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text } from 'react-native';
+import { Header as Heading } from 'react-native-elements';
+
+import BackButton from './back-button';
+import CloseButton from './close-button';
 
 import styles from './styles/header';
 
-const Header = ({ text }) => <Text style={ styles }>{ text }</Text>;
+const Header = ({ onBack, onClose, text }) => {
+	const backButton = onBack && <BackButton onBack={ onBack } />;
+	const closeButton = onClose && <CloseButton onClose={ onClose } />;
+	const centerHeading = {
+		text,
+		style: styles.heading
+	};
+
+	return <Heading
+		leftComponent={ backButton }
+		centerComponent={ centerHeading }
+		rightComponent={ closeButton }
+	/>;
+};
 
 Header.propTypes = {
+	onBack: PropTypes.func,
+	onClose: PropTypes.func,
 	text: PropTypes.string.isRequired
 };
 

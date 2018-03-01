@@ -6,18 +6,6 @@ export default StyleSheet.create({
 	container: {
 		flex: 1
 	},
-	closeButton: {
-		position: 'absolute',
-		top: 0,
-		right: 10,
-		zIndex: 1
-	},
-	backButton: {
-		position: 'absolute',
-		top: 0,
-		right: 35,
-		zIndex: 2
-	},
 	setupProgress: {
 		bottom: 0,
 		left: 0,

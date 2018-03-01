@@ -11,6 +11,7 @@ import gameSetupStyles from '../../../src/components/new-game/styles/game-setup'
 
 describe('Given <GameSetup />', () => {
 	const addPlayer = sinon.stub();
+	const onClose = sinon.stub();
 	const removePlayer = sinon.stub();
 	const players = [
 		{ id: 1, name: 'Player 1' },
@@ -18,6 +19,7 @@ describe('Given <GameSetup />', () => {
 	];
 	const props = {
 		addPlayer,
+		onClose,
 		players,
 		removePlayer
 	};

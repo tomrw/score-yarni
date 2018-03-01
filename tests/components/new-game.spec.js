@@ -48,9 +48,8 @@ describe('Given <NewGame />', () => {
 		expect(renderedComponent.prop('style')).toEqual(newGameStyles.container);
 	});
 
-	describe('and its <CloseButton />', () => {
-		const closeButton = renderedComponent.find(CloseButton);
-		const onClose = closeButton.prop('onClose');
+	describe('and the `onClose` prop', () => {
+		const onClose = renderedComponent.instance().onClose;
 
 		onClose();
 
@@ -63,34 +62,13 @@ describe('Given <NewGame />', () => {
 		});
 	});
 
-	describe('and its <BackButton />', () => {
-		describe('when the `view` is `NEW_GAME`', () => {
-			const backButton = renderedComponent.find(BackButton);
+	describe('and the `onBack` prop', () => {
+		it('should call `navigateTo` with `NEW_GAME` when the `onBack` prop is called', () => {
+			const onBack = renderedComponent.instance().onBack;
 
-			it('should NOT be rendered', () => {
-				expect(backButton.exists()).toBe(false);
-			});
-		});
+			onBack();
 
-		describe('when the `view` is GAME_CONFIG', () => {
-			const newProps = {
-				...props,
-				view: 'GAME_CONFIG'
-			};
-			const renderedComponent = shallow(<NewGame { ...newProps } />);
-			const backButton = renderedComponent.find(BackButton);
-
-			it('should be rendered', () => {
-				expect(backButton.exists()).toBe(true);
-			});
-
-			it('should call `navigateTo` with `NEW_GAME` when the `onBack` prop is called', () => {
-				const onBack = backButton.prop('onBack');
-
-				onBack();
-
-				expect(navigateTo.withArgs('NEW_GAME').calledOnce).toBe(true);
-			});
+			expect(navigateTo.withArgs('NEW_GAME').calledOnce).toBe(true);
 		});
 	});
 
@@ -108,6 +86,12 @@ describe('Given <NewGame />', () => {
 
 			it('should have a `players` prop', () => {
 				expect(setupView.prop('players')).toEqual(players);
+			});
+
+			it('should have an `onClose` prop', () => {
+				const expectedOnClose = renderedComponent.instance().onClose;
+
+				expect(setupView.prop('onClose')).toEqual(expectedOnClose);
 			});
 		});
 
@@ -127,8 +111,20 @@ describe('Given <NewGame />', () => {
 				expect(setupView.prop('gameConfig')).toEqual(gameConfig);
 			});
 
+			it('should have an `onBack` prop', () => {
+				const expectedonBack = renderedComponent.instance().onBack;
+
+				expect(setupView.prop('onBack')).toEqual(expectedonBack);
+			});
+
 			it('should have an `onChange` prop', () => {
 				expect(setupView.prop('onChange')).toEqual(onChange);
+			});
+
+			it('should have an `onClose` prop', () => {
+				const expectedOnClose = renderedComponent.instance().onClose;
+
+				expect(setupView.prop('onClose')).toEqual(expectedOnClose);
 			});
 		});
 	});

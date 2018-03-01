@@ -8,10 +8,10 @@ import PlayerList from './game-setup/player-list';
 
 import styles from './styles/game-setup';
 
-const GameSetup = ({ addPlayer, removePlayer, players }) => {
+const GameSetup = ({ addPlayer, onClose, players, removePlayer }) => {
 	return (
 		<View style={ styles.container }>
-			<Header text="Add Players" />
+			<Header text="Add Players" onClose={ onClose } />
 			<NewPlayerForm playerAdded={ addPlayer } />
 			<View style={ styles.playerListWrapper }>
 				<PlayerList playerList={ players } removePlayer={ removePlayer } />
@@ -22,6 +22,7 @@ const GameSetup = ({ addPlayer, removePlayer, players }) => {
 
 GameSetup.propTypes = {
 	addPlayer: PropTypes.func.isRequired,
+	onClose: PropTypes.func.isRequired,
 	players: PropTypes.array.isRequired,
 	removePlayer: PropTypes.func.isRequired
 };

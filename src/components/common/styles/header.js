@@ -1,4 +1,8 @@
-export default {
-	fontSize: 20,
-	textAlign: 'center'
-};
+import { StyleSheet } from 'react-native';
+
+export default StyleSheet.create({
+	heading: {
+		color: '#fff',
+		fontSize: 18
+	}
+});

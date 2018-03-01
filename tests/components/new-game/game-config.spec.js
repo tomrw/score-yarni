@@ -7,13 +7,17 @@ import GameConfig from '../../../src/components/new-game/game-config';
 import GameOptions from '../../../src/components/new-game/game-config/game-options';
 
 describe('Given <GameConfig />', () => {
+	const onBack = sinon.stub();
 	const onChange = sinon.stub();
+	const onClose = sinon.stub();
 	const gameConfig = {
 		maxGameScore: 10
 	};
 	const props = {
 		gameConfig,
-		onChange
+		onBack,
+		onChange,
+		onClose
 	};
 	const renderedComponent = shallow(<GameConfig { ...props } />);
 

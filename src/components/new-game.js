@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
 
-import BackButton from './common/back-button';
-import CloseButton from './common/close-button';
 import GameConfig from './new-game/game-config';
 import GameSetup from './new-game/game-setup';
 import ProgressBar from './common/progress-bar';
@@ -43,15 +41,9 @@ export class NewGame extends Component {
 		const setupView = this.getSetupView();
 		const isSetupActive = this.isSetupActive();
 		const isSetupCompleted = this.isSetupCompleted(isSetupActive);
-		const hasBackButton = this.hasBackButton();
-		const backButton = hasBackButton && <BackButton onBack={ this.onBack } style={ styles.backButton } />;
 
 		return (
 			<View style={ styles.container }>
-				<CloseButton
-					onClose={ this.onClose }
-					style={ styles.closeButton } />
-				{ backButton }
 				{ setupView }
 				<ProgressBar
 					steps={ TOTAL_NEW_GAME_STEPS }
@@ -93,13 +85,25 @@ export class NewGame extends Component {
 
 		if (view === types.NEW_GAME) {
 			const { addPlayer, removePlayer, players } = this.props;
+			const props = {
+				addPlayer,
+				removePlayer,
+				players,
+				onClose: this.onClose
+			};
 
-			component = <GameSetup addPlayer={ addPlayer } removePlayer={ removePlayer } players={ players } />;
+			component = <GameSetup { ...props } />;
 		}
 		else {
 			const { gameConfig, setGameConfig: onChange } = this.props;
+			const props = {
+				gameConfig,
+				onBack: this.onBack,
+				onChange,
+				onClose: this.onClose
+			};
 
-			component = <GameConfig gameConfig={ gameConfig } onChange={ onChange } />;
+			component = <GameConfig { ...props } />;
 		}
 
 		return component;
@@ -143,13 +147,6 @@ export class NewGame extends Component {
 
 		navigateTo(types.HOME);
 		resetGame();
-	}
-
-	hasBackButton() {
-		const { view } = this.props;
-		const hasBackButton = view === types.GAME_CONFIG;
-
-		return hasBackButton;
 	}
 
 	onBack() {
