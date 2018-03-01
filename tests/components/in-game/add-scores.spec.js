@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import AddScores from '../../../src/components/in-game/add-scores';
-import AddPlayerScore from '../../../src/components/in-game/add-player-score';
+
+import addScoreStyles from '../../../src/components/in-game/styles/add-scores';
 
 describe('Given <AddScores />', () => {
 	const addPendingScore = sinon.stub();
@@ -25,37 +26,43 @@ describe('Given <AddScores />', () => {
 	describe('and its first child', () => {
 		const playerScores = renderedComponent.childAt(0);
 
-		it('should be a `FlatList`', () => {
-			expect(playerScores.is('FlatList')).toBe(true);
+		it('should be a `List`', () => {
+			expect(playerScores.is('List')).toBe(true);
 		});
 
-		it('should have a `data` prop', () => {
-			expect(playerScores.prop('data')).toEqual(data);
+		it('should have the `container` styles', () => {
+			expect(playerScores.prop('containerStyle')).toEqual(addScoreStyles.container);
 		});
 
-		it('should have a `keyExtractor` prop', () => {
-			const index = 1234;
-			const item = null;
-			const keyExtractor = playerScores.prop('keyExtractor')(item, index);
+		describe('when rendering the entries', () => {
+			it('should render the expected number of children', () => {
+				expect(renderedComponent.children()).toHaveLength(data.length);
+			});
 
-			expect(keyExtractor).toEqual(index);
-		});
+			data.forEach((entry, i) => {
+				describe(`for the entry at index ${ i }`, () => {
+					const renderedEntry = playerScores.childAt(i);
 
-		describe('when rendering each <AddPlayerScore />', () => {
-			const entry1 = data[0];
-			const args = {
-				item: entry1
-			};
-			const entry = playerScores.prop('renderItem')(args);
+					it('should be an `AddPlayerScore`', () => {
+						expect(renderedEntry.is('AddPlayerScore')).toBe(true);
+					});
 
-			it('should render an entry correctly', () => {
-				const expectedEntry = <AddPlayerScore
-					id={ entry1.id }
-					addPendingScore={ addPendingScore }
-					name={ entry1.name }
-					score={ 0 } />;
+					it('should have an `id` prop', () => {
+						expect(renderedEntry.prop('id')).toEqual(entry.id);
+					});
 
-				expect(entry).toEqual(expectedEntry);
+					it('should have a `name` prop', () => {
+						expect(renderedEntry.prop('name')).toEqual(entry.name);
+					});
+
+					it('should have a `score` prop', () => {
+						expect(renderedEntry.prop('score')).toEqual(entry.score);
+					});
+
+					it('should have an `addPendingScore` prop', () => {
+						expect(renderedEntry.prop('addPendingScore')).toEqual(addPendingScore);
+					});
+				});
 			});
 		});
 	});

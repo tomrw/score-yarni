@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, TextInput, View } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 import styles from './styles/add-player-score';
 
@@ -26,15 +26,16 @@ class AddPlayerScore extends Component {
 		};
 
 		return (
-			<View style={ styles.container }>
-				<Text style={ styles.playerName }>{ name }</Text>
-				<TextInput
-					onChangeText={ setScore }
-					keyboardType="numeric"
-					placeholder={ PLACEHOLDER }
-					style={ styles.playerScore }
-					value={ this.state.score.toString() } />
-			</View>
+			<ListItem
+				wrapperStyle={ styles.container }
+				hideChevron
+				title={ name }
+				textInput
+				textInputKeyboardType="numeric"
+				textInputPlaceholder={ PLACEHOLDER }
+				textInputOnChangeText={ setScore }
+				textInputValue={ this.state.score.toString() }
+			/>
 		);
 	}
 }

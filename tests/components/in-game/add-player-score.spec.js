@@ -19,61 +19,45 @@ describe('Given <AddPlayerScore />', () => {
 	};
 	const renderedComponent = shallow(<AddPlayerScore { ...props } />);
 
-	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+	it('should be a `ListItem`', () => {
+		expect(renderedComponent.is('ListItem')).toBe(true);
 	});
 
 	it('should have the `container` styles', () => {
-		expect(renderedComponent.prop('style')).toEqual(addPlayerScoreStyles.container);
+		expect(renderedComponent.prop('wrapperStyle')).toEqual(addPlayerScoreStyles.container);
 	});
 
-	describe('and its first child', () => {
-		const playerName = renderedComponent.childAt(0);
-
-		it('should be a `Text`', () => {
-			expect(playerName.is('Text')).toBe(true);
-		});
-
-		it('should have the correct name', () => {
-			expect(playerName.props().children).toEqual(name);
-		});
-
-		it('should have the `playerName` styles', () => {
-			expect(playerName.prop('style')).toEqual(addPlayerScoreStyles.playerName);
-		});
+	it('should have the correct `title` prop', () => {
+		expect(renderedComponent.prop('title')).toEqual(name);
 	});
 
-	describe('and its second child', () => {
-		const playerScoreInput = renderedComponent.childAt(1);
+	it('should have a `hideChevron` prop', () => {
+		expect(renderedComponent.prop('hideChevron')).toBe(true);
+	});
 
-		it('should be a `TextInput`', () => {
-			expect(playerScoreInput.is('TextInput')).toBe(true);
-		});
+	it('should have a `textInput` prop', () => {
+		expect(renderedComponent.prop('textInput')).toBe(true);
+	});
 
-		it('should have the correct `keyboardType` prop', () => {
-			expect(playerScoreInput.prop('keyboardType')).toEqual('numeric');
-		});
+	it('should have the correct `textInputKeyboardType` prop', () => {
+		expect(renderedComponent.prop('textInputKeyboardType')).toEqual('numeric');
+	});
 
-		it('should have the correct `placeholder` prop', () => {
-			expect(playerScoreInput.prop('placeholder')).toEqual('0');
-		});
+	it('should have the correct `textInputPlaceholder` prop', () => {
+		expect(renderedComponent.prop('textInputPlaceholder')).toEqual('0');
+	});
 
-		it('should have the correct `value` prop', () => {
-			expect(playerScoreInput.prop('value')).toEqual(score.toString());
-		});
+	it('should have the correct `textInputValue` prop', () => {
+		expect(renderedComponent.prop('textInputValue')).toEqual(score.toString());
+	});
 
-		it('should have the `playerScore` styles', () => {
-			expect(playerScoreInput.prop('style')).toEqual(addPlayerScoreStyles.playerScore);
-		});
+	describe('when the input changes', () => {
+		it('should call `addPendingScore`', () => {
+			const newScore = 100;
 
-		describe('when changing', () => {
-			it('should call `addPendingScore`', () => {
-				const newScore = 100;
+			renderedComponent.prop('textInputOnChangeText')(newScore);
 
-				playerScoreInput.simulate('changeText', newScore);
-
-				expect(addPendingScore.withArgs(id, newScore).calledOnce).toBe(true);
-			});
+			expect(addPendingScore.withArgs(id, newScore).calledOnce).toBe(true);
 		});
 	});
 });

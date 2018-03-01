@@ -1,23 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FlatList, View } from 'react-native';
+import { List } from 'react-native-elements';
+import { View } from 'react-native';
 
 import AddPlayerScore from './add-player-score';
 import ConfirmScores from './confirm-scores';
 
+import styles from './styles/add-scores';
+
 const AddScores = ({ addPendingScore, data, confirmScores }) => {
 	return (
 		<View>
-			<FlatList
-				data={ data }
-				renderItem={ ({ item }) => {
-					return <AddPlayerScore
-						id={ item.id }
-						name={ item.name }
-						addPendingScore={ addPendingScore }
-						score={ item.score } />;
-				} }
-				keyExtractor={ (item, index) => index } />
+			<List containerStyle={ styles.container }>
+				{
+					data.map(({ id, name, score }, i) => {
+						const props = {
+							addPendingScore,
+							id,
+							name,
+							score
+						};
+
+						return <AddPlayerScore key={ i } { ...props } />;
+					})
+				}
+			</List>
 			<ConfirmScores onConfirmScores={ confirmScores } />
 		</View>
 	);
