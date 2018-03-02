@@ -4,5 +4,7 @@ export default StyleSheet.create({
 	container: {
 		height: '100%'
 	},
-	playerListWrapper: {}
+	playerListWrapper: {
+		marginBottom: 80
+	}
 });

@@ -8,7 +8,6 @@ import setupProgressStyles from '../../../../src/components/new-game/game-setup/
 describe('Given <SetupProgress />', () => {
 	const sandbox = sinon.sandbox.create();
 	const onPress = sandbox.stub();
-	const active = false;
 	const props = {
 		onPress
 	};

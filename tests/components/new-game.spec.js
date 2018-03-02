@@ -2,8 +2,6 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import BackButton from '../../src/components/common/back-button';
-import CloseButton from '../../src/components/common/close-button';
 import GameConfig from '../../src/components/new-game/game-config';
 import GameSetup from '../../src/components/new-game/game-setup';
 import ProgressBar from '../../src/components/common/progress-bar';

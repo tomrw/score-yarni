@@ -60,10 +60,6 @@ describe('Given <GameSetup />', () => {
 	describe('and its players list wrapper', () => {
 		const playerListWrapper = renderedComponent.childAt(2);
 
-		it('should be a `View`', () => {
-			expect(playerListWrapper.is('View')).toBe(true);
-		});
-
 		it('should have the `player-list-wrapper` styles', () => {
 			expect(playerListWrapper.prop('style')).toEqual(gameSetupStyles.playerListWrapper);
 		});

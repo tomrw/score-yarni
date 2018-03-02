@@ -48,12 +48,13 @@ export class NewGame extends Component {
 				<ProgressBar
 					steps={ TOTAL_NEW_GAME_STEPS }
 					progress={ progress }
-					style={ styles.progressBar } />
+					style={ styles.progressBar }
+				/>
 				<SetupProgress
 					active={ isSetupActive }
 					complete={ isSetupCompleted }
 					onPress={ this.onProgress }
-					style={ styles.setupProgress } />
+				/>
 			</View>
 		);
 	}
