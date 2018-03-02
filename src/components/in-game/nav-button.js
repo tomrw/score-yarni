@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-elements';
 
 import styles from './styles/nav-button';
 
@@ -9,14 +9,13 @@ const NavButton = ({ active, onSelect, text }) => {
 	const activeStyle = active && styles.active;
 	const activeTextStyle = active && styles.activeText;
 
-	return (
-		<TouchableOpacity
-			activeOpacity={ 0.8 }
-			onPress={ onPress }
-			style={ [ styles.container, activeStyle ] }>
-			<Text style={ [ styles.text, activeTextStyle ] }>{ text }</Text>
-		</TouchableOpacity>
-	);
+	return <Button
+		title={ text }
+		onPress={ onPress }
+		containerViewStyle={ [ styles.container, activeStyle ] }
+		buttonStyle={ activeStyle }
+		textStyle={ activeTextStyle }
+	/>;
 };
 
 NavButton.propTypes = {

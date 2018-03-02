@@ -15,16 +15,16 @@ describe('Given <NavButton />', () => {
 	};
 	const renderedComponent = shallow(<NavButton { ...props } />);
 
-	it('should be a `TouchableOpacity`', () => {
-		expect(renderedComponent.is('TouchableOpacity')).toBe(true);
+	it('should be a `Button`', () => {
+		expect(renderedComponent.is('Button')).toBe(true);
 	});
 
-	it('should have an `activeOpacity` prop', () => {
-		expect(renderedComponent.prop('activeOpacity')).toEqual(0.8);
+	it('should have the correct `title` prop', () => {
+		expect(renderedComponent.prop('title')).toEqual(text);
 	});
 
 	it('should have the `container` styles', () => {
-		expect(renderedComponent.prop('style')).toContain(navButtonStyles.container);
+		expect(renderedComponent.prop('containerViewStyle')).toContain(navButtonStyles.container);
 	});
 
 	it('should call the `onSelect` function when pressed', () => {
@@ -33,19 +33,13 @@ describe('Given <NavButton />', () => {
 		expect(onSelect.calledOnce).toBe(true);
 	});
 
-	describe('and its first child', () => {
-		const textChild = renderedComponent.childAt(0);
-
-		it('should be a `Text`', () => {
-			expect(textChild.is('Text')).toBe(true);
+	describe('when NOT active', () => {
+		it('should have a `textStyle/false` prop', () => {
+			expect(renderedComponent.prop('buttonStyle')).toBeUndefined();
 		});
 
-		it('should have the `text` styles', () => {
-			expect(textChild.prop('style')).toContain(navButtonStyles.text);
-		});
-
-		it('should have the correct value', () => {
-			expect(textChild.props().children).toEqual(text);
+		it('should have a `textStyle/false` prop', () => {
+			expect(renderedComponent.prop('textStyle')).toBeUndefined();
 		});
 	});
 
@@ -55,14 +49,13 @@ describe('Given <NavButton />', () => {
 			active: true
 		};
 		const renderedComponent = shallow(<NavButton { ...newProps } />);
-		const textChild = renderedComponent.childAt(0);
 
-		it('should have the `active` styles', () => {
-			expect(renderedComponent.prop('style')).toContain(navButtonStyles.active);
+		it('should have a `textStyle/true` prop', () => {
+			expect(renderedComponent.prop('buttonStyle')).toEqual(navButtonStyles.active);
 		});
 
-		it('should have the `textActive` styles', () => {
-			expect(textChild.prop('style')).toContain(navButtonStyles.activeText);
+		it('should have a `textStyle/true` prop', () => {
+			expect(renderedComponent.prop('textStyle')).toEqual(navButtonStyles.activeText);
 		});
 	});
 });

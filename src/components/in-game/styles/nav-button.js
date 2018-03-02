@@ -4,19 +4,19 @@ import { height } from './navigation-bar';
 
 export default StyleSheet.create({
 	container: {
-		alignItems: 'center',
-		backgroundColor: 'red',
 		flex: 1,
-		height
+		height,
+		marginLeft: 0,
+		marginRight: 0
 	},
 	text: {
 		height,
 		lineHeight: height
 	},
 	active: {
-		backgroundColor: 'white'
+		backgroundColor: 'red'
 	},
 	activeText: {
-		color: 'red'
+		color: 'white'
 	}
 });
