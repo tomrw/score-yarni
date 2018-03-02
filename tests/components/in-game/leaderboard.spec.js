@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Leaderboard from '../../../src/components/in-game/leaderboard';
+import leaderboardStyles from '../../../src/components/in-game/styles/leaderboard';
 
 describe('Given <Leaderboard />', () => {
 	const data = [
@@ -13,6 +14,10 @@ describe('Given <Leaderboard />', () => {
 
 	it('should be a `List`', () => {
 		expect(renderedComponent.is('List')).toBe(true);
+	});
+
+	it('should have the `container` styles', () => {
+		expect(renderedComponent.prop('containerStyle')).toEqual(leaderboardStyles.container);
 	});
 
 	describe('when rendering the entries', () => {
