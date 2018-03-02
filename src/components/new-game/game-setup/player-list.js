@@ -5,6 +5,10 @@ import { List } from 'react-native-elements';
 import Player from './player';
 
 const PlayerList = ({ playerList, removePlayer }) => {
+	if (playerList.length === 0) {
+		return null;
+	}
+
 	return (
 		<List>
 			{

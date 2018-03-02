@@ -41,4 +41,12 @@ describe('Given <PlayerList />', () => {
 			});
 		});
 	});
+
+	describe('when there are NO players', () => {
+		it('should NOT render anything', () => {
+			const renderedComponent = shallow(<PlayerList playerList={ [] } removePlayer={ removePlayer } />);
+
+			expect(renderedComponent.type()).toBeNull();
+		});
+	});
 });
