@@ -4,13 +4,15 @@ import { List } from 'react-native-elements';
 
 import Player from './player';
 
+import styles from './styles/player-list';
+
 const PlayerList = ({ playerList, removePlayer }) => {
 	if (playerList.length === 0) {
 		return null;
 	}
 
 	return (
-		<List>
+		<List containerStyle={ styles.container }>
 			{
 				playerList.map(({ id, name }, i) => {
 					const props = {

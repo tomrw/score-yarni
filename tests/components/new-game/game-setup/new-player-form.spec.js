@@ -21,6 +21,10 @@ describe('Given <NewPlayerForm />', () => {
 		expect(renderedComponent.is('View')).toBe(true);
 	});
 
+	it('should have the `container` styles', () => {
+		expect(renderedComponent.prop('style')).toEqual(newPlayerFormStyles.container);
+	});
+
 	describe('and its first child', () => {
 		const inputLabel = renderedComponent.childAt(0);
 

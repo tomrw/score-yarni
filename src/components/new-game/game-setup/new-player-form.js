@@ -19,7 +19,7 @@ class NewPlayerForm extends Component {
 
 	render() {
 		return (
-			<View>
+			<View style={ styles.container }>
 				<FormLabel>Name</FormLabel>
 				<FormInput
 					autoCorrect={ false }

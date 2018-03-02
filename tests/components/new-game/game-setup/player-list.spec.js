@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 
 import PlayerList from '../../../../src/components/new-game/game-setup/player-list';
 
+import playerListStyles from '../../../../src/components/new-game/game-setup/styles/player-list'
+
 describe('Given <PlayerList />', () => {
 	const player1 = { name: 'Tom', id: 1 };
 	const player2 = { name: 'Fred', id: 2 };
@@ -12,6 +14,10 @@ describe('Given <PlayerList />', () => {
 
 	it('should be a `List`', () => {
 		expect(renderedComponent.is('List')).toBe(true);
+	});
+
+	it('should have the `container` styles', () => {
+		expect(renderedComponent.prop('containerStyle')).toEqual(playerListStyles.container);
 	});
 
 	describe('when rendering the players', () => {
