@@ -2,24 +2,34 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Logo from '../../../src/components/home-page/logo';
-import logoStyle from '../../../src/components/home-page/styles/logo';
+import logoStyles from '../../../src/components/home-page/styles/logo';
 
 describe('Given <Logo />', () => {
 	const renderedComponent = shallow(<Logo />);
 
-	it('should be a `Text`', () => {
-		expect(renderedComponent.is('Text')).toBe(true);
+	it('should be a `View`', () => {
+		expect(renderedComponent.is('View')).toBe(true);
 	});
 
-	it('should have the `logo` styles', () => {
-		const style = renderedComponent.prop('style');
-
-		expect(style).toEqual(logoStyle);
+	it('should have the `container` styles', () => {
+		expect(renderedComponent.prop('style')).toEqual(logoStyles.container);
 	});
 
-	it('should have the correct text', () => {
-		const text = renderedComponent.first().props().children;
+	describe('and its first child', () => {
+		const logoText = renderedComponent.childAt(0);
 
-		expect(text).toEqual('Hola!');
+		it('should be `Text`', () => {
+			expect(logoText.is('TextElement')).toBe(true);
+		});
+
+		it('should have a `h1` prop', () => {
+			expect(logoText.prop('h1')).toBe(true);
+		});
+
+		it('should have the correct text', () => {
+			const text = logoText.props().children;
+
+			expect(text).toEqual('Yarni!');
+		});
 	});
 });

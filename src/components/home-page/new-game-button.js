@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, TouchableOpacity } from 'react-native';
-
-import styles from './styles/new-game-btn';
+import { Button } from 'react-native-elements';
 
 const NewGame = ({ onNewGame }) => {
-	const onPress = () => {
-		onNewGame();
-	};
+	const onPress = () => onNewGame();
 
 	return (
-		<TouchableOpacity onPress={ onPress } style={ styles.container }>
-			<Text style={ styles.text }>New Game</Text>
-		</TouchableOpacity>
+		<Button
+			large
+			onPress={ onPress }
+			title="New Game"
+		/>
 	);
 };
 
