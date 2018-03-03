@@ -14,12 +14,16 @@ describe('Given <Scoreboard />', () => {
 	];
 	const renderedComponent = shallow(<Scoreboard scoreboardData={ scoreboardData } />);
 
-	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+	it('should be a `ScrollView`', () => {
+		expect(renderedComponent.is('ScrollViewMock')).toBe(true);
 	});
 
 	it('should have the `container` styles', () => {
 		expect(renderedComponent.prop('style')).toEqual(scoreboardStyles.container);
+	});
+
+	it('should have a `horizontal` prop', () => {
+		expect(renderedComponent.prop('horizontal')).toBe(true);
 	});
 
 	it('should have the expected number of children', () => {

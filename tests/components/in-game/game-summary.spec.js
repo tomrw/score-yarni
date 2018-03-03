@@ -23,8 +23,8 @@ describe('Given <GameSummary />', () => {
 	};
 	const renderedComponent = shallow(<GameSummary { ...props } />);
 
-	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+	it('should be a `ScrollView`', () => {
+		expect(renderedComponent.is('ScrollViewMock')).toBe(true);
 	});
 
 	describe('and its first child', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Text } from 'react-native-elements';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import Leaderboard from './leaderboard';
 import Scoreboard from './scoreboard';
@@ -11,12 +11,12 @@ const GameSummary = ({ leaderboard, players, scores }) => {
 	const scoreboardData = getScoreboardData(players, scores);
 
 	return (
-		<View>
+		<ScrollView>
 			<Text h4>Leaderboard</Text>
 			<Leaderboard data={ leaderboardData } />
 			<Text h4>Scoreboard</Text>
 			<Scoreboard scoreboardData={ scoreboardData } />
-		</View>
+		</ScrollView>
 	);
 };
 
