@@ -1,4 +1,4 @@
-import { addScore } from './score';
+import { addPendingScore, addScore } from './score';
 import {
 	ADD_PLAYER,
 	REMOVE_PLAYER,
@@ -44,6 +44,7 @@ export const startGame = () => {
 
 		players.forEach(({ id }) => {
 			dispatch(addScore(id, 0));
+			dispatch(addPendingScore(id, 0));
 		});
 	};
 };

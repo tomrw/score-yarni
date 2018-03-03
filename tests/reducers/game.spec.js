@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
 import reduce from '../../src/reducers/game';
-import { addScore } from '../../src/action-creators/score';
+import { addPendingScore, addScore } from '../../src/action-creators/score';
 import { resetGame, setGameConfig, startGame } from '../../src/action-creators/game';
 
 describe('Given the game reducer', () => {
@@ -53,6 +53,12 @@ describe('Given the game reducer', () => {
 		players.forEach(({ name, id }) => {
 			it(`should add a default score for ${ name }`, () => {
 				const expected = addScore(id, 0);
+
+				expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+			});
+
+			it(`should add a pending score for ${ name }`, () => {
+				const expected = addPendingScore(id, 0);
 
 				expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 			});
