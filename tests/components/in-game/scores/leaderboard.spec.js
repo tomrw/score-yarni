@@ -5,12 +5,12 @@ import Leaderboard from '../../../../src/components/in-game/scores/leaderboard';
 import leaderboardStyles from '../../../../src/components/in-game/scores/styles/leaderboard';
 
 describe('Given <Leaderboard />', () => {
-	const data = [
+	const leaderboardData = [
 		{ position: 1, name: 'Tom', score: 12 },
 		{ position: 2, name: 'Chloe', score: 13 },
 		{ position: 3, name: 'Fred', score: 20 }
 	];
-	const renderedComponent = shallow(<Leaderboard data={ data } />);
+	const renderedComponent = shallow(<Leaderboard leaderboardData={ leaderboardData } />);
 
 	it('should be a `List`', () => {
 		expect(renderedComponent.is('List')).toBe(true);
@@ -22,10 +22,10 @@ describe('Given <Leaderboard />', () => {
 
 	describe('when rendering the entries', () => {
 		it('should render the expected number of children', () => {
-			expect(renderedComponent.children()).toHaveLength(data.length);
+			expect(renderedComponent.children()).toHaveLength(leaderboardData.length);
 		});
 
-		data.forEach((entry, i) => {
+		leaderboardData.forEach((entry, i) => {
 			describe(`for the entry at position ${ entry.position }`, () => {
 				const renderedEntry = renderedComponent.childAt(i);
 

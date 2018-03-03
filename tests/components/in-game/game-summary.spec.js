@@ -46,13 +46,13 @@ describe('Given <GameSummary />', () => {
 			expect(leaderboard.is('Leaderboard')).toBe(true);
 		});
 
-		it('should have a `data` prop', () => {
+		it('should have a `leaderboardData` prop', () => {
 			const expectedData = [
 				{ name: player1.name, position: score1.position, score: score1.score },
 				{ name: player2.name, position: score2.position, score: score2.score }
 			];
 
-			expect(leaderboard.prop('data')).toEqual(expectedData);
+			expect(leaderboard.prop('leaderboardData')).toEqual(expectedData);
 		});
 	});
 

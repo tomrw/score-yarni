@@ -6,10 +6,10 @@ import LeaderboardEntry from './leaderboard-entry';
 
 import styles from './styles/leaderboard';
 
-const Leaderboard = ({ data }) => {
+const Leaderboard = ({ leaderboardData }) => {
 	return <List containerStyle={ styles.container }>
 		{
-			data.map(({ position, name, score }, i) => {
+			leaderboardData.map(({ position, name, score }, i) => {
 				const props = {
 					name,
 					position,
@@ -23,7 +23,11 @@ const Leaderboard = ({ data }) => {
 };
 
 Leaderboard.propTypes = {
-	data: PropTypes.array.isRequired
+	leaderboardData: PropTypes.arrayOf(PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		position: PropTypes.number.isRequired,
+		score: PropTypes.number.isRequired
+	})).isRequired
 };
 
 export default Leaderboard;

@@ -13,7 +13,7 @@ const GameSummary = ({ leaderboard, players, scores }) => {
 	return (
 		<ScrollView>
 			<Text h4>Leaderboard</Text>
-			<Leaderboard data={ leaderboardData } />
+			<Leaderboard leaderboardData={ leaderboardData } />
 			<Text h4>Scoreboard</Text>
 			<Scoreboard scoreboardData={ scoreboardData } />
 		</ScrollView>
