@@ -29,6 +29,10 @@ export const confirmAllPendingScores = () => {
 		});
 
 		dispatch(confirmPendingScores());
+
+		pendingScores.forEach(({ id }) => {
+			dispatch(addPendingScore(id, 0));
+		});
 	};
 };
 

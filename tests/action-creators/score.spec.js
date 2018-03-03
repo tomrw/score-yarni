@@ -64,6 +64,12 @@ describe('Given the `score` action creators', () => {
 
 				expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 			});
+
+			it(`should add a pending score for player with id: ${ id }`, () => {
+				const expected = addPendingScore(id, 0);
+
+				expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+			});
 		});
 	});
 });
