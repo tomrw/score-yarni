@@ -59,6 +59,12 @@ describe('Given <ScoreboardEntry />', () => {
 					expect(scoreEntry.prop('title')).toEqual(scoreSubTotal);
 				});
 
+				it('should have the score as the `rightTitle` prop', () => {
+					const expectedRightTitle = score.toString();
+
+					expect(scoreEntry.prop('rightTitle')).toEqual(expectedRightTitle);
+				});
+
 				it('should have a `hideChevron` prop', () => {
 					expect(scoreEntry.prop('hideChevron')).toBe(true);
 				});

@@ -28,6 +28,7 @@ const getScores = scores => {
 			hideChevron
 			key={ i }
 			title={ scoreSubtotal }
+			rightTitle={ score.toString() }
 		/>;
 	});
 };
