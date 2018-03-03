@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { View } from 'react-native';
 
 import AddScores from './in-game/add-scores';
+import GameSummary from './in-game/game-summary';
 import Header from './common/header';
-import Leaderboard from './in-game/leaderboard';
 import NavigationBar from './in-game/navigation-bar';
 import { addPendingScore, confirmAllPendingScores } from '../action-creators/score';
 import { navigateTo } from '../action-creators/layout';
@@ -14,7 +14,7 @@ import { subTypes, types } from '../constants/layout';
 
 import styles from './styles/in-game';
 
-const getView = (view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo) => {
+const getView = (view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo, scores) => {
 	let component;
 
 	if (view === subTypes.ADD_SCORES) {
@@ -41,28 +41,24 @@ const getView = (view, players, leaderboard, pendingScores, addPendingScore, con
 		component = <AddScores { ...props } />;
 	}
 	else {
-		const data = leaderboard.map(({ id, position, score }) => {
-			const { name } = players.find(el => el.id === id);
+		const props = {
+			leaderboard,
+			players,
+			scores
+		};
 
-			return {
-				name,
-				position,
-				score
-			};
-		});
-
-		component = <Leaderboard data={ data } /> ;
+		component = <GameSummary { ...props } />;
 	}
 
 	return component;
 };
 
-export const InGame = ({ addPendingScore, confirmAllPendingScores, navigateTo, players, resetGame, leaderboard, pendingScores, view }) => {
+export const InGame = ({ addPendingScore, confirmAllPendingScores, navigateTo, players, resetGame, leaderboard, pendingScores, view, scores }) => {
 	const onClose = () => {
 		resetGame();
 		navigateTo(types.HOME);
 	};
-	const childView = getView(view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo);
+	const childView = getView(view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo, scores);
 
 	return (
 		<View style={ styles.container }>
@@ -82,6 +78,10 @@ InGame.propTypes = {
 	navigateTo: PropTypes.func.isRequired,
 	pendingScores: PropTypes.array.isRequired,
 	players: PropTypes.array.isRequired,
+	scores: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		score: PropTypes.number.isRequired
+	})).isRequired,
 	resetGame: PropTypes.func.isRequired,
 	view: PropTypes.string
 };
@@ -90,6 +90,7 @@ const mapStateToProps = ({ layout, leaderboard, players, scores }) => ({
 	leaderboard,
 	pendingScores: scores.pendingScores,
 	players,
+	scores: scores.scores,
 	view: layout.child
 });
 

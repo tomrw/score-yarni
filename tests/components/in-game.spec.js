@@ -3,8 +3,8 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import AddScores from '../../src/components/in-game/add-scores';
+import GameSummary from '../../src/components/in-game/game-summary';
 import Header from '../../src/components/common/header';
-import Leaderboard from '../../src/components/in-game/leaderboard';
 import NavigationBar from '../../src/components/in-game/navigation-bar';
 import { InGame } from '../../src/components/in-game';
 
@@ -17,6 +17,7 @@ describe('Given <InGame />', () => {
 	const score1 = { id: player1.id, position: 1, score: 100 };
 	const score2 = { id: player2.id, position: 2, score: 10 };
 	const leaderboard = [ score1, score2 ];
+	const scores = [ score1, score2 ];
 	const pendingScores = [ { id: player1.id, score: 100 } ];
 	const addPendingScore = sinon.stub();
 	const confirmAllPendingScores = sinon.stub();
@@ -29,7 +30,8 @@ describe('Given <InGame />', () => {
 		navigateTo,
 		pendingScores,
 		players,
-		resetGame
+		resetGame,
+		scores
 	};
 	const renderedComponent = shallow(<InGame { ...props } />);
 
@@ -69,19 +71,22 @@ describe('Given <InGame />', () => {
 
 	describe('and its second child', () => {
 		describe('when no view is specified', () => {
-			const leaderboard = renderedComponent.childAt(1);
+			const gameSummary = renderedComponent.childAt(1);
 
-			it('should be a <Leaderboard />', () => {
-				expect(leaderboard.is(Leaderboard)).toBe(true);
+			it('should be a <GameSummary />', () => {
+				expect(gameSummary.is(GameSummary)).toBe(true);
 			});
 
-			it('should have a `data` prop', () => {
-				const expectedData = [
-					{ position: player1.id, name: player1.name, score: score1.score },
-					{ position: player2.id, name: player2.name, score: score2.score }
-				];
+			it('should have a `leaderboard` prop', () => {
+				expect(gameSummary.prop('leaderboard')).toEqual(leaderboard);
+			});
 
-				expect(leaderboard.prop('data')).toEqual(expectedData);
+			it('should have a `players` prop', () => {
+				expect(gameSummary.prop('players')).toEqual(players);
+			});
+
+			it('should have a `scores` prop', () => {
+				expect(gameSummary.prop('scores')).toEqual(scores);
 			});
 		});
 
