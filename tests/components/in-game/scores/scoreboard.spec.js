@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Scoreboard from '../../../src/components/in-game/scoreboard';
+import Scoreboard from '../../../../src/components/in-game/scores/scoreboard';
 
-import scoreboardStyles from '../../../src/components/in-game/styles/scoreboard';
+import scoreboardStyles from '../../../../src/components/in-game/scores/styles/scoreboard';
 
 describe('Given <Scoreboard />', () => {
 	const scores1 = [ 1, 2, 3 ];

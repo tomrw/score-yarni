@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Leaderboard from '../../../src/components/in-game/leaderboard';
-import leaderboardStyles from '../../../src/components/in-game/styles/leaderboard';
+import Leaderboard from '../../../../src/components/in-game/scores/leaderboard';
+import leaderboardStyles from '../../../../src/components/in-game/scores/styles/leaderboard';
 
 describe('Given <Leaderboard />', () => {
 	const data = [

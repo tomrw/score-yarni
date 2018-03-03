@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ScoreboardEntry from '../../../src/components/in-game/scoreboard-entry';
+import ScoreboardEntry from '../../../../src/components/in-game/scores/scoreboard-entry';
 
-import scoreboardEntryStyles from '../../../src/components/in-game/styles/scoreboard-entry';
+import scoreboardEntryStyles from '../../../../src/components/in-game/scores/styles/scoreboard-entry';
 
 describe('Given <ScoreboardEntry />', () => {
 	const name = 'Tom';

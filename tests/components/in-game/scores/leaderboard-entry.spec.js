@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Text } from 'react-native';
 
-import LeaderboardEntry from '../../../src/components/in-game/leaderboard-entry';
+import LeaderboardEntry from '../../../../src/components/in-game/scores/leaderboard-entry';
 
-import leaderboardEntryStyles from '../../../src/components/in-game/styles/leaderboard-entry';
+import leaderboardEntryStyles from '../../../../src/components/in-game/scores/styles/leaderboard-entry';
 
 describe('Given <LeaderboardEntry />', () => {
 	const position = 1;

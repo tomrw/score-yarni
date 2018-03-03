@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Text } from 'react-native-elements';
 import { ScrollView } from 'react-native';
 
-import Leaderboard from './leaderboard';
-import Scoreboard from './scoreboard';
+import Leaderboard from './scores/leaderboard';
+import Scoreboard from './scores/scoreboard';
 
 const GameSummary = ({ leaderboard, players, scores }) => {
 	const leaderboardData = getLeaderboardData(leaderboard, players);
