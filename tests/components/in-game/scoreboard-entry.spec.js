@@ -35,9 +35,15 @@ describe('Given <ScoreboardEntry />', () => {
 	});
 
 	describe('when rendering the scores', () => {
+		let scoreSubTotal = 0;
+
 		scores.forEach((score, i) => {
 			describe(`for the score at index ${ i }`, () => {
 				const scoreEntry = renderedComponent.childAt(i + 1);
+
+				beforeAll(() => {
+					scoreSubTotal += score;
+				});
 
 				it('should be a `ListItem`', () => {
 					expect(scoreEntry.is('ListItem')).toBe(true);
@@ -49,8 +55,8 @@ describe('Given <ScoreboardEntry />', () => {
 					expect(scoreEntry.key()).toEqual(expectedKey);
 				});
 
-				it('should have the correct `title` prop', () => {
-					expect(scoreEntry.prop('title')).toEqual(score);
+				it('should have the score subtotal as the `title` prop', () => {
+					expect(scoreEntry.prop('title')).toEqual(scoreSubTotal);
 				});
 
 				it('should have a `hideChevron` prop', () => {

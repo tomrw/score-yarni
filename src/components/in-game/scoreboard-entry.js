@@ -18,15 +18,19 @@ const ScoreboardEntry = ({ name, scores }) => {
 
 const getHeading = name => <ListItem title={ name } hideChevron />;
 
-const getScores = scores => (
-	scores.map((score, i) =>
-		<ListItem
+const getScores = scores => {
+	let scoreSubtotal = 0;
+
+	return scores.map((score, i) => {
+		scoreSubtotal += score;
+
+		return <ListItem
 			hideChevron
 			key={ i }
-			title={ score }
-		/>
-	)
-);
+			title={ scoreSubtotal }
+		/>;
+	});
+};
 
 ScoreboardEntry.propTypes = {
 	name: PropTypes.string.isRequired,
