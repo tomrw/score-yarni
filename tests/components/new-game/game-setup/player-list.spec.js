@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import PlayerList from '../../../../src/components/new-game/game-setup/player-list';
 
-import playerListStyles from '../../../../src/components/new-game/game-setup/styles/player-list'
+import playerListStyles from '../../../../src/components/new-game/game-setup/styles/player-list';
 
 describe('Given <PlayerList />', () => {
 	const player1 = { name: 'Tom', id: 1 };
