@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import GameSummary from '../../../src/components/in-game/game-summary';
+import gameSummaryStyles from '../../../src/components/in-game/styles/game-summary';
 
 describe('Given <GameSummary />', () => {
 	const player1 = { name: 'Tom', id: 1 };
@@ -34,8 +35,8 @@ describe('Given <GameSummary />', () => {
 			expect(leaderboardHeading.is('TextElement')).toBe(true);
 		});
 
-		it('should have a `h4` prop', () => {
-			expect(leaderboardHeading.prop('h4')).toBe(true);
+		it('should have the `heading` styles', () => {
+			expect(leaderboardHeading.prop('style')).toEqual(gameSummaryStyles.heading);
 		});
 	});
 
@@ -63,8 +64,8 @@ describe('Given <GameSummary />', () => {
 			expect(scoreboardHeading.is('TextElement')).toBe(true);
 		});
 
-		it('should have a `h4` prop', () => {
-			expect(scoreboardHeading.prop('h4')).toBe(true);
+		it('should have the `heading` styles', () => {
+			expect(scoreboardHeading.prop('style')).toEqual(gameSummaryStyles.heading);
 		});
 	});
 

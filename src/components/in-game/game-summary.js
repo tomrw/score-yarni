@@ -6,15 +6,17 @@ import { ScrollView } from 'react-native';
 import Leaderboard from './scores/leaderboard';
 import Scoreboard from './scores/scoreboard';
 
+import styles from './styles/game-summary';
+
 const GameSummary = ({ leaderboard, players, scores }) => {
 	const leaderboardData = getLeaderboardData(leaderboard, players);
 	const scoreboardData = getScoreboardData(players, scores);
 
 	return (
 		<ScrollView>
-			<Text h4>Leaderboard</Text>
+			<Text style={ styles.heading }>Leaderboard</Text>
 			<Leaderboard leaderboardData={ leaderboardData } />
-			<Text h4>Scoreboard</Text>
+			<Text style={ styles.heading }>Scoreboard</Text>
 			<Scoreboard scoreboardData={ scoreboardData } />
 		</ScrollView>
 	);
