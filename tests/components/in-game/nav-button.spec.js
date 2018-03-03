@@ -27,10 +27,24 @@ describe('Given <NavButton />', () => {
 		expect(renderedComponent.prop('containerViewStyle')).toContain(navButtonStyles.container);
 	});
 
-	it('should call the `onSelect` function when pressed', () => {
-		renderedComponent.simulate('press');
+	describe('when pressed', () => {
+		it('should call the `onSelect` function', () => {
+			renderedComponent.simulate('press');
 
-		expect(onSelect.calledOnce).toBe(true);
+			expect(onSelect.calledOnce).toBe(true);
+		});
+
+		it('should NOT call the `onSelect` function when active', () => {
+			const newProps = {
+				...props,
+				active: true
+			};
+			const renderedComponent = shallow(<NavButton { ...newProps } />);
+
+			renderedComponent.simulate('press');
+
+			expect(onSelect.calledOnce).toBe(true);
+		});
 	});
 
 	describe('when NOT active', () => {

@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import styles from './styles/nav-button';
 
 const NavButton = ({ active, onSelect, text }) => {
-	const onPress = () => onSelect();
+	const onPress = () => !active && onSelect();
 	const activeStyle = active && styles.active;
 	const activeTextStyle = active && styles.activeText;
 
