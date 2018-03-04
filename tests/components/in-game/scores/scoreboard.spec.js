@@ -12,7 +12,10 @@ describe('Given <Scoreboard />', () => {
 		{ name: 'Tom', scores: scores1 },
 		{ name: 'Fred', scores: scores2 }
 	];
-	const renderedComponent = shallow(<Scoreboard scoreboardData={ scoreboardData } />);
+	const props = {
+		scoreboardData
+	};
+	const renderedComponent = shallow(<Scoreboard { ...props } />);
 
 	it('should be a `ScrollView`', () => {
 		expect(renderedComponent.is('ScrollViewMock')).toBe(true);
@@ -50,6 +53,24 @@ describe('Given <Scoreboard />', () => {
 
 			it('should have the correct `scores` prop', () => {
 				expect(entry.prop('scores')).toEqual(scores);
+			});
+		});
+	});
+
+	describe('when reversing the scoreboard', () => {
+		const newProps = {
+			...props,
+			reverse: true
+		};
+		const renderedComponent = shallow(<Scoreboard { ...newProps } />);
+
+		scoreboardData.forEach(({ name }, i) => {
+			describe(`when rendering the score for ${ name }`, () => {
+				const entry = renderedComponent.childAt(i);
+
+				it('should pass a `reverse/true` prop', () => {
+					expect(entry.prop('reverse')).toBe(true);
+				});
 			});
 		});
 	});

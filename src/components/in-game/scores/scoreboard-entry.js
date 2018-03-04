@@ -4,9 +4,9 @@ import { List, ListItem } from 'react-native-elements';
 
 import styles from './styles/scoreboard-entry';
 
-const ScoreboardEntry = ({ name, scores }) => {
+const ScoreboardEntry = ({ name, reverse, scores }) => {
 	const heading = getHeading(name);
-	const scoreList = getScores(scores);
+	const scoreList = getScores(scores, reverse);
 
 	return (
 		<List containerStyle={ styles.container }>
@@ -18,10 +18,9 @@ const ScoreboardEntry = ({ name, scores }) => {
 
 const getHeading = name => <ListItem title={ name } hideChevron />;
 
-const getScores = scores => {
+const getScores = (scores, reverse) => {
 	let scoreSubtotal = 0;
-
-	return scores.map((score, i) => {
+	const scoreList = scores.map((score, i) => {
 		scoreSubtotal += score;
 
 		return <ListItem
@@ -31,10 +30,19 @@ const getScores = scores => {
 			rightTitle={ score.toString() }
 		/>;
 	});
+
+	if (reverse) {
+		const reversedScores = [ ...scoreList ].reverse();
+
+		return reversedScores;
+	}
+
+	return scoreList;
 };
 
 ScoreboardEntry.propTypes = {
 	name: PropTypes.string.isRequired,
+	reverse: PropTypes.bool,
 	scores: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 

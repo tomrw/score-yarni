@@ -8,7 +8,11 @@ import scoreboardEntryStyles from '../../../../src/components/in-game/scores/sty
 describe('Given <ScoreboardEntry />', () => {
 	const name = 'Tom';
 	const scores = [ 1, 2, 3 ];
-	const renderedComponent = shallow(<ScoreboardEntry name={ name }scores={ scores } />);
+	const props = {
+		name,
+		scores
+	};
+	const renderedComponent = shallow(<ScoreboardEntry { ...props } />);
 
 	it('should be a `List`', () => {
 		expect(renderedComponent.is('List')).toBe(true);
@@ -67,6 +71,32 @@ describe('Given <ScoreboardEntry />', () => {
 
 				it('should have a `hideChevron` prop', () => {
 					expect(scoreEntry.prop('hideChevron')).toBe(true);
+				});
+			});
+		});
+	});
+
+	describe('when reversing the scores', () => {
+		const newProps = {
+			...props,
+			reverse: true
+		};
+		const renderedComponent = shallow(<ScoreboardEntry { ...newProps } />);
+		const sumScores = stopAt => scores.reduce((a, b, index) => {
+			if (index >= stopAt) {
+				return a;
+			}
+
+			return a + b;
+		}, 0);
+
+		scores.forEach((score, i) => {
+			describe(`for the score at index ${ i }`, () => {
+				const expectedScore = sumScores(scores.length - i);
+				const scoreEntry = renderedComponent.childAt(i + 1);
+
+				it('should have the score subtotal as the `title` prop', () => {
+					expect(scoreEntry.prop('title')).toEqual(expectedScore);
 				});
 			});
 		});
