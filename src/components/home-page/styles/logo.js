@@ -7,10 +7,10 @@ export default StyleSheet.create({
 		backgroundColor: '#ccc',
 		height,
 		width: '100%',
-		marginBottom: 10
+		marginBottom: 10,
+		justifyContent: 'center'
 	},
 	text: {
-		textAlign: 'center',
-		lineHeight: height
+		textAlign: 'center'
 	}
 });
