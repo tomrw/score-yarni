@@ -6,6 +6,7 @@ import { View } from 'react-native';
 import HomePage from './home-page';
 import InGame from './in-game';
 import NewGame from './new-game';
+import Settings from './settings/settings';
 import { types } from '../constants/layout';
 
 import styles from './styles/app';
@@ -28,6 +29,9 @@ const getChildView = view => {
 	}
 	else if (view === types.GAME_IN_PROGRESS) {
 		component = <InGame />;
+	}
+	else if (view === types.SETTINGS) {
+		component = <Settings />;
 	}
 
 	return component;
