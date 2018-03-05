@@ -86,5 +86,24 @@ describe('Given <GameSummary />', () => {
 
 			expect(scoreboard.prop('scoreboardData')).toEqual(expectedData);
 		});
+
+		it('should NOT have a `reverse` prop', () => {
+			expect(scoreboard.prop('reverse')).toBeUndefined();
+		});
+
+		describe('when the scoreboard is reversed', () => {
+			const newProps = {
+				...props,
+				settings: {
+					reverseScoreboard: true
+				}
+			};
+			const renderedComponent = shallow(<GameSummary { ...newProps } />);
+			const scoreboard = renderedComponent.childAt(3);
+
+			it('should have a `reverse/ true` prop', () => {
+				expect(scoreboard.prop('reverse')).toBe(true);
+			});
+		});
 	});
 });

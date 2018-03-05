@@ -23,6 +23,7 @@ describe('Given <InGame />', () => {
 	const confirmAllPendingScores = sinon.stub();
 	const navigateTo = sinon.stub();
 	const resetGame = sinon.stub();
+	const settings = { a: 'b', c: 'd' };
 	const props = {
 		addPendingScore,
 		confirmAllPendingScores,
@@ -31,7 +32,8 @@ describe('Given <InGame />', () => {
 		pendingScores,
 		players,
 		resetGame,
-		scores
+		scores,
+		settings
 	};
 	const renderedComponent = shallow(<InGame { ...props } />);
 

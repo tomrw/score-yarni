@@ -8,16 +8,17 @@ import Scoreboard from './scores/scoreboard';
 
 import styles from './styles/game-summary';
 
-const GameSummary = ({ leaderboard, players, scores }) => {
+const GameSummary = ({ leaderboard, players, scores, settings = {} }) => {
 	const leaderboardData = getLeaderboardData(leaderboard, players);
 	const scoreboardData = getScoreboardData(players, scores);
+	const { reverseScoreboard } = settings;
 
 	return (
 		<ScrollView>
 			<Text style={ styles.heading }>Leaderboard</Text>
 			<Leaderboard leaderboardData={ leaderboardData } />
 			<Text style={ styles.heading }>Scoreboard</Text>
-			<Scoreboard scoreboardData={ scoreboardData } />
+			<Scoreboard scoreboardData={ scoreboardData } reverse={ reverseScoreboard } />
 		</ScrollView>
 	);
 };
@@ -61,7 +62,8 @@ GameSummary.propTypes = {
 	scores: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number.isRequired,
 		score: PropTypes.number.isRequired
-	})).isRequired
+	})).isRequired,
+	settings: PropTypes.object
 };
 
 export default GameSummary;

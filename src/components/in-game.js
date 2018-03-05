@@ -14,7 +14,7 @@ import { subTypes, types } from '../constants/layout';
 
 import styles from './styles/in-game';
 
-const getView = (view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo, scores) => {
+const getView = (view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo, scores, settings) => {
 	let component;
 
 	if (view === subTypes.ADD_SCORES) {
@@ -44,7 +44,8 @@ const getView = (view, players, leaderboard, pendingScores, addPendingScore, con
 		const props = {
 			leaderboard,
 			players,
-			scores
+			scores,
+			settings
 		};
 
 		component = <GameSummary { ...props } />;
@@ -53,12 +54,12 @@ const getView = (view, players, leaderboard, pendingScores, addPendingScore, con
 	return component;
 };
 
-export const InGame = ({ addPendingScore, confirmAllPendingScores, navigateTo, players, resetGame, leaderboard, pendingScores, view, scores }) => {
+export const InGame = ({ addPendingScore, confirmAllPendingScores, navigateTo, players, resetGame, leaderboard, pendingScores, view, scores, settings }) => {
 	const onClose = () => {
 		resetGame();
 		navigateTo(types.HOME);
 	};
-	const childView = getView(view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo, scores);
+	const childView = getView(view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo, scores, settings);
 
 	return (
 		<View style={ styles.container }>
@@ -83,14 +84,16 @@ InGame.propTypes = {
 		score: PropTypes.number.isRequired
 	})).isRequired,
 	resetGame: PropTypes.func.isRequired,
+	settings: PropTypes.object.isRequired,
 	view: PropTypes.string
 };
 
-const mapStateToProps = ({ layout, leaderboard, players, scores }) => ({
+const mapStateToProps = ({ layout, leaderboard, players, settings, scores }) => ({
 	leaderboard,
 	pendingScores: scores.pendingScores,
 	players,
 	scores: scores.scores,
+	settings,
 	view: layout.child
 });
 
