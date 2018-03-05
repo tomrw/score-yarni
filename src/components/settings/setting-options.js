@@ -2,16 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List, ListItem } from 'react-native-elements';
 
-const SettingOptions = ({ config }) => {
+const SettingOptions = ({ changeSetting, config }) => {
 	return (
 		<List>
 			{
-				config.map(({ description, text }, i) => {
+				config.map(({ description, key, text, value }, i) => {
+					const onSwitch = switched => changeSetting(key, switched);
+
 					return <ListItem
 						key={ i }
 						hideChevron
 						switchButton
-						switched
+						switched={ value }
+						onSwitch={ onSwitch }
 						title={ text }
 						subtitle={ description }
 					/>;
@@ -22,9 +25,12 @@ const SettingOptions = ({ config }) => {
 };
 
 SettingOptions.propTypes = {
+	changeSetting: PropTypes.func.isRequired,
 	config: PropTypes.arrayOf(PropTypes.shape({
+		description: PropTypes.string,
+		key: PropTypes.string.isRequired,
 		text: PropTypes.string.isRequired,
-		description: PropTypes.string
+		value: PropTypes.any
 	})).isRequired
 };
 

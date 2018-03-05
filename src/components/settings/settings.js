@@ -6,26 +6,48 @@ import { View } from 'react-native';
 import config from './setting-config';
 import Header from '../common/header';
 import SettingOptions from './setting-options';
+import { changeSetting } from '../../action-creators/settings';
 import { navigateTo } from '../../action-creators/layout';
 import { types } from '../../constants/layout';
 
-export const Settings = ({ navigateTo }) => {
+export const Settings = ({ changeSetting, config, navigateTo, settings }) => {
 	const onClose = () => navigateTo(types.HOME);
+	const settingConfig = getSettings(config, settings);
 
 	return (
 		<View>
 			<Header text="Settings" onClose={ onClose } />
-			<SettingOptions config={ config } />
+			<SettingOptions changeSetting={ changeSetting } config={ settingConfig } />
 		</View>
 	);
 };
 
+const getSettings = (config, settings) => (
+	config.map(setting => ({
+		...setting,
+		value: settings[ setting.key ]
+	}))
+);
+
 Settings.propTypes = {
-	navigateTo: PropTypes.func.isRequired
+	changeSetting: PropTypes.func.isRequired,
+	config: PropTypes.arrayOf(PropTypes.shape({
+		description: PropTypes.string,
+		text: PropTypes.string.isRequired,
+		key: PropTypes.string.isRequired
+	})).isRequired,
+	navigateTo: PropTypes.func.isRequired,
+	settings: PropTypes.object.isRequired
 };
 
+const mapStateToProps = ({ settings }) => ({
+	config,
+	settings
+});
+
 const mapDispatchToProps = {
+	changeSetting,
 	navigateTo
 };
 
-export default connect(null, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

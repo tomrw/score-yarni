@@ -1,6 +1,7 @@
 export default [
 	{
 		text: 'Reverse Scoreboard',
-		description: 'Show the latest scores at the top'
+		description: 'Show the latest scores at the top',
+		key: 'reverseScoreboard'
 	}
 ];

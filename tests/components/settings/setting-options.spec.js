@@ -1,18 +1,23 @@
 import React from 'react';
+import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { List, ListItem } from 'react-native-elements';
 
 import SettingOptions from '../../../src/components/settings/setting-options';
 
 describe('Given <SettingOptions />', () => {
+	const changeSetting = sinon.stub();
 	const config = [
-		{ text: 'Hello!', description: 'there' },
-		{ text: 'Howdy!', description: 'partner' }
+		{ text: 'Hello!', description: 'there', key: 'a', value: true },
+		{ text: 'Howdy!', description: 'partner', key: 'b', value: false }
 	];
 	const props = {
+		changeSetting,
 		config
 	};
 	const renderedComponent = shallow(<SettingOptions { ...props } />);
+
+	afterEach(() => changeSetting.reset());
 
 	it('should be a `List`', () => {
 		expect(renderedComponent.is(List)).toBe(true);
@@ -49,8 +54,20 @@ describe('Given <SettingOptions />', () => {
 					expect(entry.prop('switchButton')).toBe(true);
 				});
 
+				it('should have the correct `switched` prop', () => {
+					expect(entry.prop('switched')).toBe(item.value);
+				});
+
 				it('should have a `hideChevron` prop', () => {
 					expect(entry.prop('hideChevron')).toBe(true);
+				});
+
+				describe('when pressed', () => {
+					it('should call `changeSetting`', () => {
+						entry.simulate('switch', !item.value);
+
+						expect(changeSetting.withArgs(item.key, !item.value).calledOnce).toBe(true);
+					});
 				});
 			});
 		});
