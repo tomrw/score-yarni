@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const height = 43;
+export const height = 70;
 
 export default StyleSheet.create({
 	container: {

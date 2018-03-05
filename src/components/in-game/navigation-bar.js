@@ -14,8 +14,8 @@ const NavigationBar = ({ activeButton, navigateTo, style }) => {
 	const leaderboardActive = activeButton !== subTypes.ADD_SCORES;
 	const addScoresActive = activeButton === subTypes.ADD_SCORES;
 	const buttons = [
-		{ text: 'Leaderboard', onSelect: onSelectLeaderboard, active: leaderboardActive, key: 'leaderboard' },
-		{ text: 'Add Scores', onSelect: onSelectAddScores, active: addScoresActive, key: 'addScores' }
+		{ text: 'Leaderboard', onSelect: onSelectLeaderboard, active: leaderboardActive, key: 'leaderboard', iconType: 'format-list-numbered' },
+		{ text: 'Add Scores', onSelect: onSelectAddScores, active: addScoresActive, key: 'addScores', iconType: 'library-add' }
 	];
 
 	return (

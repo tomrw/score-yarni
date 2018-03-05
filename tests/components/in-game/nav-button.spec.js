@@ -24,7 +24,19 @@ describe('Given <NavButton />', () => {
 	});
 
 	it('should have the `container` styles', () => {
-		expect(renderedComponent.prop('containerViewStyle')).toContain(navButtonStyles.container);
+		expect(renderedComponent.prop('containerViewStyle')).toEqual(navButtonStyles.container);
+	});
+
+	it('should have the `text` styles', () => {
+		expect(renderedComponent.prop('textStyle')).toEqual(navButtonStyles.text);
+	});
+
+	it('should have the `button` styles', () => {
+		expect(renderedComponent.prop('buttonStyle')).toContain(navButtonStyles.button);
+	});
+
+	it('should NOT have an `icon` prop', () => {
+		expect(renderedComponent.prop('icon')).toBeUndefined();
 	});
 
 	describe('when pressed', () => {
@@ -48,12 +60,8 @@ describe('Given <NavButton />', () => {
 	});
 
 	describe('when NOT active', () => {
-		it('should have a `textStyle/false` prop', () => {
-			expect(renderedComponent.prop('buttonStyle')).toBeUndefined();
-		});
-
-		it('should have a `textStyle/false` prop', () => {
-			expect(renderedComponent.prop('textStyle')).toBeUndefined();
+		it('should NOT have the `active` styles', () => {
+			expect(renderedComponent.prop('buttonStyle')).not.toContain(navButtonStyles.active);
 		});
 	});
 
@@ -64,12 +72,25 @@ describe('Given <NavButton />', () => {
 		};
 		const renderedComponent = shallow(<NavButton { ...newProps } />);
 
-		it('should have a `textStyle/true` prop', () => {
-			expect(renderedComponent.prop('buttonStyle')).toEqual(navButtonStyles.active);
+		it('should have the `active` styles', () => {
+			expect(renderedComponent.prop('buttonStyle')).toContain(navButtonStyles.active);
 		});
+	});
 
-		it('should have a `textStyle/true` prop', () => {
-			expect(renderedComponent.prop('textStyle')).toEqual(navButtonStyles.activeText);
+	describe('when an icon name is supplied', () => {
+		const newProps = {
+			...props,
+			iconType: 'flight-takeoff'
+		};
+		const renderedComponent = shallow(<NavButton { ...newProps } />);
+
+		it('should have an `icon` prop', () => {
+			const expectedIcon = {
+				name: 'flight-takeoff',
+				size: 30
+			};
+
+			expect(renderedComponent.prop('icon')).toEqual(expectedIcon);
 		});
 	});
 });

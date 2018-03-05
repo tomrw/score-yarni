@@ -62,6 +62,12 @@ describe('Given <NavigationBar />', () => {
 		it('should have an `active/true` prop', () => {
 			expect(leaderboardButton.prop('active')).toBe(true);
 		});
+
+		it('should have the correct `iconType` prop', () => {
+			const expectedText = 'format-list-numbered';
+
+			expect(leaderboardButton.prop('iconType')).toEqual(expectedText);
+		});
 	});
 
 	describe('and its second child', () => {
@@ -79,6 +85,12 @@ describe('Given <NavigationBar />', () => {
 
 		it('should NOT have an `active` prop', () => {
 			expect(addScoresButton.prop('active')).toBeFalsy();
+		});
+
+		it('should have the correct `iconType` prop', () => {
+			const expectedText = 'library-add';
+
+			expect(addScoresButton.prop('iconType')).toEqual(expectedText);
 		});
 
 		it('should call the `onNavigate` prop when its `onSelect` prop is called', () => {

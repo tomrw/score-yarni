@@ -7,16 +7,16 @@ export default StyleSheet.create({
 		flex: 1,
 		height,
 		marginLeft: 0,
-		marginRight: 0
+		marginRight: 0,
+		width: '100%'
+	},
+	button: {
+		flexDirection: 'column'
 	},
 	text: {
-		height,
-		lineHeight: height
+		marginTop: 5
 	},
 	active: {
 		backgroundColor: 'red'
-	},
-	activeText: {
-		color: 'white'
 	}
 });
