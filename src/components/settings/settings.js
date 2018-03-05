@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
 
+import config from './setting-config';
 import Header from '../common/header';
+import SettingOptions from './setting-options';
 import { navigateTo } from '../../action-creators/layout';
 import { types } from '../../constants/layout';
 
@@ -13,6 +15,7 @@ export const Settings = ({ navigateTo }) => {
 	return (
 		<View>
 			<Header text="Settings" onClose={ onClose } />
+			<SettingOptions config={ config } />
 		</View>
 	);
 };
