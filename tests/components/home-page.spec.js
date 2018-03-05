@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import Logo from '../../src/components/home-page/logo';
-import NewGameButton from '../../src/components/home-page/new-game-button';
+import HomePageButton from '../../src/components/home-page/home-page-button';
 import { HomePage } from '../../src/components/home-page';
 
 import homePageStyles from '../../src/components/styles/home-page';
@@ -30,26 +30,52 @@ describe('Given <HomePage />', () => {
 		it('should have the `home-page-content-wrapper` styles', () => {
 			expect(wrapperChild.prop('style')).toEqual(homePageStyles.contentWrapper);
 		});
+	});
 
-		it('should contain a <Logo />', () => {
-			expect(wrapperChild.find(Logo).exists()).toBe(true);
+	describe('and the content wrapper', () => {
+		const wrapperChild = renderedComponent.childAt(0);
+
+		describe('and its first child', () => {
+			const logo = wrapperChild.childAt(0);
+
+			it('should be a `Logo`', () => {
+				expect(logo.is(Logo)).toBe(true);
+			});
 		});
 
-		it('should contain a <NewGameButton />', () => {
-			expect(wrapperChild.find(NewGameButton).exists()).toBe(true);
+		describe('and its second child', () => {
+			const newGameButton = wrapperChild.childAt(1);
+
+			it('should be a <HomePageButton />', () => {
+				expect(newGameButton.is(HomePageButton)).toBe(true);
+			});
+
+			describe('when the `onPress` prop is called', () => {
+				it('should call its `navigateTo` prop with `NEW_GAME`', () => {
+					const onPress = newGameButton.prop('onPress');
+
+					onPress();
+
+					expect(navigateTo.withArgs('NEW_GAME').calledOnce).toBe(true);
+				});
+			});
 		});
 
-		it('should have a `navigateTo` prop on the <NewGameButton />', () => {
-			expect(typeof wrapperChild.find(NewGameButton).prop('onNewGame')).toBe('function');
-		});
+		describe('and its third child', () => {
+			const settingsButton = wrapperChild.childAt(2);
 
-		describe('when the `onNewGame` prop is called', () => {
-			it('should call its `navigateTo` prop with a `NEW_GAME` arg', () => {
-				const onNewGame = wrapperChild.find(NewGameButton).prop('onNewGame');
+			it('should be a <HomePageButton />', () => {
+				expect(settingsButton.is(HomePageButton)).toBe(true);
+			});
 
-				onNewGame();
+			describe('when the `onPress` prop is called', () => {
+				it('should call its `navigateTo` prop with `SETTINGS`', () => {
+					const onPress = settingsButton.prop('onPress');
 
-				expect(navigateTo.withArgs('NEW_GAME').calledOnce).toBe(true);
+					onPress();
+
+					expect(navigateTo.withArgs('SETTINGS').calledOnce).toBe(true);
+				});
 			});
 		});
 	});
