@@ -44,8 +44,10 @@ describe('Given the `score` action creators', () => {
 			{ id: 2, score: 200 }
 		];
 		const getState = () => ({
-			scores: {
-				pendingScores
+			currentGame: {
+				scores: {
+					pendingScores
+				}
 			}
 		});
 		const dispatch = sinon.stub();

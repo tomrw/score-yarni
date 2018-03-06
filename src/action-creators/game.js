@@ -40,7 +40,7 @@ export const resetGame = () => ({
 
 export const startGame = () => {
 	return (dispatch, getState) => {
-		const { players } = getState();
+		const { currentGame: { players } } = getState();
 
 		players.forEach(({ id }) => {
 			dispatch(addScore(id, 0));

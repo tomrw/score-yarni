@@ -171,11 +171,11 @@ NewGame.propTypes = {
 	view: PropTypes.string.isRequired
 };
 
-const mapStateToProps = ({ game, layout, players }) => ({
+const mapStateToProps = ({ currentGame, layout }) => ({
 	gameConfig: {
-		maxGameScore: game.maxGameScore
+		maxGameScore: currentGame.game.maxGameScore
 	},
-	players,
+	players: currentGame.players,
 	view: layout.view
 });
 

@@ -88,11 +88,11 @@ InGame.propTypes = {
 	view: PropTypes.string
 };
 
-const mapStateToProps = ({ layout, leaderboard, players, settings, scores }) => ({
-	leaderboard,
-	pendingScores: scores.pendingScores,
-	players,
-	scores: scores.scores,
+const mapStateToProps = ({ currentGame, layout, settings }) => ({
+	leaderboard: currentGame.leaderboard,
+	pendingScores: currentGame.scores.pendingScores,
+	players: currentGame.players,
+	scores: currentGame.scores.scores,
 	settings,
 	view: layout.child
 });

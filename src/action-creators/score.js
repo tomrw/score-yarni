@@ -22,7 +22,13 @@ export const addPendingScore = (id, score) => ({
 
 export const confirmAllPendingScores = () => {
 	return (dispatch, getState) => {
-		const { scores: { pendingScores } } = getState();
+		const {
+			currentGame: {
+				scores: {
+					pendingScores
+				}
+			}
+		} = getState();
 
 		pendingScores.forEach(({ id, score }) => {
 			dispatch(addScore(id, score));

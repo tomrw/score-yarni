@@ -8,10 +8,12 @@ import scores from './score';
 import settings from './settings';
 
 export default combineReducers({
-	game,
+	currentGame: combineReducers({
+		game,
+		leaderboard,
+		players,
+		scores
+	}),
 	layout,
-	leaderboard,
-	players,
-	scores,
 	settings
 });

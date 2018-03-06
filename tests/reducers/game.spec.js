@@ -44,7 +44,9 @@ describe('Given the game reducer', () => {
 			{ name: 'player2', id: 2 }
 		];
 		const getState = () => ({
-			players
+			currentGame: {
+				players
+			}
 		});
 		const dispatch = sinon.stub();
 
