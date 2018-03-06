@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import { Provider } from 'react-redux';
 
 import App from './components/app';
-import store from './store';
+import { persistor, store } from './store';
 
-export default class App2 extends Component {
-	render() {
-		return (
-			<Provider store={ store }>
-				<App />
-			</Provider>
-		);
-	}
-}
+const AppEntry = () =>
+	<Provider store={ store }>
+		<PersistGate persistor={ persistor }>
+			<App />
+		</PersistGate>
+	</Provider>;
+
+export default AppEntry;
