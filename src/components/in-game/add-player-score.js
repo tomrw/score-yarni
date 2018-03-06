@@ -33,6 +33,7 @@ class AddPlayerScore extends Component {
 				textInput
 				textInputKeyboardType="numeric"
 				textInputPlaceholder={ PLACEHOLDER }
+				textInputStyle={ styles.textInputStyle }
 				textInputOnChangeText={ setScore }
 				textInputValue={ this.state.score.toString() }
 			/>

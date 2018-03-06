@@ -47,6 +47,10 @@ describe('Given <AddPlayerScore />', () => {
 		expect(renderedComponent.prop('textInputPlaceholder')).toEqual('0');
 	});
 
+	it('should have the correct `textInputStyle` prop', () => {
+		expect(renderedComponent.prop('textInputStyle')).toEqual(addPlayerScoreStyles.textInputStyle);
+	});
+
 	it('should have the correct `textInputValue` prop', () => {
 		expect(renderedComponent.prop('textInputValue')).toEqual(score.toString());
 	});
