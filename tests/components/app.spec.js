@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import InGame from '../../src/components/in-game';
+import History from '../../src/components/history/history';
 import HomePage from '../../src/components/home-page';
 import NewGame from '../../src/components/new-game';
 import Settings from '../../src/components/settings/settings';
@@ -81,6 +82,21 @@ describe('Given <App />', () => {
 
 		it('should render the <Settings />', () => {
 			expect(renderedComponent.find(Settings).exists()).toBe(true);
+		});
+
+		it('should only render one child', () => {
+			expect(renderedComponent.children).toHaveLength(1);
+		});
+	});
+
+	describe('when rendered with the `HISTORY` view', () => {
+		const props = {
+			view: 'HISTORY'
+		};
+		const renderedComponent = shallow(<App { ...props } />);
+
+		it('should render the <History />', () => {
+			expect(renderedComponent.find(History).exists()).toBe(true);
 		});
 
 		it('should only render one child', () => {

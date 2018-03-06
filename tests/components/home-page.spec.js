@@ -78,5 +78,23 @@ describe('Given <HomePage />', () => {
 				});
 			});
 		});
+
+		describe('and its fourth child', () => {
+			const historyButton = wrapperChild.childAt(3);
+
+			it('should be a <HomePageButton />', () => {
+				expect(historyButton.is(HomePageButton)).toBe(true);
+			});
+
+			describe('when the `onPress` prop is called', () => {
+				it('should call its `navigateTo` prop with `HISTORY`', () => {
+					const onPress = historyButton.prop('onPress');
+
+					onPress();
+
+					expect(navigateTo.withArgs('HISTORY').calledOnce).toBe(true);
+				});
+			});
+		});
 	});
 });

@@ -13,6 +13,7 @@ import styles from './styles/home-page';
 export const HomePage = ({ navigateTo }) => {
 	const onNewGame = () => navigateTo(types.NEW_GAME);
 	const onOpenSettings = () => navigateTo(types.SETTINGS);
+	const onOpenHistory = () => navigateTo(types.HISTORY);
 
 	return (
 		<View style={ styles.container }>
@@ -20,6 +21,7 @@ export const HomePage = ({ navigateTo }) => {
 				<Logo />
 				<HomePageButton onPress={ onNewGame } text="New Game" />
 				<HomePageButton onPress={ onOpenSettings } text="Settings" />
+				<HomePageButton onPress={ onOpenHistory } text="Past Games" />
 			</View>
 		</View>
 	);

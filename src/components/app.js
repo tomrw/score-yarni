@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
 
+import History from './history/history';
 import HomePage from './home-page';
 import InGame from './in-game';
 import NewGame from './new-game';
@@ -32,6 +33,9 @@ const getChildView = view => {
 	}
 	else if (view === types.SETTINGS) {
 		component = <Settings />;
+	}
+	else if (view === types.HISTORY) {
+		component = <History />;
 	}
 
 	return component;
