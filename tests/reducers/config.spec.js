@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 
-import reduce from '../../src/reducers/game';
+import reduce from '../../src/reducers/config';
 import { addPendingScore, addScore } from '../../src/action-creators/score';
 import { resetGame, setGameConfig, startGame } from '../../src/action-creators/game';
 
@@ -27,8 +27,8 @@ describe('Given the game reducer', () => {
 		});
 	});
 
-	describe('when resetting the players', () => {
-		it('should remove all the players', () => {
+	describe('when resetting the config', () => {
+		it('should reset the config to the initial state', () => {
 			const newState = reduce(initialState, setGameConfig(10));
 			const nextState = reduce(newState, resetGame());
 

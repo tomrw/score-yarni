@@ -173,7 +173,7 @@ NewGame.propTypes = {
 
 const mapStateToProps = ({ currentGame, layout }) => ({
 	gameConfig: {
-		maxGameScore: currentGame.game.maxGameScore
+		maxGameScore: currentGame.config.maxGameScore
 	},
 	players: currentGame.players,
 	view: layout.view

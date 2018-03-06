@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import game from './game';
+import config from './config';
 import layout from './layout';
 import leaderboard from './leaderboard';
 import players from './players';
@@ -9,7 +9,7 @@ import settings from './settings';
 
 export default combineReducers({
 	currentGame: combineReducers({
-		game,
+		config,
 		leaderboard,
 		players,
 		scores
