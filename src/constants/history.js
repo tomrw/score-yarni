@@ -1,0 +1,1 @@
+export const MOVE_GAME_TO_HISTORY = 'MOVE_GAME_TO_HISTORY';
