@@ -14,8 +14,13 @@ const Header = ({ onBack, onClose, text }) => {
 		text,
 		style: styles.heading
 	};
+	const statusBarProps = {
+		backgroundColor: '#476DC5',
+		translucent: true
+	};
 
 	return <Heading
+		statusBarProps={ statusBarProps }
 		leftComponent={ backButton }
 		centerComponent={ centerHeading }
 		rightComponent={ closeButton }

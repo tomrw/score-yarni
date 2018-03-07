@@ -23,6 +23,15 @@ describe('Given <Header />', () => {
 		expect(renderedComponent.is('Header')).toBe(true);
 	});
 
+	it('should have a `statusBarProps` prop', () => {
+		const expectedProps = {
+			backgroundColor: '#476DC5',
+			translucent: true
+		};
+
+		expect(renderedComponent.prop('statusBarProps')).toEqual(expectedProps);
+	});
+
 	describe('and the center component', () => {
 		const centerComponent = renderedComponent.prop('centerComponent');
 
