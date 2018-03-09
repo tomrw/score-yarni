@@ -53,6 +53,7 @@ const getScoreboardData = (players, scores) => {
 GameSummary.propTypes = {
 	leaderboard: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number.isRequired,
+		position: PropTypes.number.isRequired,
 		score: PropTypes.number.isRequired
 	})).isRequired,
 	players: PropTypes.arrayOf(PropTypes.shape({
