@@ -1,15 +1,18 @@
 import React from 'react';
+import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { ListItem } from 'react-native-elements';
 
 import HistoryEntry from '../../../src/components/history/history-entry';
 
 describe('Given <HistoryEntry />', () => {
+	const onPress = sinon.stub();
 	const player1 = { id: 1, name: 'Tom' };
 	const player2 = { id: 2, name: 'Fred' };
 	const player3 = { id: 3, name: 'Jimmy' };
 	const players = [ player1, player2, player3 ];
 	const props = {
+		onPress,
 		players
 	};
 	const renderedComponent = shallow(<HistoryEntry { ...props } />);
@@ -65,6 +68,14 @@ describe('Given <HistoryEntry />', () => {
 			const expectedTitle = `${ player1.name }, ${ player2.name }, ${ player3.name }, ${ player1.name } and others`;
 
 			expect(title).toEqual(expectedTitle);
+		});
+	});
+
+	describe('when pressed', () => {
+		it('should call the `onPress` prop', () => {
+			renderedComponent.simulate('press');
+
+			expect(onPress.calledOnce).toBe(true);
 		});
 	});
 });

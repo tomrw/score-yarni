@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem } from 'react-native-elements';
 
-const HistoryEntry = ({ players }) => {
+const HistoryEntry = ({ onPress, players }) => {
 	const title = getTitle(players);
 	const leftIcon = { name: 'people' };
 
@@ -11,6 +11,7 @@ const HistoryEntry = ({ players }) => {
 			title={ title }
 			titleNumberOfLines={ 0 }
 			leftIcon={ leftIcon }
+			onPress={ onPress }
 		/>
 	);
 };
@@ -37,6 +38,7 @@ const getTitle = players => {
 };
 
 HistoryEntry.propTypes = {
+	onPress: PropTypes.func.isRequired,
 	players: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired
