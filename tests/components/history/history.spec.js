@@ -1,30 +1,32 @@
 import React from 'react';
 import sinon from 'sinon';
-import { List } from 'react-native-elements';
 import { shallow } from 'enzyme';
 
 import Header from '../../../src/components/common/header';
-import HistoryEntry from '../../../src/components/history/history-entry';
+import HistoryDetail from '../../../src/components/history/history-detail';
+import HistoryEntries from '../../../src/components/history/history-entries';
 import { History } from '../../../src/components/history/history';
 
 describe('Given <History />', () => {
+	const players1 = [
+		{ id: 1, name: 'Tom' },
+		{ id: 2, name: 'Chloe' }
+	];
+	const players2 = [
+		{ id: 3, name: 'Fred' },
+		{ id: 4, name: 'Bob' }
+	];
 	const history = [
 		{
 			config: { maxGameScore: 20 },
 			leaderboard: [],
-			players: [
-				{ id: 1, name: 'Tom' },
-				{ id: 2, name: 'Chloe' }
-			],
+			players: players1,
 			scores: []
 		},
 		{
 			config: { maxGameScore: 150 },
 			leaderboard: [],
-			players: [
-				{ id: 3, name: 'Fred' },
-				{ id: 4, name: 'Bob' }
-			],
+			players: players2,
 			scores: []
 		}
 	];
@@ -64,34 +66,48 @@ describe('Given <History />', () => {
 	});
 
 	describe('and its second child', () => {
-		const list = renderedComponent.childAt(1);
+		const historyEntries = renderedComponent.childAt(1);
 
-		it('should be a `List`', () => {
-			expect(list.is(List)).toBe(true);
+		it('should be a `HistoryEntries`', () => {
+			expect(historyEntries.is(HistoryEntries)).toBe(true);
 		});
 
-		it('should have the expected number of children', () => {
-			expect(list.children()).toHaveLength(history.length);
+		it('should have a `historyData` prop', () => {
+			const expectedHistoryData = [
+				{ players: players1 },
+				{ players: players2 }
+			];
+
+			expect(historyEntries.prop('historyData')).toEqual(expectedHistoryData);
 		});
 
-		history.forEach((history, i) => {
-			describe(`when rendering the history item at index ${ i }`, () => {
-				const entry = list.childAt(i);
+		it('should have a `navigateTo` prop', () => {
+			expect(historyEntries.prop('navigateTo')).toEqual(navigateTo);
+		});
+	});
 
-				it('should be a `HistoryEntry', () => {
-					expect(entry.is(HistoryEntry)).toBe(true);
-				});
+	describe('when the `view` is `HISTORY_DETAIL`', () => {
+		const newProps = {
+			...props,
+			view: 'HISTORY_DETAIL'
+		};
+		const renderedComponent = shallow(<History { ...newProps } />);
+		const historyDetail = renderedComponent.childAt(1);
 
-				it('should have a `key` prop', () => {
-					const expectedKey = i.toString();
+		it('should be a `HistoryDetail`', () => {
+			expect(historyDetail.is(HistoryDetail)).toBe(true);
+		});
 
-					expect(entry.key()).toEqual(expectedKey);
-				});
+		it('should have a `leaderboard` prop', () => {
+			expect(historyDetail.prop('leaderboard')).toEqual(history[0].leaderboard);
+		});
 
-				it('should have a `player` prop', () => {
-					expect(entry.prop('players')).toEqual(history.players);
-				});
-			});
+		it('should have a `players` prop', () => {
+			expect(historyDetail.prop('players')).toEqual(history[0].players);
+		});
+
+		it('should have a `scores` prop', () => {
+			expect(historyDetail.prop('scores')).toEqual(history[0].scores);
 		});
 	});
 });
