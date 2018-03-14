@@ -1,106 +1,102 @@
 import React from 'react';
+import sinon from 'sinon';
+import { BackHandler } from 'react-native';
 import { shallow } from 'enzyme';
+import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 
-import InGame from '../../src/components/in-game';
-import History from '../../src/components/history/history';
-import HomePage from '../../src/components/home-page';
-import NewGame from '../../src/components/new-game';
-import Settings from '../../src/components/settings/settings';
-import { App } from '../../src/components/app';
-
-import appStyles from '../../src/components/styles/app';
+import AppNavigator from '../../src/navigation/app';
+import { addListener } from '../../src/navigation/redux';
+import { AppWithNavigationState as App } from '../../src/components/app';
 
 describe('Given <App />', () => {
-	const renderedComponent = shallow(<App />);
+	const dispatch = sinon.stub();
+	const nav = {
+		index: 1
+	};
+	const props = {
+		dispatch,
+		nav
+	};
+	const renderedComponent = shallow(<App { ...props } />);
+	const sandbox = sinon.sandbox.create();
 
-	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+	afterEach(() => sandbox.restore());
+
+	it('should be a `AppNavigator`', () => {
+		expect(renderedComponent.is(AppNavigator)).toBe(true);
 	});
 
-	it('should have the `app` styles', () => {
-		expect(renderedComponent.prop('style')).toEqual(appStyles);
-	});
-
-	it('should render the <HomePage />', () => {
-		expect(renderedComponent.find(HomePage).exists()).toBe(true);
-	});
-
-	it('should only render one child', () => {
-		expect(renderedComponent.children).toHaveLength(1);
-	});
-
-	describe('when rendered with the `NEW_GAME` view', () => {
-		const props = {
-			view: 'NEW_GAME'
-		};
-		const renderedComponent = shallow(<App { ...props } />);
-
-		it('should render the <NewGame />', () => {
-			expect(renderedComponent.find(NewGame).exists()).toBe(true);
+	describe('and its `navigation` prop', () => {
+		const navigation = renderedComponent.prop('navigation');
+		const expectedNavigation = addNavigationHelpers({
+			dispatch,
+			state: nav,
+			addListener
 		});
 
-		it('should only render one child', () => {
-			expect(renderedComponent.children).toHaveLength(1);
-		});
-	});
-
-	describe('when rendered with the `GAME_CONFIG` view', () => {
-		const props = {
-			view: 'GAME_CONFIG'
-		};
-		const renderedComponent = shallow(<App { ...props } />);
-
-		it('should render the <NewGame />', () => {
-			expect(renderedComponent.find(NewGame).exists()).toBe(true);
+		it('should have an `addListener` prop', () => {
+			expect(navigation.addListener).toEqual(expectedNavigation.addListener);
 		});
 
-		it('should only render one child', () => {
-			expect(renderedComponent.children).toHaveLength(1);
+		it('should have a `dispatch` prop', () => {
+			expect(navigation.dispatch).toEqual(expectedNavigation.dispatch);
+		});
+
+		it('should have a `state` prop', () => {
+			expect(navigation.state).toEqual(expectedNavigation.state);
 		});
 	});
 
-	describe('when rendered with the `GAME_IN_PROGRESS` view', () => {
-		const props = {
-			view: 'GAME_IN_PROGRESS'
-		};
-		const renderedComponent = shallow(<App { ...props } />);
+	describe('when the component mounts', () => {
+		it('should START listening when the component mounts', () => {
+			const spy = sandbox.spy(BackHandler, 'addEventListener');
+			const onBack = renderedComponent.instance().onBackPress;
 
-		it('should render the <InGame />', () => {
-			expect(renderedComponent.find(InGame).exists()).toBe(true);
-		});
+			renderedComponent.instance().componentDidMount();
 
-		it('should only render one child', () => {
-			expect(renderedComponent.children).toHaveLength(1);
+			expect(spy.withArgs('hardwareBackPress', onBack).calledOnce).toBe(true);
 		});
 	});
 
-	describe('when rendered with the `SETTINGS` view', () => {
-		const props = {
-			view: 'SETTINGS'
-		};
-		const renderedComponent = shallow(<App { ...props } />);
+	describe('when the component unmounts', () => {
+		it('should STOP listening when the component unmounts', () => {
+			const spy = sandbox.spy(BackHandler, 'removeEventListener');
+			const onBack = renderedComponent.instance().onBackPress;
 
-		it('should render the <Settings />', () => {
-			expect(renderedComponent.find(Settings).exists()).toBe(true);
-		});
+			renderedComponent.instance().componentWillUnmount();
 
-		it('should only render one child', () => {
-			expect(renderedComponent.children).toHaveLength(1);
+			expect(spy.withArgs('hardwareBackPress', onBack).calledOnce).toBe(true);
 		});
 	});
 
-	describe('when rendered with the `HISTORY` view', () => {
-		const props = {
-			view: 'HISTORY'
-		};
-		const renderedComponent = shallow(<App { ...props } />);
+	describe('when the back button is pressed', () => {
+		describe('when the nav index is nil', () => {
+			const newProps = {
+				...props,
+				nav: {
+					index: 0
+				}
+			};
+			const renderedComponent = shallow(<App { ...newProps } />);
+			const onBack = renderedComponent.instance().onBackPress;
 
-		it('should render the <History />', () => {
-			expect(renderedComponent.find(History).exists()).toBe(true);
+			it('should return `false`', () => {
+				expect(onBack()).toBe(false);
+			});
 		});
 
-		it('should only render one child', () => {
-			expect(renderedComponent.children).toHaveLength(1);
+		describe('when the nav index is one or greater', () => {
+			const onBack = renderedComponent.instance().onBackPress;
+
+			it('should return `true`', () => {
+				expect(onBack()).toBe(true);
+			});
+
+			it('should dispatch a `NavigationAction/back`', () => {
+				const back = NavigationActions.back();
+
+				expect(dispatch.withArgs(back).calledOnce).toBe(true);
+			});
 		});
 	});
 });

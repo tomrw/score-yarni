@@ -1,52 +1,58 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { BackHandler } from 'react-native';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 
-import History from './history/history';
-import HomePage from './home-page';
-import InGame from './in-game';
-import NewGame from './new-game';
-import Settings from './settings/settings';
-import { types } from '../constants/layout';
+import { addListener } from '../navigation/redux';
+import AppNavigator from '../navigation/app';
 
-import styles from './styles/app';
+export class AppWithNavigationState extends Component {
+	constructor() {
+		super();
 
-export const App = ({ view }) => {
-	const component = getChildView(view);
+		this.onBackPress = this.onBackPress.bind(this);
+	}
 
-	return (
-		<View style={ styles }>
-			{ component }
-		</View>
-	);
+	componentDidMount() {
+		BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+	}
+
+	componentWillUnmount() {
+		BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+	}
+
+	onBackPress() {
+		const { dispatch, nav } = this.props;
+
+		if (nav.index === 0) {
+			return false;
+		}
+
+		dispatch(NavigationActions.back());
+
+		return true;
+	}
+
+	render() {
+		const { dispatch, nav } = this.props;
+		const navigation = addNavigationHelpers({
+			dispatch,
+			state: nav,
+			addListener
+		});
+
+		return <AppNavigator navigation={ navigation } />;
+	}
+}
+
+AppWithNavigationState.propTypes = {
+	dispatch: PropTypes.func.isRequired,
+	nav: PropTypes.object.isRequired
 };
 
-const getChildView = view => {
-	let component = <HomePage />;
-
-	if (view === types.NEW_GAME || view === types.GAME_CONFIG) {
-		component = <NewGame />;
-	}
-	else if (view === types.GAME_IN_PROGRESS) {
-		component = <InGame />;
-	}
-	else if (view === types.SETTINGS) {
-		component = <Settings />;
-	}
-	else if (view === types.HISTORY) {
-		component = <History />;
-	}
-
-	return component;
-};
-
-App.propTypes = {
-	view: PropTypes.string
-};
-
-const mapStateToProps = ({ layout }) => ({
-	view: layout.view
+const mapStateToProps = state => ({
+	nav: state.nav
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(AppWithNavigationState);
