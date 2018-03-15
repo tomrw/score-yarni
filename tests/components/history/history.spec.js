@@ -29,10 +29,11 @@ describe('Given <History />', () => {
 			scores: []
 		}
 	];
-	const navigateTo = sinon.stub();
+	const navigate = sinon.stub();
+	const navigation = { navigate };
 	const props = {
 		history,
-		navigateTo
+		navigation
 	};
 	const renderedComponent = shallow(<History { ...props } />);
 
@@ -67,7 +68,7 @@ describe('Given <History />', () => {
 		});
 
 		it('should have a `navigateTo` prop', () => {
-			expect(historyEntries.prop('navigateTo')).toEqual(navigateTo);
+			expect(historyEntries.prop('navigateTo')).toEqual(navigate);
 		});
 	});
 

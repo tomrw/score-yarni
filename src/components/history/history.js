@@ -8,7 +8,8 @@ import HistoryEntries from './history-entries';
 import { navigateTo } from '../../action-creators/layout';
 import { subTypes } from '../../constants/layout';
 
-export const History = ({ history, navigateTo, view }) => {
+export const History = ({ history, navigation, view }) => {
+	const { navigate: navigateTo } = navigation;
 	const historyView = getHistoryView(view, history, navigateTo);
 
 	return (
@@ -55,7 +56,9 @@ History.propTypes = {
 			name: PropTypes.string.isRequired
 		})).isRequired
 	})).isRequired,
-	navigateTo: PropTypes.func.isRequired,
+	navigation: PropTypes.shape({
+		navigate: PropTypes.func.isRequired
+	}).isRequired,
 	view: PropTypes.string
 };
 
