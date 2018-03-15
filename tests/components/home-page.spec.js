@@ -9,8 +9,9 @@ import { HomePage } from '../../src/components/home-page';
 import homePageStyles from '../../src/components/styles/home-page';
 
 describe('Given <HomePage />', () => {
-	const navigateTo = sinon.stub();
-	const renderedComponent = shallow(<HomePage navigateTo={ navigateTo } />);
+	const navigate = sinon.stub();
+	const navigation = { navigate };
+	const renderedComponent = shallow(<HomePage navigation={ navigation } />);
 
 	it('should be a `View`', () => {
 		expect(renderedComponent.is('View')).toBe(true);
@@ -18,6 +19,14 @@ describe('Given <HomePage />', () => {
 
 	it('should have the `container` styles', () => {
 		expect(renderedComponent.prop('style')).toEqual(homePageStyles.container);
+	});
+
+	describe('and its navigation options', () => {
+		const options = HomePage.navigationOptions;
+
+		it('should have no `header`', () => {
+			expect(options.header).toBeNull();
+		});
 	});
 
 	describe('and its first child', () => {
@@ -51,12 +60,12 @@ describe('Given <HomePage />', () => {
 			});
 
 			describe('when the `onPress` prop is called', () => {
-				it('should call its `navigateTo` prop with `NEW_GAME`', () => {
+				it('should call its `navigate` prop with `NEW_GAME`', () => {
 					const onPress = newGameButton.prop('onPress');
 
 					onPress();
 
-					expect(navigateTo.withArgs('NEW_GAME').calledOnce).toBe(true);
+					expect(navigate.withArgs('NEW_GAME').calledOnce).toBe(true);
 				});
 			});
 		});
@@ -69,12 +78,12 @@ describe('Given <HomePage />', () => {
 			});
 
 			describe('when the `onPress` prop is called', () => {
-				it('should call its `navigateTo` prop with `SETTINGS`', () => {
+				it('should call its `navigate` prop with `SETTINGS`', () => {
 					const onPress = settingsButton.prop('onPress');
 
 					onPress();
 
-					expect(navigateTo.withArgs('SETTINGS').calledOnce).toBe(true);
+					expect(navigate.withArgs('SETTINGS').calledOnce).toBe(true);
 				});
 			});
 		});
@@ -87,12 +96,12 @@ describe('Given <HomePage />', () => {
 			});
 
 			describe('when the `onPress` prop is called', () => {
-				it('should call its `navigateTo` prop with `HISTORY`', () => {
+				it('should call its `navigate` prop with `HISTORY`', () => {
 					const onPress = historyButton.prop('onPress');
 
 					onPress();
 
-					expect(navigateTo.withArgs('HISTORY').calledOnce).toBe(true);
+					expect(navigate.withArgs('HISTORY').calledOnce).toBe(true);
 				});
 			});
 		});

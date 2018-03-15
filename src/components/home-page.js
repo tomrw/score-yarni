@@ -5,15 +5,14 @@ import { connect } from 'react-redux';
 
 import Logo from './home-page/logo';
 import HomePageButton from './home-page/home-page-button';
-import { navigateTo } from '../action-creators/layout';
 import { types } from '../constants/layout';
 
 import styles from './styles/home-page';
 
-export const HomePage = ({ navigateTo }) => {
-	const onNewGame = () => navigateTo(types.NEW_GAME);
-	const onOpenSettings = () => navigateTo(types.SETTINGS);
-	const onOpenHistory = () => navigateTo(types.HISTORY);
+export const HomePage = ({ navigation }) => {
+	const onNewGame = () => navigation.navigate(types.NEW_GAME);
+	const onOpenSettings = () => navigation.navigate(types.SETTINGS);
+	const onOpenHistory = () => navigation.navigate(types.HISTORY);
 
 	return (
 		<View style={ styles.container }>
@@ -27,12 +26,14 @@ export const HomePage = ({ navigateTo }) => {
 	);
 };
 
+HomePage.navigationOptions = {
+	header: null
+};
+
 HomePage.propTypes = {
-	navigateTo: PropTypes.func.isRequired
+	navigation: PropTypes.shape({
+		navigate: PropTypes.func.isRequired
+	}).isRequired
 };
 
-const mapDispatchToProps = {
-	navigateTo
-};
-
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect()(HomePage);
