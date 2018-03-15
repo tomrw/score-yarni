@@ -18,7 +18,13 @@ export const screens = {
 };
 
 const AppNavigator = StackNavigator(screens, {
-	initialRouteName: types.HOME
+	initialRouteName: types.HOME,
+	navigationOptions: {
+		headerStyle: {
+			backgroundColor: '#f4511e'
+		},
+		headerTintColor: '#fff'
+	}
 });
 
 export default AppNavigator;
