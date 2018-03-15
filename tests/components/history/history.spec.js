@@ -2,7 +2,6 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import Header from '../../../src/components/common/header';
 import HistoryDetail from '../../../src/components/history/history-detail';
 import HistoryEntries from '../../../src/components/history/history-entries';
 import { History } from '../../../src/components/history/history';
@@ -41,32 +40,18 @@ describe('Given <History />', () => {
 		expect(renderedComponent.is('View')).toBe(true);
 	});
 
-	describe('and its first child', () => {
-		const header = renderedComponent.childAt(0);
+	describe('and its navigation options', () => {
+		const options = History.navigationOptions;
 
-		it('should be a `Header`', () => {
-			expect(header.is(Header)).toBe(true);
-		});
+		it('should have the correct `title`', () => {
+			const expectedTitle = 'Past Games';
 
-		it('should have a `text` prop', () => {
-			const expectedText = 'Past Games';
-
-			expect(header.prop('text')).toEqual(expectedText);
-		});
-
-		describe('when the `onClose` prop is called', () => {
-			const onClose = header.prop('onClose');
-
-			onClose();
-
-			it('should call `navigateTo` when the `onClose` prop is triggered', () => {
-				expect(navigateTo.withArgs('HOME').calledOnce).toBe(true);
-			});
+			expect(options.title).toEqual(expectedTitle);
 		});
 	});
 
-	describe('and its second child', () => {
-		const historyEntries = renderedComponent.childAt(1);
+	describe('and its first child', () => {
+		const historyEntries = renderedComponent.childAt(0);
 
 		it('should be a `HistoryEntries`', () => {
 			expect(historyEntries.is(HistoryEntries)).toBe(true);
@@ -92,7 +77,7 @@ describe('Given <History />', () => {
 			view: 'HISTORY_DETAIL'
 		};
 		const renderedComponent = shallow(<History { ...newProps } />);
-		const historyDetail = renderedComponent.childAt(1);
+		const historyDetail = renderedComponent.childAt(0);
 
 		it('should be a `HistoryDetail`', () => {
 			expect(historyDetail.is(HistoryDetail)).toBe(true);
