@@ -6,11 +6,11 @@ import { View } from 'react-native';
 import HistoryDetail from './history-detail';
 import HistoryEntries from './history-entries';
 import { navigateTo } from '../../action-creators/layout';
-import { subTypes } from '../../constants/layout';
 
-export const History = ({ history, navigation, view }) => {
+export const History = ({ history, navigation }) => {
 	const { navigate: navigateTo } = navigation;
-	const historyView = getHistoryView(view, history, navigateTo);
+	const entryId = getEntryId(navigation);
+	const historyView = getHistoryView(entryId, history, navigateTo);
 
 	return (
 		<View>
@@ -19,17 +19,18 @@ export const History = ({ history, navigation, view }) => {
 	);
 };
 
-const getHistoryData = historyData => (
-	historyData.map(({ players }) => ({
-		players
-	}))
-);
+const getEntryId = navigation => {
+	const { params } = navigation.state;
+	const entryId = params ? params.entryId : null;
 
-const getHistoryView = (view, history, navigateTo) => {
+	return entryId;
+};
+
+const getHistoryView = (entryId, history, navigateTo) => {
 	let component;
 
-	if (view === subTypes.HISTORY_DETAIL) {
-		const props = { ...history[0] };
+	if (entryId !== null) {
+		const props = { ...history[entryId] };
 
 		component = <HistoryDetail { ...props } />;
 	}
@@ -45,8 +46,19 @@ const getHistoryView = (view, history, navigateTo) => {
 	return component;
 };
 
-History.navigationOptions = {
-	title: 'Past Games'
+const getHistoryData = historyData => (
+	historyData.map(({ players }) => ({
+		players
+	}))
+);
+
+History.navigationOptions = ({ navigation }) => {
+	const entryId = getEntryId(navigation);
+	const title = entryId === null ? 'Past Games' : 'Hello!';
+
+	return {
+		title
+	};
 };
 
 History.propTypes = {
@@ -58,8 +70,7 @@ History.propTypes = {
 	})).isRequired,
 	navigation: PropTypes.shape({
 		navigate: PropTypes.func.isRequired
-	}).isRequired,
-	view: PropTypes.string
+	}).isRequired
 };
 
 const mapStateToProps = ({ history }) => ({

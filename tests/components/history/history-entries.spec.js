@@ -26,6 +26,10 @@ describe('Given <HistoryEntries />', () => {
 	};
 	const renderedComponent = shallow(<HistoryEntries { ...props } />);
 
+	afterEach(() => {
+		navigateTo.reset();
+	});
+
 	it('should be a `List`', () => {
 		expect(renderedComponent.is(List)).toBe(true);
 	});
@@ -50,6 +54,16 @@ describe('Given <HistoryEntries />', () => {
 
 			it('should have a `player` prop', () => {
 				expect(entry.prop('players')).toEqual(history.players);
+			});
+
+			describe('when pressed', () => {
+				it('should call `navigateTo` with an `entryId`', () => {
+					const onPress = entry.prop('onPress');
+
+					onPress();
+
+					expect(navigateTo.withArgs('HISTORY', { entryId: i }).calledOnce).toBe(true);
+				});
 			});
 		});
 	});

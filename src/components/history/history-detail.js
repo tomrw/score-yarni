@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import { View } from 'react-native';
 
 import GameSummary from '../in-game/game-summary';
-import Header from '../common/header';
 
 const HistoryDetail = ({ leaderboard, players, scores }) => {
 	return (
 		<View>
-			<Header text="Hello!" />
 			<GameSummary
 				leaderboard={ leaderboard }
 				players={ players }

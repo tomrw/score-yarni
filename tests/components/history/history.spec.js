@@ -30,7 +30,10 @@ describe('Given <History />', () => {
 		}
 	];
 	const navigate = sinon.stub();
-	const navigation = { navigate };
+	const navigation = {
+		navigate,
+		state: {}
+	};
 	const props = {
 		history,
 		navigation
@@ -42,7 +45,7 @@ describe('Given <History />', () => {
 	});
 
 	describe('and its navigation options', () => {
-		const options = History.navigationOptions;
+		const options = History.navigationOptions({ navigation });
 
 		it('should have the correct `title`', () => {
 			const expectedTitle = 'Past Games';
@@ -72,10 +75,19 @@ describe('Given <History />', () => {
 		});
 	});
 
-	describe('when the `view` is `HISTORY_DETAIL`', () => {
+	describe('when the an `entryId` is supplied', () => {
+		const entryId = 1;
+		const navigation = {
+			navigate,
+			state: {
+				params: {
+					entryId
+				}
+			}
+		};
 		const newProps = {
 			...props,
-			view: 'HISTORY_DETAIL'
+			navigation
 		};
 		const renderedComponent = shallow(<History { ...newProps } />);
 		const historyDetail = renderedComponent.childAt(0);
@@ -85,15 +97,25 @@ describe('Given <History />', () => {
 		});
 
 		it('should have a `leaderboard` prop', () => {
-			expect(historyDetail.prop('leaderboard')).toEqual(history[0].leaderboard);
+			expect(historyDetail.prop('leaderboard')).toEqual(history[entryId].leaderboard);
 		});
 
 		it('should have a `players` prop', () => {
-			expect(historyDetail.prop('players')).toEqual(history[0].players);
+			expect(historyDetail.prop('players')).toEqual(history[entryId].players);
 		});
 
 		it('should have a `scores` prop', () => {
-			expect(historyDetail.prop('scores')).toEqual(history[0].scores);
+			expect(historyDetail.prop('scores')).toEqual(history[entryId].scores);
+		});
+
+		describe('and the `title`', () => {
+			const options = History.navigationOptions({ navigation });
+
+			it('should be correct', () => {
+				const expectedTitle = 'Hello!';
+
+				expect(options.title).toEqual(expectedTitle);
+			});
 		});
 	});
 });

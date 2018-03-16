@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { List } from 'react-native-elements';
 
 import HistoryEntry from './history-entry';
-import { subTypes, types } from '../../constants/layout';
+import { types } from '../../constants/layout';
 
 const HistoryEntries = ({ historyData, navigateTo }) => {
-	const onPress = () => navigateTo(types.HISTORY, subTypes.HISTORY_DETAIL);
-
 	return (
 		<List>
 			{
 				historyData.map((game, i) => {
+					const onPress = () => navigateTo(types.HISTORY, { entryId: i });
+
 					return <HistoryEntry
 						key={ i }
 						onPress={ onPress }

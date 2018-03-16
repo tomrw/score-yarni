@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { View } from 'react-native';
 
 import GameSummary from '../../../src/components/in-game/game-summary';
-import Header from '../../../src/components/common/header';
 import HistoryDetail from '../../../src/components/history/history-detail';
 
 describe('Given <HistoryDetail />', () => {
@@ -33,21 +32,7 @@ describe('Given <HistoryDetail />', () => {
 	});
 
 	describe('and its first child', () => {
-		const header = renderedComponent.childAt(0);
-
-		it('should be a `Header`', () => {
-			expect(header.is(Header)).toBe(true);
-		});
-
-		it('should have a `text` prop', () => {
-			const expectedText = 'Hello!';
-
-			expect(header.prop('text')).toEqual(expectedText);
-		});
-	});
-
-	describe('and its second child', () => {
-		const gameSummary = renderedComponent.childAt(1);
+		const gameSummary = renderedComponent.childAt(0);
 
 		it('should be a `GameSummary`', () => {
 			expect(gameSummary.is(GameSummary)).toBe(true);
