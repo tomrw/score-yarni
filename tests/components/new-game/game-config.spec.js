@@ -2,22 +2,17 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import Header from '../../../src/components/common/header';
 import GameConfig from '../../../src/components/new-game/game-config';
 import GameOptions from '../../../src/components/new-game/game-config/game-options';
 
 describe('Given <GameConfig />', () => {
-	const onBack = sinon.stub();
 	const onChange = sinon.stub();
-	const onClose = sinon.stub();
 	const gameConfig = {
 		maxGameScore: 10
 	};
 	const props = {
 		gameConfig,
-		onBack,
-		onChange,
-		onClose
+		onChange
 	};
 	const renderedComponent = shallow(<GameConfig { ...props } />);
 
@@ -25,20 +20,8 @@ describe('Given <GameConfig />', () => {
 		expect(renderedComponent.is('View')).toBe(true);
 	});
 
-	describe('and its header', () => {
-		const header = renderedComponent.childAt(0);
-
-		it('should be a `Header`', () => {
-			expect(header.is(Header)).toBe(true);
-		});
-
-		it('should have a `text` prop', () => {
-			expect(header.prop('text')).not.toEqual('');
-		});
-	});
-
 	describe('and its game options', () => {
-		const gameOptions = renderedComponent.childAt(1);
+		const gameOptions = renderedComponent.childAt(0);
 
 		it('should be a <GameOptions />', () => {
 			expect(gameOptions.is(GameOptions)).toBe(true);
