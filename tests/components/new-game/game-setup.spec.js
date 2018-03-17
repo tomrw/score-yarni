@@ -2,7 +2,6 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import Header from '../../../src/components/common/header';
 import NewPlayerForm from '../../../src/components/new-game/game-setup/new-player-form';
 import PlayerList from '../../../src/components/new-game/game-setup/player-list';
 import GameSetup from '../../../src/components/new-game/game-setup';
@@ -11,7 +10,6 @@ import gameSetupStyles from '../../../src/components/new-game/styles/game-setup'
 
 describe('Given <GameSetup />', () => {
 	const addPlayer = sinon.stub();
-	const onClose = sinon.stub();
 	const removePlayer = sinon.stub();
 	const players = [
 		{ id: 1, name: 'Player 1' },
@@ -19,7 +17,6 @@ describe('Given <GameSetup />', () => {
 	];
 	const props = {
 		addPlayer,
-		onClose,
 		players,
 		removePlayer
 	};
@@ -33,20 +30,8 @@ describe('Given <GameSetup />', () => {
 		expect(renderedComponent.prop('style')).toEqual(gameSetupStyles.container);
 	});
 
-	describe('and its header', () => {
-		const header = renderedComponent.childAt(0);
-
-		it('should be a `Header`', () => {
-			expect(header.is(Header)).toBe(true);
-		});
-
-		it('should have a `text` prop', () => {
-			expect(header.prop('text')).not.toEqual('');
-		});
-	});
-
-	describe('and its second child', () => {
-		const newPlayerform = renderedComponent.childAt(1);
+	describe('and its first child', () => {
+		const newPlayerform = renderedComponent.childAt(0);
 
 		it('should be a <NewPlayerForm />', () => {
 			expect(newPlayerform.is(NewPlayerForm)).toBe(true);
@@ -58,7 +43,7 @@ describe('Given <GameSetup />', () => {
 	});
 
 	describe('and its players list wrapper', () => {
-		const playerListWrapper = renderedComponent.childAt(2);
+		const playerListWrapper = renderedComponent.childAt(1);
 
 		it('should have the `player-list-wrapper` styles', () => {
 			expect(playerListWrapper.prop('style')).toEqual(gameSetupStyles.playerListWrapper);
