@@ -27,6 +27,13 @@ const {
 	PLAYERS_ADDED
 } = NEW_GAME_PROGRESS_STEPS;
 
+const arePlayedConfirmed = navigation => {
+	const { params } = navigation.state;
+	const playersConfirmed = params ? params.playersConfirmed : false;
+
+	return playersConfirmed;
+};
+
 export class NewGame extends Component {
 	constructor() {
 		super();
@@ -60,10 +67,11 @@ export class NewGame extends Component {
 	}
 
 	getProgress() {
-		const { gameConfig, players, view } = this.props;
+		const { gameConfig, players } = this.props;
+		const playersConfirmed = this.arePlayedConfirmed();
 		let progress = NO_PLAYERS;
 
-		if (view === types.NEW_GAME) {
+		if (!playersConfirmed) {
 			if (players.length) {
 				progress = PLAYERS_ADDED;
 			}
@@ -81,10 +89,10 @@ export class NewGame extends Component {
 	}
 
 	getSetupView() {
-		const { view } = this.props;
+		const playersConfirmed = this.arePlayedConfirmed();
 		let component;
 
-		if (view === types.NEW_GAME) {
+		if (!playersConfirmed) {
 			const { addPlayer, removePlayer, players } = this.props;
 			const props = {
 				addPlayer,
@@ -110,11 +118,18 @@ export class NewGame extends Component {
 		return component;
 	}
 
+	arePlayedConfirmed() {
+		const { navigation } = this.props;
+
+		return arePlayedConfirmed(navigation);
+	}
+
 	isSetupActive() {
-		const { gameConfig, players, view } = this.props;
+		const { gameConfig, players } = this.props;
+		const playersConfirmed = this.arePlayedConfirmed();
 		let isActive = false;
 
-		if (view === types.NEW_GAME) {
+		if (!playersConfirmed) {
 			isActive = players.length > 0;
 		}
 		else {
@@ -125,17 +140,21 @@ export class NewGame extends Component {
 	}
 
 	isSetupCompleted(isSetupActive) {
-		const { view } = this.props;
-		const completed = isSetupActive && view === types.GAME_CONFIG;
+		const playersConfirmed = this.arePlayedConfirmed();
+		const completed = isSetupActive && playersConfirmed;
 
 		return completed;
 	}
 
 	onProgress() {
-		const { navigateTo, startGame, view } = this.props;
+		const { navigation, startGame } = this.props;
+		const { navigate: navigateTo } = navigation;
+		const playersConfirmed = this.arePlayedConfirmed();
 
-		if (view === types.NEW_GAME) {
-			navigateTo(types.GAME_CONFIG);
+		if (!playersConfirmed) {
+			navigateTo(types.GAME_CONFIG, {
+				playersConfirmed: true
+			});
 		}
 		else {
 			startGame();
@@ -144,39 +163,50 @@ export class NewGame extends Component {
 	}
 
 	onClose() {
-		const { navigateTo, resetGame } = this.props;
+		const { navigation, resetGame } = this.props;
+		const { navigate: navigateTo } = navigation;
 
 		navigateTo(types.HOME);
 		resetGame();
 	}
 
 	onBack() {
-		const { navigateTo } = this.props;
+		const { navigation } = this.props;
+		const { navigate: navigateTo } = navigation;
 
 		navigateTo(types.NEW_GAME);
 	}
 }
+
+NewGame.navigationOptions = ({ navigation }) => {
+	const playersConfirmed = arePlayedConfirmed(navigation);
+	const title = playersConfirmed ? 'Game Config' : 'Add Players';
+
+	return {
+		title
+	};
+};
 
 NewGame.propTypes = {
 	addPlayer: PropTypes.func.isRequired,
 	gameConfig: PropTypes.shape({
 		maxGameScore: PropTypes.number.isRequired
 	}),
-	navigateTo: PropTypes.func.isRequired,
+	navigation: PropTypes.shape({
+		navigate: PropTypes.func.isRequired
+	}).isRequired,
 	players: PropTypes.array.isRequired,
 	removePlayer: PropTypes.func.isRequired,
 	resetGame: PropTypes.func.isRequired,
 	setGameConfig: PropTypes.func.isRequired,
-	startGame: PropTypes.func.isRequired,
-	view: PropTypes.string.isRequired
+	startGame: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ currentGame, layout }) => ({
+const mapStateToProps = ({ currentGame }) => ({
 	gameConfig: {
 		maxGameScore: currentGame.config.maxGameScore
 	},
-	players: currentGame.players,
-	view: layout.view
+	players: currentGame.players
 });
 
 const mapDispatchToProps = {

@@ -15,9 +15,20 @@ describe('Given <NewGame />', () => {
 	const onChange = sinon.stub();
 	const removePlayer = sinon.stub();
 	const resetGame = sinon.stub();
-	const navigateTo = sinon.stub();
+	const navigate = sinon.stub();
+	const navigation = {
+		navigate,
+		state: {}
+	};
+	const navigationWithPlayersConfirmed = {
+		navigate,
+		state: {
+			params: {
+				playersConfirmed: true
+			}
+		}
+	};
 	const startGame = sinon.stub();
-	const view = 'NEW_GAME';
 	const players = [
 		{ name: 'Player 1', id: 1 },
 		{ name: 'Player 2', id: 2 }
@@ -28,13 +39,12 @@ describe('Given <NewGame />', () => {
 	const props = {
 		addPlayer,
 		gameConfig,
-		navigateTo,
+		navigation,
 		players,
 		removePlayer,
 		resetGame,
 		setGameConfig: onChange,
-		startGame,
-		view
+		startGame
 	};
 	const renderedComponent = shallow(<NewGame { ...props } />);
 
@@ -46,13 +56,35 @@ describe('Given <NewGame />', () => {
 		expect(renderedComponent.prop('style')).toEqual(newGameStyles.container);
 	});
 
+	describe('and its navigation options', () => {
+		const options = NewGame.navigationOptions({ navigation });
+
+		it('should have the correict `title`', () => {
+			const expectedTitle = 'Add Players';
+
+			expect(options.title).toEqual(expectedTitle);
+		});
+
+		describe('when players have been confirmed', () => {
+			const options = NewGame.navigationOptions({
+				navigation: navigationWithPlayersConfirmed
+			});
+
+			it('should have the correict `title`', () => {
+				const expectedTitle = 'Game Config';
+
+				expect(options.title).toEqual(expectedTitle);
+			});
+		});
+	});
+
 	describe('and the `onClose` prop', () => {
 		const onClose = renderedComponent.instance().onClose;
 
 		onClose();
 
 		it('should call `navigateTo` when the `onClose` prop is triggered', () => {
-			expect(navigateTo.withArgs('HOME').calledOnce).toBe(true);
+			expect(navigate.withArgs('HOME').calledOnce).toBe(true);
 		});
 
 		it('should call `resetGame` when the `onClose` prop is triggered', () => {
@@ -66,14 +98,14 @@ describe('Given <NewGame />', () => {
 
 			onBack();
 
-			expect(navigateTo.withArgs('NEW_GAME').calledOnce).toBe(true);
+			expect(navigate.withArgs('NEW_GAME').calledOnce).toBe(true);
 		});
 	});
 
 	describe('and its <GameSetup />', () => {
 		const setupView = renderedComponent.find(GameSetup);
 
-		describe('when the `view` is set to `NEW_GAME`', () => {
+		describe('when players have NOT been confirmed`', () => {
 			it('should have an `addPlayer` prop', () => {
 				expect(setupView.prop('addPlayer')).toEqual(addPlayer);
 			});
@@ -93,10 +125,10 @@ describe('Given <NewGame />', () => {
 			});
 		});
 
-		describe('when the `view` is set to `GAME_CONFIG`', () => {
+		describe('when players have been confirmed', () => {
 			const newProps = {
 				...props,
-				view: 'GAME_CONFIG'
+				navigation: navigationWithPlayersConfirmed
 			};
 			const renderedComponent = shallow(<NewGame { ...newProps } />);
 			const setupView = renderedComponent.find(GameConfig);
@@ -134,7 +166,7 @@ describe('Given <NewGame />', () => {
 			expect(progressBar.prop('steps')).toEqual(3);
 		});
 
-		describe('when the `view` is set to `NEW_GAME`', () => {
+		describe('when players have NOT been confirmed', () => {
 			it('should have a `progress` prop of `zero` when there are no players', () => {
 				const newProps = {
 					...props,
@@ -151,11 +183,11 @@ describe('Given <NewGame />', () => {
 			});
 		});
 
-		describe('when the `view` is set to `GAME_CONFIG`', () => {
+		describe('when players have been confirmed', () => {
 			describe('when the config is valid', () => {
 				const newProps = {
 					...props,
-					view: 'GAME_CONFIG'
+					navigation: navigationWithPlayersConfirmed
 				};
 				const renderedComponent = shallow(<NewGame { ...newProps } />);
 				const progressBar = renderedComponent.find(ProgressBar);
@@ -169,10 +201,10 @@ describe('Given <NewGame />', () => {
 				it('should have a `progress` prop of `two`', () => {
 					const newProps = {
 						...props,
+						navigation: navigationWithPlayersConfirmed,
 						gameConfig: {
 							maxGameScore: 0
-						},
-						view: 'GAME_CONFIG'
+						}
 					};
 					const renderedComponent = shallow(<NewGame { ...newProps } />);
 					const progressBar = renderedComponent.find(ProgressBar);
@@ -186,7 +218,7 @@ describe('Given <NewGame />', () => {
 	describe('and its <SetupProgress />', () => {
 		const setupProgress = renderedComponent.find(SetupProgress);
 
-		describe('when the `view` is set to `NEW_GAME`', () => {
+		describe('when players have NOT been confirmed', () => {
 			it('should have an `active/false` prop if there are no players', () => {
 				const newProps = {
 					...props,
@@ -210,15 +242,17 @@ describe('Given <NewGame />', () => {
 				it('should navigate to `GAME_CONFIG`', () => {
 					setupProgress.simulate('press');
 
-					expect(navigateTo.withArgs('GAME_CONFIG').calledOnce).toBe(true);
+					expect(navigate.withArgs('GAME_CONFIG', {
+						playersConfirmed: true
+					}).calledOnce).toBe(true);
 				});
 			});
 		});
 
-		describe('when the `view` is set to `GAME_CONFIG`', () => {
+		describe('when players have been confirmed', () => {
 			const newProps = {
 				...props,
-				view: 'GAME_CONFIG'
+				navigation: navigationWithPlayersConfirmed
 			};
 			const renderedComponent = shallow(<NewGame { ...newProps } />);
 			const setupProgress = renderedComponent.find(SetupProgress);
@@ -234,10 +268,10 @@ describe('Given <NewGame />', () => {
 			describe('when the game config if NOT valid', () => {
 				const newProps = {
 					...props,
+					navigation: navigationWithPlayersConfirmed,
 					gameConfig: {
 						maxGameScore: 0
-					},
-					view: 'GAME_CONFIG'
+					}
 				};
 				const renderedComponent = shallow(<NewGame { ...newProps } />);
 				const setupProgress = renderedComponent.find(SetupProgress);
@@ -259,7 +293,7 @@ describe('Given <NewGame />', () => {
 				});
 
 				it('should navigate to `GAME_IN_PROGRESS`', () => {
-					expect(navigateTo.withArgs('GAME_IN_PROGRESS').calledOnce).toBe(true);
+					expect(navigate.withArgs('GAME_IN_PROGRESS').calledOnce).toBe(true);
 				});
 			});
 		});
