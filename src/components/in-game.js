@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
@@ -14,10 +14,35 @@ import { subTypes, types } from '../constants/layout';
 
 import styles from './styles/in-game';
 
-const getView = (view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo, scores, settings) => {
-	let component;
+export class InGame extends Component {
+	render() {
+		const { navigateTo, resetGame, view } = this.props;
+		const onClose = () => {
+			resetGame();
+			navigateTo(types.HOME);
+		};
+		let childView;
 
-	if (view === subTypes.ADD_SCORES) {
+		if (view === subTypes.ADD_SCORES) {
+			childView = this.getAddScores();
+		}
+		else {
+			childView = this.getGameSummary();
+		}
+
+		return (
+			<View style={ styles.container }>
+				<Header text="Game in Progress" onClose={ onClose } />
+				{ childView }
+				<NavigationBar activeButton={ view }
+					navigateTo={ navigateTo }
+					style={ styles.navigationBar } />
+			</View>
+		);
+	}
+
+	getAddScores() {
+		const { players, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo } = this.props;
 		const data = players.map(({ id, name }) => {
 			const pendingScore = pendingScores.find(score => score.id === id);
 			const score = pendingScore && pendingScore.score || 0;
@@ -38,9 +63,11 @@ const getView = (view, players, leaderboard, pendingScores, addPendingScore, con
 			data
 		};
 
-		component = <AddScores { ...props } />;
+		return <AddScores { ...props } />;
 	}
-	else {
+
+	getGameSummary() {
+		const { leaderboard, players, scores, settings } = this.props;
 		const props = {
 			leaderboard,
 			players,
@@ -48,29 +75,9 @@ const getView = (view, players, leaderboard, pendingScores, addPendingScore, con
 			settings
 		};
 
-		component = <GameSummary { ...props } />;
+		return <GameSummary { ...props } />;
 	}
-
-	return component;
-};
-
-export const InGame = ({ addPendingScore, confirmAllPendingScores, navigateTo, players, resetGame, leaderboard, pendingScores, view, scores, settings }) => {
-	const onClose = () => {
-		resetGame();
-		navigateTo(types.HOME);
-	};
-	const childView = getView(view, players, leaderboard, pendingScores, addPendingScore, confirmAllPendingScores, navigateTo, scores, settings);
-
-	return (
-		<View style={ styles.container }>
-			<Header text="Game in Progress" onClose={ onClose } />
-			{ childView }
-			<NavigationBar activeButton={ view }
-				navigateTo={ navigateTo }
-				style={ styles.navigationBar } />
-		</View>
-	);
-};
+}
 
 InGame.propTypes = {
 	addPendingScore: PropTypes.func.isRequired,
