@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Logo from './home-page/logo';
 import HomePageButton from './home-page/home-page-button';
-import { types } from '../constants/layout';
+import { types } from '../constants/nav';
 
 import styles from './styles/home-page';
 

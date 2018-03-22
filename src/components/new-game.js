@@ -7,8 +7,7 @@ import GameConfig from './new-game/game-config';
 import GameSetup from './new-game/game-setup';
 import ProgressBar from './common/progress-bar';
 import SetupProgress from './new-game/game-setup/setup-progress';
-import { navigateTo } from '../action-creators/layout';
-import { types } from '../constants/layout';
+import { types } from '../constants/nav';
 import { NEW_GAME_PROGRESS_STEPS, TOTAL_NEW_GAME_STEPS } from '../constants/game';
 import {
 	addPlayer,
@@ -213,7 +212,6 @@ const mapDispatchToProps = {
 	addPlayer,
 	removePlayer,
 	resetGame,
-	navigateTo,
 	setGameConfig,
 	startGame
 };

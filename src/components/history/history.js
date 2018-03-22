@@ -3,47 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
 
-import HistoryDetail from './history-detail';
 import HistoryEntries from './history-entries';
-import { navigateTo } from '../../action-creators/layout';
 
 export const History = ({ history, navigation }) => {
-	const { navigate: navigateTo } = navigation;
-	const entryId = getEntryId(navigation);
-	const historyView = getHistoryView(entryId, history, navigateTo);
+	const historyData = getHistoryData(history);
 
 	return (
 		<View>
-			{ historyView }
+			<HistoryEntries historyData={ historyData } navigateTo={ navigation.navigate } />
 		</View>
 	);
-};
-
-const getEntryId = navigation => {
-	const { params } = navigation.state;
-	const entryId = params ? params.entryId : null;
-
-	return entryId;
-};
-
-const getHistoryView = (entryId, history, navigateTo) => {
-	let component;
-
-	if (entryId !== null) {
-		const props = { ...history[entryId] };
-
-		component = <HistoryDetail { ...props } />;
-	}
-	else {
-		const historyData = getHistoryData(history);
-
-		component = <HistoryEntries
-			historyData={ historyData }
-			navigateTo={ navigateTo }
-		/>;
-	}
-
-	return component;
 };
 
 const getHistoryData = historyData => (
@@ -52,13 +21,8 @@ const getHistoryData = historyData => (
 	}))
 );
 
-History.navigationOptions = ({ navigation }) => {
-	const entryId = getEntryId(navigation);
-	const title = entryId === null ? 'Past Games' : 'Hello!';
-
-	return {
-		title
-	};
+History.navigationOptions = {
+	title: 'Past Games'
 };
 
 History.propTypes = {
@@ -77,8 +41,4 @@ const mapStateToProps = ({ history }) => ({
 	history
 });
 
-const mapDispatchToProps = {
-	navigateTo
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(History);
+export default connect(mapStateToProps)(History);

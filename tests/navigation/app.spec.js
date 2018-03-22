@@ -1,56 +1,108 @@
-import { screens } from '../../src/navigation/app';
+import AddScores from '../../src/components/in-game/add-scores';
+import GameInfo from '../../src/components/in-game/game-info';
 import History from '../../src/components/history/history';
+import HistoryDetail from '../../src/components/history/history-detail';
 import HomePage from '../../src/components/home-page';
-import InGame from '../../src/components/in-game';
 import NewGame from '../../src/components/new-game';
 import Settings from '../../src/components/settings/settings';
+import {
+	config,
+	gameInProgressTabs,
+	screens
+} from '../../src/navigation/app';
 
 describe('Given <AppNavigator />', () => {
-	it('should have a `home` screen', () => {
-		const expectedScreen = {
-			screen: HomePage
-		};
+	describe('and the screens', () => {
+		it('should have a `home` screen', () => {
+			const expectedScreen = {
+				screen: HomePage
+			};
 
-		expect(screens.HOME).toEqual(expectedScreen);
+			expect(screens.HOME).toEqual(expectedScreen);
+		});
+
+		it('should have a `history` screen', () => {
+			const expectedScreen = {
+				screen: History
+			};
+
+			expect(screens.HISTORY).toEqual(expectedScreen);
+		});
+
+		it('should have a `history detail` screen', () => {
+			const expectedScreen = {
+				screen: HistoryDetail
+			};
+
+			expect(screens.HISTORY_DETAIL).toEqual(expectedScreen);
+		});
+
+		it('should have a `settings` screen', () => {
+			const expectedScreen = {
+				screen: Settings
+			};
+
+			expect(screens.SETTINGS).toEqual(expectedScreen);
+		});
+
+		it('should have a `new game` screen', () => {
+			const expectedScreen = {
+				screen: NewGame
+			};
+
+			expect(screens.NEW_GAME).toEqual(expectedScreen);
+		});
+
+		it('should have a `game config` screen', () => {
+			const expectedScreen = {
+				screen: NewGame
+			};
+
+			expect(screens.GAME_CONFIG).toEqual(expectedScreen);
+		});
+
+		describe('and the `game in progress` screens', () => {
+			it('should have a `game info` screen', () => {
+				const expectedScreen = {
+					screen: GameInfo
+				};
+
+				expect(gameInProgressTabs.gameInfo).toEqual(expectedScreen);
+			});
+
+			it('should have an `add scores` screen', () => {
+				const expectedScreen = {
+					screen: AddScores
+				};
+
+				expect(gameInProgressTabs.addScores).toEqual(expectedScreen);
+			});
+		});
 	});
 
-	it('should have a `history` screen', () => {
-		const expectedScreen = {
-			screen: History
-		};
+	describe('and the config', () => {
+		it('should have the correct `initialRouteName`', () => {
+			expect(config.initialRouteName).toEqual('HOME');
+		});
 
-		expect(screens.HISTORY).toEqual(expectedScreen);
-	});
+		describe('and the navigation options', () => {
+			const options = config.navigationOptions;
 
-	it('should have a `settings` screen', () => {
-		const expectedScreen = {
-			screen: Settings
-		};
+			it('should have the correct `headerBackTitle`', () => {
+				expect(options.headerBackTitle).toEqual('Back');
+			});
 
-		expect(screens.SETTINGS).toEqual(expectedScreen);
-	});
+			it('should have the correct `headerTintColor`', () => {
+				expect(options.headerTintColor).toEqual('#fff');
+			});
 
-	it('should have a `new game` screen', () => {
-		const expectedScreen = {
-			screen: NewGame
-		};
+			it('should have the correct `headerStyle`', () => {
+				const expectedHeaderStyle = {
+					backgroundColor: '#f4511e'
+				};
 
-		expect(screens.NEW_GAME).toEqual(expectedScreen);
-	});
-
-	it('should have a `game config` screen', () => {
-		const expectedScreen = {
-			screen: NewGame
-		};
-
-		expect(screens.GAME_CONFIG).toEqual(expectedScreen);
-	});
-
-	it('should have a `game in progress` screen', () => {
-		const expectedScreen = {
-			screen: InGame
-		};
-
-		expect(screens.GAME_IN_PROGRESS).toEqual(expectedScreen);
+				expect(options.headerStyle).toEqual(expectedHeaderStyle);
+			});
+		});
 	});
 });

@@ -1,26 +1,80 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { Icon } from 'react-native-elements';
+import { shallow } from 'enzyme';
+import { View } from 'react-native';
 
-import AddScores from '../../../src/components/in-game/add-scores';
+import { AddScores } from '../../../src/components/in-game/add-scores';
 
 import addScoreStyles from '../../../src/components/in-game/styles/add-scores';
+import ConfirmScores from '../../../src/components/in-game/confirm-scores';
 
 describe('Given <AddScores />', () => {
 	const addPendingScore = sinon.stub();
-	const confirmScores = sinon.stub();
-	const player1 = { name: 'Tom', id: 1, score: 0 };
-	const player2 = { name: 'Fred', id: 2, score: 10 };
-	const data = [ player1, player2 ];
+	const confirmAllPendingScores = sinon.stub();
+	const navigate = sinon.stub();
+	const navigation = { navigate };
+	const pendingScores = [
+		{ id: 1, score: 10 },
+		{ id: 2, score: 20 }
+	];
+	const players = [
+		{ name: 'Tom', id: 1 },
+		{ name: 'Fred', id: 2 }
+	];
 	const props = {
 		addPendingScore,
-		confirmScores,
-		data
+		confirmAllPendingScores,
+		pendingScores,
+		players,
+		navigation
 	};
 	const renderedComponent = shallow(<AddScores { ...props } />);
 
 	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+		expect(renderedComponent.is(View)).toBe(true);
+	});
+
+	describe('and its navigation options', () => {
+		const options = AddScores.navigationOptions({ navigation });
+
+		it('should have the correct `title`', () => {
+			const expectedTitle = 'Add Scores';
+
+			expect(options.title).toEqual(expectedTitle);
+		});
+
+		it('should have the correct `topBarLabel`', () => {
+			const expectedTopBarLabel = 'Add Scores';
+
+			expect(options.title).toEqual(expectedTopBarLabel);
+		});
+
+		it('should NOT have a `headerLeft`', () => {
+			expect(options.headerLeft).toBeNull();
+		});
+
+		describe('and its icon', () => {
+			const icon = options.tabBarIcon;
+
+			it('should be an `Icon`', () => {
+				const expectedIcon = <Icon name="library-add" />;
+
+				expect(icon).toEqual(expectedIcon);
+			});
+		});
+
+		describe('and its header right', () => {
+			const headerRight = options.headerRight;
+
+			it('should navigate to `HOME` when closed', () => {
+				const onClose = headerRight.props.onClose;
+
+				onClose();
+
+				expect(navigate.withArgs('HOME').calledOnce).toBe(true);
+			});
+		});
 	});
 
 	describe('and its first child', () => {
@@ -36,10 +90,10 @@ describe('Given <AddScores />', () => {
 
 		describe('when rendering the entries', () => {
 			it('should render the expected number of children', () => {
-				expect(renderedComponent.children()).toHaveLength(data.length);
+				expect(renderedComponent.children()).toHaveLength(players.length);
 			});
 
-			data.forEach((entry, i) => {
+			players.forEach((entry, i) => {
 				describe(`for the entry at index ${ i }`, () => {
 					const renderedEntry = playerScores.childAt(i);
 
@@ -56,7 +110,7 @@ describe('Given <AddScores />', () => {
 					});
 
 					it('should have a `score` prop', () => {
-						expect(renderedEntry.prop('score')).toEqual(entry.score);
+						expect(renderedEntry.prop('score')).toEqual(pendingScores[i].score);
 					});
 
 					it('should have an `addPendingScore` prop', () => {
@@ -71,11 +125,21 @@ describe('Given <AddScores />', () => {
 		const confirmScoresButton = renderedComponent.childAt(1);
 
 		it('should be a `ConfirmScores`', () => {
-			expect(confirmScoresButton.is('ConfirmScores')).toBe(true);
+			expect(confirmScoresButton.is(ConfirmScores)).toBe(true);
 		});
 
-		it('should have an `onConfirmScores` prop', () => {
-			expect(confirmScoresButton.prop('onConfirmScores')).toEqual(confirmScores);
+		describe('when the `onConfirmScores` prop is called', () => {
+			const onConfirmScores = confirmScoresButton.prop('onConfirmScores');
+
+			onConfirmScores();
+
+			it('should call `confirmAllPendingScores`', () => {
+				expect(confirmAllPendingScores.calledOnce).toBe(true);
+			});
+
+			it('should call the `navigate` prop', () => {
+				expect(navigate.withArgs('gameInfo').calledOnce).toBe(true);
+			});
 		});
 	});
 });

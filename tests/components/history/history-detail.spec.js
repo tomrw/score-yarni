@@ -1,11 +1,18 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import GameSummary from '../../../src/components/in-game/game-summary';
-import HistoryDetail from '../../../src/components/history/history-detail';
+import { HistoryDetail } from '../../../src/components/history/history-detail';
 
 describe('Given <HistoryDetail />', () => {
+	const navigation = {
+		state: {
+			params: {
+				entryId: 0
+			}
+		}
+	};
 	const leaderboard = [
 		{ id: 1, position: 1, score: 130 },
 		{ id: 2, position: 2, score: 90 }
@@ -21,14 +28,27 @@ describe('Given <HistoryDetail />', () => {
 		{ id: 2, name: 'Fred' }
 	];
 	const props = {
-		leaderboard,
-		players,
-		scores
+		history: [
+			{
+				leaderboard,
+				players,
+				scores
+			}
+		],
+		navigation
 	};
 	const renderedComponent = shallow(<HistoryDetail { ...props } />);
 
-	it('should be a `View`', () => {
-		expect(renderedComponent.is(View)).toBe(true);
+	it('should be a `ScrollView`', () => {
+		expect(renderedComponent.is(ScrollView)).toBe(true);
+	});
+
+	describe('and its navigation options', () => {
+		it('should have the correct `title`', () => {
+			const expectedTitle = 'Hello!';
+
+			expect(HistoryDetail.navigationOptions.title).toEqual(expectedTitle);
+		});
 	});
 
 	describe('and its first child', () => {

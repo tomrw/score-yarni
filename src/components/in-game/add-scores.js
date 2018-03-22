@@ -1,14 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { Icon, List } from 'react-native-elements';
 import { View } from 'react-native';
 
 import AddPlayerScore from './add-player-score';
 import ConfirmScores from './confirm-scores';
+import CloseButton from '../common/close-button';
+import { addPendingScore, confirmAllPendingScores } from '../../action-creators/score';
 
 import styles from './styles/add-scores';
 
-const AddScores = ({ addPendingScore, data, confirmScores }) => {
+export const AddScores = ({ addPendingScore, confirmAllPendingScores, navigation, players, pendingScores }) => {
+	const data = getData(players, pendingScores);
+	const confirmScores = () => {
+		confirmAllPendingScores();
+
+		navigation.navigate('gameInfo');
+	};
+
 	return (
 		<View>
 			<List containerStyle={ styles.container }>
@@ -30,10 +40,55 @@ const AddScores = ({ addPendingScore, data, confirmScores }) => {
 	);
 };
 
-AddScores.propTypes = {
-	addPendingScore: PropTypes.func.isRequired,
-	confirmScores: PropTypes.func.isRequired,
-	data: PropTypes.array.isRequired
+const getData = (players, pendingScores) => {
+	return players.map(({ id, name }) => {
+		const pendingScore = pendingScores.find(score => score.id === id);
+		const score = pendingScore && pendingScore.score || 0;
+
+		return {
+			id,
+			name,
+			score
+		};
+	});
 };
 
-export default AddScores;
+AddScores.navigationOptions = ({ navigation }) => {
+	const onClose = () => navigation.navigate('HOME');
+
+	return {
+		title: 'Add Scores',
+		tabBarLabel: 'Add Scores',
+		tabBarIcon: <Icon name="library-add" />,
+		headerLeft: null,
+		headerRight: <CloseButton onClose={ onClose } />
+	};
+};
+
+AddScores.propTypes = {
+	addPendingScore: PropTypes.func.isRequired,
+	confirmAllPendingScores: PropTypes.func.isRequired,
+	navigation: PropTypes.shape({
+		navigate: PropTypes.func.isRequired
+	}).isRequired,
+	pendingScores: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		score: PropTypes.number.isRequired
+	})).isRequired,
+	players: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		name: PropTypes.string.isRequired
+	})).isRequired
+};
+
+const mapStateToProps = ({ currentGame }) => ({
+	pendingScores: currentGame.scores.pendingScores,
+	players: currentGame.players
+});
+
+const mapDispatchToProps = {
+	addPendingScore,
+	confirmAllPendingScores
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddScores);

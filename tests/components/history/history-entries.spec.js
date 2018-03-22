@@ -62,7 +62,7 @@ describe('Given <HistoryEntries />', () => {
 
 					onPress();
 
-					expect(navigateTo.withArgs('HISTORY', { entryId: i }).calledOnce).toBe(true);
+					expect(navigateTo.withArgs('HISTORY_DETAIL', { entryId: i }).calledOnce).toBe(true);
 				});
 			});
 		});
