@@ -10,9 +10,11 @@ import { resetGame } from '../../../src/action-creators/game';
 describe('Given <GameInfo />', () => {
 	const dispatch = sinon.stub();
 	const navigate = sinon.stub();
+	const popToTop = sinon.stub();
 	const navigation = {
 		dispatch,
-		navigate
+		navigate,
+		popToTop
 	};
 	const player1 = { name: 'Tom', id: 1 };
 	const player2 = { name: 'Fred', id: 2 };
@@ -84,8 +86,8 @@ describe('Given <GameInfo />', () => {
 
 			onClose();
 
-			it('should navigate to `HOME` when closed', () => {
-				expect(navigate.withArgs('HOME').calledOnce).toBe(true);
+			it('should navigate to the top when closed', () => {
+				expect(popToTop.calledOnce).toBe(true);
 			});
 
 			it('should reset the game when closed', () => {

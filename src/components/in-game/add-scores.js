@@ -9,7 +9,6 @@ import ConfirmScores from './confirm-scores';
 import CloseButton from '../common/close-button';
 import { addPendingScore, confirmAllPendingScores } from '../../action-creators/score';
 import { resetGame } from '../../action-creators/game';
-import { types } from '../../constants/nav';
 
 import styles from './styles/add-scores';
 
@@ -58,7 +57,7 @@ const getData = (players, pendingScores) => {
 AddScores.navigationOptions = ({ navigation }) => {
 	const onClose = () => {
 		navigation.dispatch(resetGame());
-		navigation.navigate(types.HOME);
+		navigation.popToTop();
 	};
 
 	return {

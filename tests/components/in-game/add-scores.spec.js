@@ -15,9 +15,11 @@ describe('Given <AddScores />', () => {
 	const confirmAllPendingScores = sinon.stub();
 	const dispatch = sinon.stub();
 	const navigate = sinon.stub();
+	const popToTop = sinon.stub();
 	const navigation = {
 		dispatch,
-		navigate
+		navigate,
+		popToTop
 	};
 	const pendingScores = [
 		{ id: 1, score: 10 },
@@ -75,8 +77,8 @@ describe('Given <AddScores />', () => {
 
 			onClose();
 
-			it('should navigate to `HOME` when closed', () => {
-				expect(navigate.withArgs('HOME').calledOnce).toBe(true);
+			it('should navigate to the top when closed', () => {
+				expect(popToTop.calledOnce).toBe(true);
 			});
 
 			it('should reset the game when closed', () => {
