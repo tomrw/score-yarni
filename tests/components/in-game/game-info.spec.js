@@ -3,12 +3,17 @@ import sinon from 'sinon';
 import { Icon } from 'react-native-elements';
 import { shallow } from 'enzyme';
 
-import { GameInfo } from '../../../src/components/in-game/game-info';
 import GameSummary from '../../../src/components/in-game/game-summary';
+import { GameInfo } from '../../../src/components/in-game/game-info';
+import { resetGame } from '../../../src/action-creators/game';
 
 describe('Given <GameInfo />', () => {
+	const dispatch = sinon.stub();
 	const navigate = sinon.stub();
-	const navigation = { navigate };
+	const navigation = {
+		dispatch,
+		navigate
+	};
 	const player1 = { name: 'Tom', id: 1 };
 	const player2 = { name: 'Fred', id: 2 };
 	const players = [ player1, player2 ];
@@ -75,13 +80,18 @@ describe('Given <GameInfo />', () => {
 
 		describe('and its header right', () => {
 			const headerRight = options.headerRight;
+			const onClose = headerRight.props.onClose;
+
+			onClose();
 
 			it('should navigate to `HOME` when closed', () => {
-				const onClose = headerRight.props.onClose;
-
-				onClose();
-
 				expect(navigate.withArgs('HOME').calledOnce).toBe(true);
+			});
+
+			it('should reset the game when closed', () => {
+				const expectedAction = resetGame();
+
+				expect(dispatch.withArgs(expectedAction).calledOnce).toBe(true);
 			});
 		});
 	});

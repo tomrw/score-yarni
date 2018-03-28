@@ -4,16 +4,21 @@ import { Icon } from 'react-native-elements';
 import { shallow } from 'enzyme';
 import { View } from 'react-native';
 
+import ConfirmScores from '../../../src/components/in-game/confirm-scores';
 import { AddScores } from '../../../src/components/in-game/add-scores';
+import { resetGame } from '../../../src/action-creators/game';
 
 import addScoreStyles from '../../../src/components/in-game/styles/add-scores';
-import ConfirmScores from '../../../src/components/in-game/confirm-scores';
 
 describe('Given <AddScores />', () => {
 	const addPendingScore = sinon.stub();
 	const confirmAllPendingScores = sinon.stub();
+	const dispatch = sinon.stub();
 	const navigate = sinon.stub();
-	const navigation = { navigate };
+	const navigation = {
+		dispatch,
+		navigate
+	};
 	const pendingScores = [
 		{ id: 1, score: 10 },
 		{ id: 2, score: 20 }
@@ -66,13 +71,18 @@ describe('Given <AddScores />', () => {
 
 		describe('and its header right', () => {
 			const headerRight = options.headerRight;
+			const onClose = headerRight.props.onClose;
+
+			onClose();
 
 			it('should navigate to `HOME` when closed', () => {
-				const onClose = headerRight.props.onClose;
-
-				onClose();
-
 				expect(navigate.withArgs('HOME').calledOnce).toBe(true);
+			});
+
+			it('should reset the game when closed', () => {
+				const expectedAction = resetGame();
+
+				expect(dispatch.withArgs(expectedAction).calledOnce).toBe(true);
 			});
 		});
 	});
