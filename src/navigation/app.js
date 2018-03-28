@@ -38,7 +38,7 @@ export const config = {
 	initialRouteName: types.HOME,
 	navigationOptions: {
 		headerStyle: {
-			backgroundColor: '#f4511e'
+			backgroundColor: '#2089dc'
 		},
 		headerTintColor: '#fff',
 		headerBackTitle: 'Back'

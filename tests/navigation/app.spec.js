@@ -98,7 +98,7 @@ describe('Given <AppNavigator />', () => {
 
 			it('should have the correct `headerStyle`', () => {
 				const expectedHeaderStyle = {
-					backgroundColor: '#f4511e'
+					backgroundColor: '#2089dc'
 				};
 
 				expect(options.headerStyle).toEqual(expectedHeaderStyle);
