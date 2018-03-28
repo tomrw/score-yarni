@@ -6,6 +6,7 @@ import { Icon } from 'react-native-elements';
 import CloseButton from '../common/close-button';
 import GameSummary from './game-summary';
 import { resetGame } from '../../action-creators/game';
+import { types } from '../../constants/nav';
 
 export const GameInfo = ({ leaderboard, players, scores, settings }) => {
 	const props = {
@@ -21,7 +22,7 @@ export const GameInfo = ({ leaderboard, players, scores, settings }) => {
 GameInfo.navigationOptions = ({ navigation }) => {
 	const onClose = () => {
 		navigation.dispatch(resetGame());
-		navigation.navigate('HOME');
+		navigation.navigate(types.HOME);
 	};
 
 	return {
