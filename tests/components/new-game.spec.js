@@ -78,30 +78,6 @@ describe('Given <NewGame />', () => {
 		});
 	});
 
-	describe('and the `onClose` prop', () => {
-		const onClose = renderedComponent.instance().onClose;
-
-		onClose();
-
-		it('should call `navigateTo` when the `onClose` prop is triggered', () => {
-			expect(navigate.withArgs('HOME').calledOnce).toBe(true);
-		});
-
-		it('should call `resetGame` when the `onClose` prop is triggered', () => {
-			expect(resetGame.calledOnce).toBe(true);
-		});
-	});
-
-	describe('and the `onBack` prop', () => {
-		it('should call `navigateTo` with `NEW_GAME` when the `onBack` prop is called', () => {
-			const onBack = renderedComponent.instance().onBack;
-
-			onBack();
-
-			expect(navigate.withArgs('NEW_GAME').calledOnce).toBe(true);
-		});
-	});
-
 	describe('and its <GameSetup />', () => {
 		const setupView = renderedComponent.find(GameSetup);
 
@@ -139,12 +115,6 @@ describe('Given <NewGame />', () => {
 
 			it('should have a `gameConfig` prop', () => {
 				expect(setupView.prop('gameConfig')).toEqual(gameConfig);
-			});
-
-			it('should have an `onBack` prop', () => {
-				const expectedonBack = renderedComponent.instance().onBack;
-
-				expect(setupView.prop('onBack')).toEqual(expectedonBack);
 			});
 
 			it('should have an `onChange` prop', () => {

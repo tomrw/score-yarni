@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { HeaderBackButton } from 'react-navigation';
 import { View } from 'react-native';
 
 import GameConfig from './new-game/game-config';
@@ -37,8 +38,6 @@ export class NewGame extends Component {
 	constructor() {
 		super();
 
-		this.onBack = this.onBack.bind(this);
-		this.onClose = this.onClose.bind(this);
 		this.onProgress = this.onProgress.bind(this);
 	}
 
@@ -96,8 +95,7 @@ export class NewGame extends Component {
 			const props = {
 				addPlayer,
 				removePlayer,
-				players,
-				onClose: this.onClose
+				players
 			};
 
 			component = <GameSetup { ...props } />;
@@ -106,9 +104,7 @@ export class NewGame extends Component {
 			const { gameConfig, setGameConfig: onChange } = this.props;
 			const props = {
 				gameConfig,
-				onBack: this.onBack,
-				onChange,
-				onClose: this.onClose
+				onChange
 			};
 
 			component = <GameConfig { ...props } />;
@@ -161,14 +157,6 @@ export class NewGame extends Component {
 		}
 	}
 
-	onClose() {
-		const { navigation, resetGame } = this.props;
-		const { navigate: navigateTo } = navigation;
-
-		navigateTo(types.HOME);
-		resetGame();
-	}
-
 	onBack() {
 		const { navigation } = this.props;
 		const { navigate: navigateTo } = navigation;
@@ -180,9 +168,21 @@ export class NewGame extends Component {
 NewGame.navigationOptions = ({ navigation }) => {
 	const playersConfirmed = arePlayedConfirmed(navigation);
 	const title = playersConfirmed ? 'Game Config' : 'Add Players';
+	const props = {
+		title: 'Back',
+		tintColor: '#fff',
+		onPress:() => {
+			if (!playersConfirmed) {
+				navigation.dispatch(resetGame());
+			}
+
+			navigation.goBack(null);
+		}
+	};
 
 	return {
-		title
+		title,
+		headerLeft: <HeaderBackButton { ...props } />
 	};
 };
 
