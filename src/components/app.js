@@ -7,6 +7,8 @@ import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { addListener } from '../navigation/redux';
 import AppNavigator from '../navigation/app';
 
+const HARDWARE_BACKPRESS = 'hardwareBackPress';
+
 export class AppWithNavigationState extends Component {
 	constructor() {
 		super();
@@ -15,11 +17,11 @@ export class AppWithNavigationState extends Component {
 	}
 
 	componentDidMount() {
-		BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+		BackHandler.addEventListener(HARDWARE_BACKPRESS, this.onBackPress);
 	}
 
 	componentWillUnmount() {
-		BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+		BackHandler.removeEventListener(HARDWARE_BACKPRESS, this.onBackPress);
 	}
 
 	onBackPress() {
