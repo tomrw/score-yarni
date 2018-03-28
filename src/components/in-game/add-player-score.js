@@ -7,22 +7,12 @@ import styles from './styles/add-player-score';
 const PLACEHOLDER = '0';
 
 class AddPlayerScore extends Component {
-	constructor({ score }) {
-		super();
-
-		this.state = {
-			score
-		};
-	}
-
 	render() {
-		const { id, name, addPendingScore } = this.props;
+		const { id, name, addPendingScore, score } = this.props;
 		const setScore = score => {
-			this.setState({ score }, () => {
-				const parsedScore = parseInt(score, 10);
+			const parsedScore = parseInt(score, 10);
 
-				addPendingScore(id, parsedScore);
-			});
+			addPendingScore(id, parsedScore);
 		};
 
 		return (
@@ -36,7 +26,7 @@ class AddPlayerScore extends Component {
 				textInputSelectTextOnFocus
 				textInputStyle={ styles.textInputStyle }
 				textInputOnChangeText={ setScore }
-				textInputValue={ this.state.score.toString() }
+				textInputValue={ score.toString() }
 			/>
 		);
 	}
