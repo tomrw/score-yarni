@@ -155,13 +155,6 @@ export class NewGame extends Component {
 			startGame();
 		}
 	}
-
-	onBack() {
-		const { navigation } = this.props;
-		const { navigate: navigateTo } = navigation;
-
-		navigateTo(types.NEW_GAME);
-	}
 }
 
 NewGame.navigationOptions = ({ navigation }) => {
