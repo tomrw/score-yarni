@@ -42,6 +42,19 @@ export const resetGame = () => ({
 	type: RESET_GAME
 });
 
+export const moveToGameConfig = () => {
+	return dispatch => {
+		dispatch(changeStatus(types.GAME_CONFIG));
+
+		dispatch(NavigationActions.navigate({
+			routeName: types.GAME_CONFIG,
+			params: {
+				playersConfirmed: true
+			}
+		}));
+	};
+};
+
 export const startGame = () => {
 	return (dispatch, getState) => {
 		const { currentGame: { players } } = getState();

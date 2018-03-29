@@ -5,6 +5,7 @@ import { addPendingScore, addScore } from '../../src/action-creators/score';
 import { changeStatus } from '../../src/action-creators/status';
 import {
 	addPlayer,
+	moveToGameConfig,
 	removePlayer,
 	resetGame,
 	resetPlayerId,
@@ -75,6 +76,29 @@ describe('Given the `newGame` action creators', () => {
 
 		it('should NOT return a payload', () => {
 			expect(action.payload).toBeUndefined();
+		});
+	});
+
+	describe('when moving to game config', () => {
+		const dispatch = sinon.stub();
+
+		moveToGameConfig()(dispatch);
+
+		it('should update the status to `GAME_CONFIG`', () => {
+			const expected = changeStatus('GAME_CONFIG');
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+
+		it('should navigate to `GAME_CONFIG`', () => {
+			const expected = NavigationActions.navigate({
+				routeName: 'GAME_CONFIG',
+				params: {
+					playersConfirmed: true
+				}
+			});
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});
 	});
 

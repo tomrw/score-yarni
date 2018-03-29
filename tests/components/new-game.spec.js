@@ -13,6 +13,7 @@ import newGameStyles from '../../src/components/styles/new-game';
 describe('Given <NewGame />', () => {
 	const addPlayer = sinon.stub();
 	const onChange = sinon.stub();
+	const moveToGameConfig = sinon.stub();
 	const removePlayer = sinon.stub();
 	const resetGame = sinon.stub();
 	const navigate = sinon.stub();
@@ -39,6 +40,7 @@ describe('Given <NewGame />', () => {
 	const props = {
 		addPlayer,
 		gameConfig,
+		moveToGameConfig,
 		navigation,
 		players,
 		removePlayer,
@@ -212,9 +214,7 @@ describe('Given <NewGame />', () => {
 				it('should navigate to `GAME_CONFIG`', () => {
 					setupProgress.simulate('press');
 
-					expect(navigate.withArgs('GAME_CONFIG', {
-						playersConfirmed: true
-					}).calledOnce).toBe(true);
+					expect(moveToGameConfig.calledOnce).toBe(true);
 				});
 			});
 		});

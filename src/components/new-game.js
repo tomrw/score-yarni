@@ -8,10 +8,10 @@ import GameConfig from './new-game/game-config';
 import GameSetup from './new-game/game-setup';
 import ProgressBar from './common/progress-bar';
 import SetupProgress from './new-game/game-setup/setup-progress';
-import { types } from '../constants/nav';
 import { NEW_GAME_PROGRESS_STEPS, TOTAL_NEW_GAME_STEPS } from '../constants/game';
 import {
 	addPlayer,
+	moveToGameConfig,
 	removePlayer,
 	resetGame,
 	setGameConfig,
@@ -142,14 +142,11 @@ export class NewGame extends Component {
 	}
 
 	onProgress() {
-		const { navigation, startGame } = this.props;
-		const { navigate: navigateTo } = navigation;
+		const { moveToGameConfig, startGame } = this.props;
 		const playersConfirmed = this.arePlayedConfirmed();
 
 		if (!playersConfirmed) {
-			navigateTo(types.GAME_CONFIG, {
-				playersConfirmed: true
-			});
+			moveToGameConfig();
 		}
 		else {
 			startGame();
@@ -183,9 +180,8 @@ NewGame.propTypes = {
 	gameConfig: PropTypes.shape({
 		maxGameScore: PropTypes.number.isRequired
 	}),
-	navigation: PropTypes.shape({
-		navigate: PropTypes.func.isRequired
-	}).isRequired,
+	navigation: PropTypes.object.isRequired,
+	moveToGameConfig: PropTypes.func.isRequired,
 	players: PropTypes.array.isRequired,
 	removePlayer: PropTypes.func.isRequired,
 	resetGame: PropTypes.func.isRequired,
@@ -202,6 +198,7 @@ const mapStateToProps = ({ currentGame }) => ({
 
 const mapDispatchToProps = {
 	addPlayer,
+	moveToGameConfig,
 	removePlayer,
 	resetGame,
 	setGameConfig,
