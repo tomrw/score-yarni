@@ -9,9 +9,14 @@ import { HomePage } from '../../src/components/home-page';
 import homePageStyles from '../../src/components/styles/home-page';
 
 describe('Given <HomePage />', () => {
+	const moveToAddPlayers = sinon.stub();
 	const navigate = sinon.stub();
 	const navigation = { navigate };
-	const renderedComponent = shallow(<HomePage navigation={ navigation } />);
+	const props = {
+		moveToAddPlayers,
+		navigation
+	};
+	const renderedComponent = shallow(<HomePage { ...props } />);
 
 	it('should be a `View`', () => {
 		expect(renderedComponent.is('View')).toBe(true);
@@ -60,12 +65,12 @@ describe('Given <HomePage />', () => {
 			});
 
 			describe('when the `onPress` prop is called', () => {
-				it('should call its `navigate` prop with `NEW_GAME`', () => {
+				it('should call `moveToAddPlayers`', () => {
 					const onPress = newGameButton.prop('onPress');
 
 					onPress();
 
-					expect(navigate.withArgs('NEW_GAME').calledOnce).toBe(true);
+					expect(moveToAddPlayers.calledOnce).toBe(true);
 				});
 			});
 		});

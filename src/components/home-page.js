@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 
 import Logo from './home-page/logo';
 import HomePageButton from './home-page/home-page-button';
+import { moveToAddPlayers } from '../action-creators/game';
 import { types } from '../constants/nav';
 
 import styles from './styles/home-page';
 
-export const HomePage = ({ navigation }) => {
-	const onNewGame = () => navigation.navigate(types.NEW_GAME);
+export const HomePage = ({ moveToAddPlayers, navigation }) => {
+	const onNewGame = () => moveToAddPlayers();
 	const onOpenSettings = () => navigation.navigate(types.SETTINGS);
 	const onOpenHistory = () => navigation.navigate(types.HISTORY);
 
@@ -31,9 +32,14 @@ HomePage.navigationOptions = {
 };
 
 HomePage.propTypes = {
+	moveToAddPlayers: PropTypes.func.isRequired,
 	navigation: PropTypes.shape({
 		navigate: PropTypes.func.isRequired
 	}).isRequired
 };
 
-export default connect()(HomePage);
+const mapDispatchToProps = {
+	moveToAddPlayers
+};
+
+export default connect(null, mapDispatchToProps)(HomePage);
