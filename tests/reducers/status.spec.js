@@ -1,5 +1,6 @@
 import reduce from '../../src/reducers/status';
 import { changeStatus } from '../../src/action-creators/status';
+import { resetGame } from '../../src/action-creators/game';
 
 describe('Given the status reducer', () => {
 	const unknownAction = {
@@ -23,7 +24,7 @@ describe('Given the status reducer', () => {
 			expect(newState).toEqual(expectedState);
 		});
 
-		it('should update an existing `key/value` pairing', () => {
+		it('should update the location', () => {
 			const newLocation = 'ADD_PLAYERS';
 			const newState = reduce(initialState, changeStatus(location));
 			const nextState = reduce(newState, changeStatus(newLocation));
@@ -32,6 +33,16 @@ describe('Given the status reducer', () => {
 			};
 
 			expect(nextState).toEqual(expectedState);
+		});
+	});
+
+	describe('when resetting the game', () => {
+		it('should reset the status', () => {
+			const location = 'GAME_CONFIG';
+			const newState = reduce(initialState, changeStatus(location));
+			const nextState = reduce(newState, resetGame());
+
+			expect(nextState).toEqual({});
 		});
 	});
 });
