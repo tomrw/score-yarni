@@ -42,6 +42,16 @@ export const resetGame = () => ({
 	type: RESET_GAME
 });
 
+export const moveToAddPlayers = () => {
+	return dispatch => {
+		dispatch(changeStatus(types.NEW_GAME));
+
+		dispatch(NavigationActions.navigate({
+			routeName: types.NEW_GAME
+		}));
+	};
+};
+
 export const moveToGameConfig = () => {
 	return dispatch => {
 		dispatch(changeStatus(types.GAME_CONFIG));
