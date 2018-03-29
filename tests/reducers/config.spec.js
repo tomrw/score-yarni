@@ -1,7 +1,9 @@
 import sinon from 'sinon';
+import { NavigationActions } from 'react-navigation';
 
 import reduce from '../../src/reducers/config';
 import { addPendingScore, addScore } from '../../src/action-creators/score';
+import { changeStatus } from '../../src/action-creators/status';
 import { resetGame, setGameConfig, startGame } from '../../src/action-creators/game';
 
 describe('Given the game reducer', () => {
@@ -64,6 +66,20 @@ describe('Given the game reducer', () => {
 
 				expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 			});
+		});
+
+		it('should update the status to `GAME_IN_PROGRESS`', () => {
+			const expected = changeStatus('GAME_IN_PROGRESS');
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+
+		it('should navigate to `GAME_IN_PROGRESS`', () => {
+			const expected = NavigationActions.navigate({
+				routeName: 'GAME_IN_PROGRESS'
+			});
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});
 	});
 });

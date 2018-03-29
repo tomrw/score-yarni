@@ -1,4 +1,8 @@
+import { NavigationActions } from 'react-navigation';
+
 import { addPendingScore, addScore } from './score';
+import { changeStatus } from './status';
+import { types } from '../constants/nav';
 import {
 	ADD_PLAYER,
 	REMOVE_PLAYER,
@@ -46,5 +50,11 @@ export const startGame = () => {
 			dispatch(addScore(id, 0));
 			dispatch(addPendingScore(id, 0));
 		});
+
+		dispatch(changeStatus(types.GAME_IN_PROGRESS));
+
+		dispatch(NavigationActions.navigate({
+			routeName: types.GAME_IN_PROGRESS
+		}));
 	};
 };

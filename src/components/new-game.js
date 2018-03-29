@@ -153,7 +153,6 @@ export class NewGame extends Component {
 		}
 		else {
 			startGame();
-			navigateTo(types.GAME_IN_PROGRESS);
 		}
 	}
 

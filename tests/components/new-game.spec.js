@@ -261,10 +261,6 @@ describe('Given <NewGame />', () => {
 				it('should call `startGame`', () => {
 					expect(startGame.calledOnce).toBe(true);
 				});
-
-				it('should navigate to `GAME_IN_PROGRESS`', () => {
-					expect(navigate.withArgs('GAME_IN_PROGRESS').calledOnce).toBe(true);
-				});
 			});
 		});
 	});
