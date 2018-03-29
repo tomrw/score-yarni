@@ -6,6 +6,7 @@ import leaderboard from './leaderboard';
 import nav from './nav';
 import players from './players';
 import scores from './score';
+import status from './status';
 import settings from './settings';
 
 export default combineReducers({
@@ -13,7 +14,8 @@ export default combineReducers({
 		config,
 		leaderboard,
 		players,
-		scores
+		scores,
+		status
 	}),
 	history,
 	nav,
