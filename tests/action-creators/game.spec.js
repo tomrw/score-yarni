@@ -1,9 +1,15 @@
+import sinon from 'sinon';
+import { NavigationActions } from 'react-navigation';
+
+import { addPendingScore, addScore } from '../../src/action-creators/score';
+import { changeStatus } from '../../src/action-creators/status';
 import {
 	addPlayer,
 	removePlayer,
 	resetGame,
 	resetPlayerId,
-	setGameConfig
+	setGameConfig,
+	startGame
 } from '../../src/action-creators/game';
 
 describe('Given the `newGame` action creators', () => {
@@ -69,6 +75,49 @@ describe('Given the `newGame` action creators', () => {
 
 		it('should NOT return a payload', () => {
 			expect(action.payload).toBeUndefined();
+		});
+	});
+
+	describe('when starting the game', () => {
+		const players = [
+			{ name: 'player1', id: 1 },
+			{ name: 'player2', id: 2 }
+		];
+		const getState = () => ({
+			currentGame: {
+				players
+			}
+		});
+		const dispatch = sinon.stub();
+
+		startGame()(dispatch, getState);
+
+		players.forEach(({ name, id }) => {
+			it(`should add a default score for ${ name }`, () => {
+				const expected = addScore(id, 0);
+
+				expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+			});
+
+			it(`should add a pending score for ${ name }`, () => {
+				const expected = addPendingScore(id, 0);
+
+				expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+			});
+		});
+
+		it('should update the status to `GAME_IN_PROGRESS`', () => {
+			const expected = changeStatus('GAME_IN_PROGRESS');
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+
+		it('should navigate to `GAME_IN_PROGRESS`', () => {
+			const expected = NavigationActions.navigate({
+				routeName: 'GAME_IN_PROGRESS'
+			});
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});
 	});
 });
