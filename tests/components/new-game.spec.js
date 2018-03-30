@@ -61,7 +61,7 @@ describe('Given <NewGame />', () => {
 	describe('and its navigation options', () => {
 		const options = NewGame.navigationOptions({ navigation });
 
-		it('should have the correict `title`', () => {
+		it('should have the correct `title`', () => {
 			const expectedTitle = 'Add Players';
 
 			expect(options.title).toEqual(expectedTitle);
@@ -72,7 +72,7 @@ describe('Given <NewGame />', () => {
 				navigation: navigationWithPlayersConfirmed
 			});
 
-			it('should have the correict `title`', () => {
+			it('should have the correct `title`', () => {
 				const expectedTitle = 'Game Config';
 
 				expect(options.title).toEqual(expectedTitle);
