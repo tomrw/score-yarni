@@ -6,7 +6,6 @@ import { View } from 'react-native';
 
 import ConfirmScores from '../../../src/components/in-game/confirm-scores';
 import { AddScores } from '../../../src/components/in-game/add-scores';
-import { resetGame } from '../../../src/action-creators/game';
 
 import addScoreStyles from '../../../src/components/in-game/styles/add-scores';
 
@@ -15,11 +14,9 @@ describe('Given <AddScores />', () => {
 	const confirmAllPendingScores = sinon.stub();
 	const dispatch = sinon.stub();
 	const navigate = sinon.stub();
-	const popToTop = sinon.stub();
 	const navigation = {
 		dispatch,
-		navigate,
-		popToTop
+		navigate
 	};
 	const pendingScores = [
 		{ id: 1, score: 10 },
@@ -68,23 +65,6 @@ describe('Given <AddScores />', () => {
 				const expectedIcon = <Icon name="library-add" />;
 
 				expect(icon).toEqual(expectedIcon);
-			});
-		});
-
-		describe('and its header right', () => {
-			const headerRight = options.headerRight;
-			const onClose = headerRight.props.onClose;
-
-			onClose();
-
-			it('should navigate to the top when closed', () => {
-				expect(popToTop.calledOnce).toBe(true);
-			});
-
-			it('should reset the game when closed', () => {
-				const expectedAction = resetGame();
-
-				expect(dispatch.withArgs(expectedAction).calledOnce).toBe(true);
 			});
 		});
 	});

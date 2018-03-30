@@ -5,16 +5,13 @@ import { shallow } from 'enzyme';
 
 import GameSummary from '../../../src/components/in-game/game-summary';
 import { GameInfo } from '../../../src/components/in-game/game-info';
-import { resetGame } from '../../../src/action-creators/game';
 
 describe('Given <GameInfo />', () => {
 	const dispatch = sinon.stub();
 	const navigate = sinon.stub();
-	const popToTop = sinon.stub();
 	const navigation = {
 		dispatch,
-		navigate,
-		popToTop
+		navigate
 	};
 	const player1 = { name: 'Tom', id: 1 };
 	const player2 = { name: 'Fred', id: 2 };
@@ -77,23 +74,6 @@ describe('Given <GameInfo />', () => {
 				const expectedIcon = <Icon name="format-list-numbered" />;
 
 				expect(icon).toEqual(expectedIcon);
-			});
-		});
-
-		describe('and its header right', () => {
-			const headerRight = options.headerRight;
-			const onClose = headerRight.props.onClose;
-
-			onClose();
-
-			it('should navigate to the top when closed', () => {
-				expect(popToTop.calledOnce).toBe(true);
-			});
-
-			it('should reset the game when closed', () => {
-				const expectedAction = resetGame();
-
-				expect(dispatch.withArgs(expectedAction).calledOnce).toBe(true);
 			});
 		});
 	});

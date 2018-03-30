@@ -13,6 +13,7 @@ import { NEW_GAME_PROGRESS_STEPS, TOTAL_NEW_GAME_STEPS } from '../constants/game
 import { types } from '../constants/nav';
 import {
 	addPlayer,
+	goHomeAndResetGame,
 	moveToGameConfig,
 	removePlayer,
 	resetGame,
@@ -159,18 +160,18 @@ export class NewGame extends Component {
 NewGame.navigationOptions = ({ navigation }) => {
 	const playersConfirmed = arePlayedConfirmed(navigation);
 	const title = playersConfirmed ? 'Game Config' : 'Add Players';
-	const onBackStatus = playersConfirmed ? types.NEW_GAME : types.HOME;
+	const onBackStatus = playersConfirmed ? types.NEW_GAME : null;
 	const props = {
 		title: 'Back',
 		tintColor: '#fff',
 		onPress:() => {
 			if (!playersConfirmed) {
-				navigation.dispatch(resetGame());
+				navigation.dispatch(goHomeAndResetGame());
+			} else {
+				navigation.dispatch(changeStatus(onBackStatus));
+				navigation.goBack(null);
+
 			}
-
-			navigation.dispatch(changeStatus(onBackStatus));
-
-			navigation.goBack(null);
 		}
 	};
 
