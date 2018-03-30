@@ -5,6 +5,7 @@ import { addPendingScore, addScore } from '../../src/action-creators/score';
 import { changeStatus } from '../../src/action-creators/status';
 import {
 	addPlayer,
+	goHomeAndResetGame,
 	moveToAddPlayers,
 	moveToGameConfig,
 	removePlayer,
@@ -161,6 +162,24 @@ describe('Given the `newGame` action creators', () => {
 			const expected = NavigationActions.navigate({
 				routeName: 'GAME_IN_PROGRESS'
 			});
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+	});
+
+	describe('when going home and resetting the game', () => {
+		const dispatch = sinon.stub();
+
+		goHomeAndResetGame()(dispatch);
+
+		it('should reset the game', () => {
+			const expected = resetGame();
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+
+		it('should pop the navigation to the top', () => {
+			const expected = NavigationActions.popToTop();
 
 			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});

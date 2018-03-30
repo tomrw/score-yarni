@@ -81,3 +81,10 @@ export const startGame = () => {
 		}));
 	};
 };
+
+export const goHomeAndResetGame = () => {
+	return dispatch => {
+		dispatch(resetGame());
+		dispatch(NavigationActions.popToTop());
+	};
+};
