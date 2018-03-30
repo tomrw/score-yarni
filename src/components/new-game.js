@@ -8,7 +8,9 @@ import GameConfig from './new-game/game-config';
 import GameSetup from './new-game/game-setup';
 import ProgressBar from './common/progress-bar';
 import SetupProgress from './new-game/game-setup/setup-progress';
+import { changeStatus } from '../action-creators/status';
 import { NEW_GAME_PROGRESS_STEPS, TOTAL_NEW_GAME_STEPS } from '../constants/game';
+import { types } from '../constants/nav';
 import {
 	addPlayer,
 	moveToGameConfig,
@@ -157,6 +159,7 @@ export class NewGame extends Component {
 NewGame.navigationOptions = ({ navigation }) => {
 	const playersConfirmed = arePlayedConfirmed(navigation);
 	const title = playersConfirmed ? 'Game Config' : 'Add Players';
+	const onBackStatus = playersConfirmed ? types.NEW_GAME : types.HOME;
 	const props = {
 		title: 'Back',
 		tintColor: '#fff',
@@ -164,6 +167,8 @@ NewGame.navigationOptions = ({ navigation }) => {
 			if (!playersConfirmed) {
 				navigation.dispatch(resetGame());
 			}
+
+			navigation.dispatch(changeStatus(onBackStatus));
 
 			navigation.goBack(null);
 		}
