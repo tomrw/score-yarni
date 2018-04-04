@@ -44,6 +44,7 @@ export const resetGame = () => ({
 
 export const moveToAddPlayers = () => {
 	return dispatch => {
+		dispatch(resetGame());
 		dispatch(changeStatus(types.NEW_GAME));
 
 		dispatch(NavigationActions.navigate({

@@ -87,6 +87,12 @@ describe('Given the `newGame` action creators', () => {
 
 		moveToAddPlayers()(dispatch);
 
+		it('should reset the game', () => {
+			const expected = resetGame();
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+
 		it('should update the status to `NEW_GAME`', () => {
 			const expected = changeStatus('NEW_GAME');
 
