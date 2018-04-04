@@ -10,6 +10,7 @@ import {
 	moveToGameConfig,
 	removePlayer,
 	resetGame,
+	resumeGame,
 	resetPlayerId,
 	setGameConfig,
 	startGame
@@ -180,6 +181,28 @@ describe('Given the `newGame` action creators', () => {
 
 		it('should pop the navigation to the top', () => {
 			const expected = NavigationActions.popToTop();
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+	});
+
+	describe('when resuming the game', () => {
+		const dispatch = sinon.stub();
+		const location = 'NEW_GAME';
+		const getState = () => ({
+			currentGame: {
+				status: {
+					location
+				}
+			}
+		});
+
+		resumeGame()(dispatch, getState);
+
+		it('should navigate to the status location', () => {
+			const expected = NavigationActions.navigate({
+				routeName: location
+			});
 
 			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});

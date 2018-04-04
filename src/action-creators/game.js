@@ -88,3 +88,14 @@ export const goHomeAndResetGame = () => {
 		dispatch(NavigationActions.popToTop());
 	};
 };
+
+export const resumeGame = () => {
+	return (dispatch, getState) => {
+		const { currentGame } = getState();
+		const { status } = currentGame;
+
+		dispatch(NavigationActions.navigate({
+			routeName: status.location
+		}));
+	};
+};
