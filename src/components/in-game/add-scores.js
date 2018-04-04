@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon, List } from 'react-native-elements';
 import { View } from 'react-native';
@@ -56,7 +57,14 @@ const getData = (players, pendingScores) => {
 
 AddScores.navigationOptions = ({ navigation }) => {
 	const onClose = () => {
-		navigation.dispatch(goHomeAndResetGame());
+		Alert.alert(
+			'Quit Game',
+			'Are you sure you want to quit the game? It will be reset.',
+			[
+				{ text: 'Cancel' },
+				{ text: 'OK', onPress: () => navigation.dispatch(goHomeAndResetGame()) }
+			]
+		);
 	};
 
 	return {
