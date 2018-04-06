@@ -1,5 +1,5 @@
 export const ADD_PLAYER = 'ADD_PLAYER';
-export const CHANGE_STATUS = 'CHANGE_STATUS';
+export const CHANGE_NAV_LOCATION = 'CHANGE_NAV_LOCATION';
 export const GAME_ENDED = 'GAME_ENDED';
 export const REMOVE_PLAYER = 'REMOVE_PLAYER';
 export const RESET_GAME = 'RESET_GAME';

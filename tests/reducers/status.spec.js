@@ -1,5 +1,5 @@
 import reduce from '../../src/reducers/status';
-import { changeStatus } from '../../src/action-creators/status';
+import { changeNavLocation } from '../../src/action-creators/status';
 import { resetGame } from '../../src/action-creators/game';
 
 describe('Given the status reducer', () => {
@@ -12,11 +12,11 @@ describe('Given the status reducer', () => {
 		expect(initialState).toEqual({});
 	});
 
-	describe('when changing the status', () => {
+	describe('when changing the nav location', () => {
 		const location = 'IN_GAME';
 
 		it('should set the location', () => {
-			const newState = reduce(initialState, changeStatus(location));
+			const newState = reduce(initialState, changeNavLocation(location));
 			const expectedState = {
 				location
 			};
@@ -26,8 +26,8 @@ describe('Given the status reducer', () => {
 
 		it('should update the location', () => {
 			const newLocation = 'ADD_PLAYERS';
-			const newState = reduce(initialState, changeStatus(location));
-			const nextState = reduce(newState, changeStatus(newLocation));
+			const newState = reduce(initialState, changeNavLocation(location));
+			const nextState = reduce(newState, changeNavLocation(newLocation));
 			const expectedState = {
 				location: newLocation
 			};
@@ -39,7 +39,7 @@ describe('Given the status reducer', () => {
 	describe('when resetting the game', () => {
 		it('should reset the status', () => {
 			const location = 'GAME_CONFIG';
-			const newState = reduce(initialState, changeStatus(location));
+			const newState = reduce(initialState, changeNavLocation(location));
 			const nextState = reduce(newState, resetGame());
 
 			expect(nextState).toEqual({});

@@ -8,7 +8,7 @@ import GameConfig from './new-game/game-config';
 import GameSetup from './new-game/game-setup';
 import ProgressBar from './common/progress-bar';
 import SetupProgress from './new-game/game-setup/setup-progress';
-import { changeStatus } from '../action-creators/status';
+import { changeNavLocation } from '../action-creators/status';
 import { NEW_GAME_PROGRESS_STEPS, TOTAL_NEW_GAME_STEPS } from '../constants/game';
 import { types } from '../constants/nav';
 import {
@@ -168,7 +168,7 @@ NewGame.navigationOptions = ({ navigation }) => {
 			if (!playersConfirmed) {
 				navigation.dispatch(goHomeAndResetGame());
 			} else {
-				navigation.dispatch(changeStatus(onBackStatus));
+				navigation.dispatch(changeNavLocation(onBackStatus));
 				navigation.goBack(null);
 
 			}

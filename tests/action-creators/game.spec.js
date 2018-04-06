@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import { NavigationActions } from 'react-navigation';
 
 import { addPendingScore, addScore } from '../../src/action-creators/score';
-import { changeStatus } from '../../src/action-creators/status';
+import { changeNavLocation } from '../../src/action-creators/status';
 import {
 	addPlayer,
 	checkForEndGame,
@@ -96,7 +96,7 @@ describe('Given the `newGame` action creators', () => {
 		});
 
 		it('should update the status to `NEW_GAME`', () => {
-			const expected = changeStatus('NEW_GAME');
+			const expected = changeNavLocation('NEW_GAME');
 
 			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});
@@ -116,7 +116,7 @@ describe('Given the `newGame` action creators', () => {
 		moveToGameConfig()(dispatch);
 
 		it('should update the status to `GAME_CONFIG`', () => {
-			const expected = changeStatus('GAME_CONFIG');
+			const expected = changeNavLocation('GAME_CONFIG');
 
 			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});
@@ -162,7 +162,7 @@ describe('Given the `newGame` action creators', () => {
 		});
 
 		it('should update the status to `GAME_IN_PROGRESS`', () => {
-			const expected = changeStatus('GAME_IN_PROGRESS');
+			const expected = changeNavLocation('GAME_IN_PROGRESS');
 
 			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});

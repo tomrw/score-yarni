@@ -1,6 +1,6 @@
-import { CHANGE_STATUS, RESET_GAME } from '../constants/game';
+import { CHANGE_NAV_LOCATION, RESET_GAME } from '../constants/game';
 
-const changeStatus = (state, location) => ({
+const changeNavLocation = (state, location) => ({
 	...state,
 	location
 });
@@ -9,8 +9,8 @@ const resetGame = () => ({});
 
 export default (state = {}, action) => {
 	switch (action.type) {
-		case CHANGE_STATUS:
-			return changeStatus(state, action.payload.location);
+		case CHANGE_NAV_LOCATION:
+			return changeNavLocation(state, action.payload.location);
 		case RESET_GAME:
 			return resetGame();
 		default:

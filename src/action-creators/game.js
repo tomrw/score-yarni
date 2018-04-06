@@ -1,7 +1,7 @@
 import { NavigationActions } from 'react-navigation';
 
 import { addPendingScore, addScore } from './score';
-import { changeStatus } from './status';
+import { changeNavLocation } from './status';
 import { types } from '../constants/nav';
 import {
 	ADD_PLAYER,
@@ -46,7 +46,7 @@ export const resetGame = () => ({
 export const moveToAddPlayers = () => {
 	return dispatch => {
 		dispatch(resetGame());
-		dispatch(changeStatus(types.NEW_GAME));
+		dispatch(changeNavLocation(types.NEW_GAME));
 
 		dispatch(NavigationActions.navigate({
 			routeName: types.NEW_GAME
@@ -56,7 +56,7 @@ export const moveToAddPlayers = () => {
 
 export const moveToGameConfig = () => {
 	return dispatch => {
-		dispatch(changeStatus(types.GAME_CONFIG));
+		dispatch(changeNavLocation(types.GAME_CONFIG));
 
 		dispatch(NavigationActions.navigate({
 			routeName: types.GAME_CONFIG,
@@ -76,7 +76,7 @@ export const startGame = () => {
 			dispatch(addPendingScore(id, 0));
 		});
 
-		dispatch(changeStatus(types.GAME_IN_PROGRESS));
+		dispatch(changeNavLocation(types.GAME_IN_PROGRESS));
 
 		dispatch(NavigationActions.navigate({
 			routeName: types.GAME_IN_PROGRESS
