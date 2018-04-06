@@ -1,3 +1,4 @@
+import { checkForEndGame } from './game';
 import {
 	ADD_SCORE,
 	ADD_PENDING_SCORE,
@@ -39,6 +40,8 @@ export const confirmAllPendingScores = () => {
 		pendingScores.forEach(({ id }) => {
 			dispatch(addPendingScore(id, 0));
 		});
+
+		dispatch(checkForEndGame());
 	};
 };
 

@@ -5,6 +5,8 @@ import { addPendingScore, addScore } from '../../src/action-creators/score';
 import { changeStatus } from '../../src/action-creators/status';
 import {
 	addPlayer,
+	checkForEndGame,
+	gameEnded,
 	goHomeAndResetGame,
 	moveToAddPlayers,
 	moveToGameConfig,
@@ -211,6 +213,55 @@ describe('Given the `newGame` action creators', () => {
 			});
 
 			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+	});
+
+	describe('when checking for end game', () => {
+		const dispatch = sinon.stub();
+
+		const runTest = (equalTo = false, lessThan = false) => {
+			const score = equalTo ? 100 : 110;
+			const position1Score = lessThan ? 90 : score;
+			const config = {
+				maxGameScore: 100
+			};
+			const leaderboard = [
+				{ id: 1, position: 1, score: position1Score },
+				{ id: 2, position: 2, score: 20 },
+				{ id: 3, position: 3, score: 5 }
+			];
+			const getState = () => ({
+				currentGame: {
+					config,
+					leaderboard
+				}
+			});
+
+			checkForEndGame()(dispatch, getState);
+		};
+
+		afterEach(() => dispatch.reset());
+
+		it('should dispatch a `GAME_ENDED` action if a players score equals the `maxGameScore', () => {
+			runTest(true);
+
+			const expected = gameEnded();
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+
+		it('should dispatch a `GAME_ENDED` action if a players score exceeds the `maxGameScore', () => {
+			runTest(false);
+
+			const expected = gameEnded();
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+
+		it('should NOT dispatch a `GAME_ENDED` action if a players score is less than `maxGameScore', () => {
+			runTest(null, true);
+
+			expect(dispatch.notCalled).toBe(true);
 		});
 	});
 });

@@ -5,6 +5,7 @@ import { changeStatus } from './status';
 import { types } from '../constants/nav';
 import {
 	ADD_PLAYER,
+	GAME_ENDED,
 	REMOVE_PLAYER,
 	RESET_GAME,
 	SET_GAME_CONFIG
@@ -100,3 +101,22 @@ export const resumeGame = () => {
 		}));
 	};
 };
+
+export const checkForEndGame = () => {
+	return (dispatch, getState) => {
+		const { currentGame } = getState();
+		const { config, leaderboard } = currentGame;
+		const { maxGameScore } = config;
+		const scoresExceedingMax = leaderboard.filter(({ score }) => {
+			return score >= maxGameScore;
+		});
+
+		if (scoresExceedingMax.length) {
+			dispatch(gameEnded());
+		}
+	};
+};
+
+export const gameEnded = () => ({
+	type: GAME_ENDED
+});
