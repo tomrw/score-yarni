@@ -1,6 +1,6 @@
 import reduce from '../../src/reducers/status';
 import { changeNavLocation } from '../../src/action-creators/status';
-import { resetGame } from '../../src/action-creators/game';
+import { gameEnded, resetGame } from '../../src/action-creators/game';
 
 describe('Given the status reducer', () => {
 	const unknownAction = {
@@ -33,6 +33,14 @@ describe('Given the status reducer', () => {
 			};
 
 			expect(nextState).toEqual(expectedState);
+		});
+	});
+
+	describe('when changing the games ended state', () => {
+		it('should set `ended` to `true`', () => {
+			const newState = reduce(initialState, gameEnded());
+
+			expect(newState.ended).toBe(true);
 		});
 	});
 
