@@ -8,8 +8,9 @@ import CloseButton from '../common/close-button';
 import GameSummary from './game-summary';
 import { goHomeAndResetGame } from '../../action-creators/game';
 
-export const GameInfo = ({ leaderboard, players, scores, settings }) => {
+export const GameInfo = ({ ended, leaderboard, players, scores, settings }) => {
 	const props = {
+		ended,
 		leaderboard,
 		players,
 		scores,
@@ -40,6 +41,7 @@ GameInfo.navigationOptions = ({ navigation }) => {
 };
 
 GameInfo.propTypes = {
+	ended: PropTypes.bool,
 	leaderboard: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number.isRequired,
 		position: PropTypes.number.isRequired,
@@ -57,6 +59,7 @@ GameInfo.propTypes = {
 };
 
 const mapStateToProps = ({ currentGame, settings }) => ({
+	ended: currentGame.status.ended,
 	leaderboard: currentGame.leaderboard,
 	scores: currentGame.scores.scores,
 	players: currentGame.players,

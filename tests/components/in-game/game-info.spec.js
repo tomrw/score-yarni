@@ -13,6 +13,7 @@ describe('Given <GameInfo />', () => {
 		dispatch,
 		navigate
 	};
+	const ended = true;
 	const player1 = { name: 'Tom', id: 1 };
 	const player2 = { name: 'Fred', id: 2 };
 	const players = [ player1, player2 ];
@@ -27,6 +28,7 @@ describe('Given <GameInfo />', () => {
 	];
 	const settings = {};
 	const props = {
+		ended,
 		leaderboard,
 		players,
 		scores,
@@ -36,6 +38,10 @@ describe('Given <GameInfo />', () => {
 
 	it('should be a `GameSummary`', () => {
 		expect(renderedComponent.is(GameSummary)).toBe(true);
+	});
+
+	it('should have an `ended` prop', () => {
+		expect(renderedComponent.prop('ended')).toEqual(ended);
 	});
 
 	it('should have a `leaderboard` prop', () => {
