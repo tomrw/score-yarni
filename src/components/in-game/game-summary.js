@@ -3,18 +3,21 @@ import PropTypes from 'prop-types';
 import { Text } from 'react-native-elements';
 import { ScrollView } from 'react-native';
 
+import GameEndedSummary from './game-ended-summary';
 import Leaderboard from './scores/leaderboard';
 import Scoreboard from './scores/scoreboard';
 
 import styles from './styles/game-summary';
 
-const GameSummary = ({ leaderboard, players, scores, settings = {} }) => {
+const GameSummary = ({ ended, leaderboard, players, scores, settings = {} }) => {
 	const leaderboardData = getLeaderboardData(leaderboard, players);
 	const scoreboardData = getScoreboardData(players, scores);
 	const { reverseScoreboard } = settings;
+	const gameEnded = ended ? <GameEndedSummary /> : null;
 
 	return (
 		<ScrollView>
+			{ gameEnded }
 			<Text style={ styles.heading }>Leaderboard</Text>
 			<Leaderboard leaderboardData={ leaderboardData } />
 			<Text style={ styles.heading }>Scoreboard</Text>
@@ -51,6 +54,7 @@ const getScoreboardData = (players, scores) => {
 };
 
 GameSummary.propTypes = {
+	ended: PropTypes.bool,
 	leaderboard: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number.isRequired,
 		position: PropTypes.number.isRequired,

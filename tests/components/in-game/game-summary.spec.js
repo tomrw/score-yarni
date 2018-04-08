@@ -2,6 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import GameSummary from '../../../src/components/in-game/game-summary';
+import GameEndedSummary from '../../../src/components/in-game/game-ended-summary';
+
 import gameSummaryStyles from '../../../src/components/in-game/styles/game-summary';
 
 describe('Given <GameSummary />', () => {
@@ -103,6 +105,24 @@ describe('Given <GameSummary />', () => {
 
 			it('should have a `reverse/ true` prop', () => {
 				expect(scoreboard.prop('reverse')).toBe(true);
+			});
+		});
+	});
+
+	describe('when the game has ended', () => {
+		const newProps = {
+			ended: true,
+			players,
+			leaderboard,
+			scores
+		};
+		const renderedComponent = shallow(<GameSummary { ...newProps } />);
+
+		describe('and the first child', () => {
+			const gameEndedSummary = renderedComponent.childAt(0);
+
+			it('should be a `GameEndedSummary`', () => {
+				expect(gameEndedSummary.is(GameEndedSummary)).toBe(true);
 			});
 		});
 	});
