@@ -1,7 +1,8 @@
 import {
 	CHANGE_NAV_LOCATION,
 	GAME_ENDED,
-	RESET_GAME
+	RESET_GAME,
+	SET_WINNERS
 } from '../constants/game';
 
 const changeNavLocation = (state, location) => ({
@@ -14,6 +15,11 @@ const gameEnded = state => ({
 	ended: true
 });
 
+const setWinners = (state, winners) => ({
+	...state,
+	winners
+});
+
 const resetGame = () => ({});
 
 export default (state = {}, action) => {
@@ -22,6 +28,8 @@ export default (state = {}, action) => {
 			return changeNavLocation(state, action.payload.location);
 		case GAME_ENDED:
 			return gameEnded(state);
+		case SET_WINNERS:
+			return setWinners(state, action.payload.winners);
 		case RESET_GAME:
 			return resetGame();
 		default:

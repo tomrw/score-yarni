@@ -1,4 +1,4 @@
-import { changeNavLocation } from '../../src/action-creators/status';
+import { changeNavLocation, setWinners } from '../../src/action-creators/status';
 
 describe('Given the `status` action creator', () => {
 	describe('when changing the location', () => {
@@ -12,6 +12,21 @@ describe('Given the `status` action creator', () => {
 		it('should return the correct payload', () => {
 			expect(action.payload).toEqual({
 				location
+			});
+		});
+	});
+
+	describe('when setting the winners', () => {
+		const winners = [ 'a', 'b' ];
+		const action = setWinners(winners);
+
+		it('should return the correct type', () => {
+			expect(action.type).toEqual('SET_WINNERS');
+		});
+
+		it('should return the correct payload', () => {
+			expect(action.payload).toEqual({
+				winners
 			});
 		});
 	});

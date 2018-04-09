@@ -1,5 +1,5 @@
 import reduce from '../../src/reducers/status';
-import { changeNavLocation } from '../../src/action-creators/status';
+import { changeNavLocation, setWinners } from '../../src/action-creators/status';
 import { gameEnded, resetGame } from '../../src/action-creators/game';
 
 describe('Given the status reducer', () => {
@@ -41,6 +41,15 @@ describe('Given the status reducer', () => {
 			const newState = reduce(initialState, gameEnded());
 
 			expect(newState.ended).toBe(true);
+		});
+	});
+
+	describe('when setting the winners', () => {
+		it('should set the winners', () => {
+			const winners = [ 'a', 'b' ];
+			const newState = reduce(initialState, setWinners(winners));
+
+			expect(newState.winners).toEqual(winners);
 		});
 	});
 
