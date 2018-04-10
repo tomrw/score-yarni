@@ -113,6 +113,7 @@ export const checkForEndGame = () => {
 
 		if (scoresExceedingMax.length) {
 			dispatch(gameEnded());
+			dispatch(calculateWinners());
 		}
 	};
 };
