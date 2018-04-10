@@ -2,9 +2,10 @@ import sinon from 'sinon';
 import { NavigationActions } from 'react-navigation';
 
 import { addPendingScore, addScore } from '../../src/action-creators/score';
-import { changeNavLocation } from '../../src/action-creators/status';
+import { changeNavLocation, setWinners } from '../../src/action-creators/status';
 import {
 	addPlayer,
+	calculateWinners,
 	checkForEndGame,
 	gameEnded,
 	goHomeAndResetGame,
@@ -12,8 +13,8 @@ import {
 	moveToGameConfig,
 	removePlayer,
 	resetGame,
-	resumeGame,
 	resetPlayerId,
+	resumeGame,
 	setGameConfig,
 	startGame
 } from '../../src/action-creators/game';
@@ -262,6 +263,61 @@ describe('Given the `newGame` action creators', () => {
 			runTest(null, true);
 
 			expect(dispatch.notCalled).toBe(true);
+		});
+	});
+
+	describe('when calculating the winners', () => {
+		const players = [
+			{ id: 1, name: 'Tom' },
+			{ id: 2, name: 'Fred' },
+			{ id: 3, name: 'Jimmy' },
+			{ id: 4, name: 'Chloe' }
+		];
+		const dispatch = sinon.stub();
+
+		afterEach(() => dispatch.reset());
+
+		it('should dispatch the `setWinners` action with the winner', () => {
+			const leaderboard = [
+				{ id: 1, position: 1, score: 100 },
+				{ id: 2, position: 2, score: 20 },
+				{ id: 3, position: 3, score: 5 }
+			];
+			const getState = () => ({
+				currentGame: {
+					leaderboard,
+					players
+				}
+			});
+			const expectedWinners = [ players[2].name ];
+			const expected = setWinners(expectedWinners);
+
+			calculateWinners()(dispatch, getState);
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+		});
+
+		describe('when there is a tie', () => {
+			it('should dispatch the `setWinners` action with the winners', () => {
+				const leaderboard = [
+					{ id: 1, position: 1, score: 100 },
+					{ id: 2, position: 2, score: 20 },
+					{ id: 3, position: 3, score: 20 },
+					{ id: 4, position: 4, score: 20 }
+				];
+				const getState = () => ({
+					currentGame: {
+						leaderboard,
+						players
+					}
+				});
+				const expectedWinners = [ players[1].name, players[2].name, players[3].name ];
+				const expected = setWinners(expectedWinners);
+
+				calculateWinners()(dispatch, getState);
+
+				expect(dispatch.withArgs(expected).calledOnce).toBe(true);
+			});
 		});
 	});
 });

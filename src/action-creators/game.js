@@ -1,7 +1,7 @@
 import { NavigationActions } from 'react-navigation';
 
 import { addPendingScore, addScore } from './score';
-import { changeNavLocation } from './status';
+import { changeNavLocation, setWinners } from './status';
 import { types } from '../constants/nav';
 import {
 	ADD_PLAYER,
@@ -114,6 +114,21 @@ export const checkForEndGame = () => {
 		if (scoresExceedingMax.length) {
 			dispatch(gameEnded());
 		}
+	};
+};
+
+export const calculateWinners = () => {
+	return (dispatch, getState) => {
+		const { currentGame } = getState();
+		const { leaderboard, players } = currentGame;
+		const lastLeaderboardentry = leaderboard[ leaderboard.length - 1 ];
+		const { score: winningScore } = lastLeaderboardentry;
+		const winners = leaderboard.filter(({ score }) => winningScore === score);
+		const playerNames = winners.map(({ id }) => {
+			return players.find(player => player.id === id).name;
+		});
+
+		dispatch(setWinners(playerNames));
 	};
 };
 
