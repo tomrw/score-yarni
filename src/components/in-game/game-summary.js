@@ -9,11 +9,11 @@ import Scoreboard from './scores/scoreboard';
 
 import styles from './styles/game-summary';
 
-const GameSummary = ({ ended, leaderboard, players, scores, settings = {} }) => {
+const GameSummary = ({ ended, leaderboard, players, scores, settings = {}, winners }) => {
 	const leaderboardData = getLeaderboardData(leaderboard, players);
 	const scoreboardData = getScoreboardData(players, scores);
 	const { reverseScoreboard } = settings;
-	const gameEnded = ended ? <GameEndedSummary /> : null;
+	const gameEnded = ended ? <GameEndedSummary winners={ winners } /> : null;
 
 	return (
 		<ScrollView>
@@ -68,7 +68,8 @@ GameSummary.propTypes = {
 		id: PropTypes.number.isRequired,
 		score: PropTypes.number.isRequired
 	})).isRequired,
-	settings: PropTypes.object
+	settings: PropTypes.object,
+	winners: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default GameSummary;

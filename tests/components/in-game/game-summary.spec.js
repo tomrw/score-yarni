@@ -110,11 +110,11 @@ describe('Given <GameSummary />', () => {
 	});
 
 	describe('when the game has ended', () => {
+		const winners = [ 'a', 'b' ];
 		const newProps = {
 			ended: true,
-			players,
-			leaderboard,
-			scores
+			winners,
+			...props
 		};
 		const renderedComponent = shallow(<GameSummary { ...newProps } />);
 
@@ -123,6 +123,10 @@ describe('Given <GameSummary />', () => {
 
 			it('should be a `GameEndedSummary`', () => {
 				expect(gameEndedSummary.is(GameEndedSummary)).toBe(true);
+			});
+
+			it('should have a `winners` prop', () => {
+				expect(gameEndedSummary.prop('winners')).toEqual(winners);
 			});
 		});
 	});

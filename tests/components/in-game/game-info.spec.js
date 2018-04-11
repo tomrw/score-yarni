@@ -27,12 +27,14 @@ describe('Given <GameInfo />', () => {
 		{ id: 2, score: 40 }
 	];
 	const settings = {};
+	const winners = [ 'a', 'b' ];
 	const props = {
 		ended,
 		leaderboard,
 		players,
 		scores,
-		settings
+		settings,
+		winners
 	};
 	const renderedComponent = shallow(<GameInfo { ...props } />);
 
@@ -58,6 +60,10 @@ describe('Given <GameInfo />', () => {
 
 	it('should have a `settings` prop', () => {
 		expect(renderedComponent.prop('settings')).toEqual(settings);
+	});
+
+	it('should have a `winners` prop', () => {
+		expect(renderedComponent.prop('winners')).toEqual(winners);
 	});
 
 	describe('and its navigation options', () => {
