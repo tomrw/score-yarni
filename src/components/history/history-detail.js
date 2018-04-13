@@ -11,7 +11,8 @@ export const HistoryDetail = ({ history, navigation }) => {
 	const {
 		leaderboard,
 		players,
-		scores
+		scores,
+		winners
 	} = historyEntry;
 
 	return (
@@ -20,6 +21,8 @@ export const HistoryDetail = ({ history, navigation }) => {
 				leaderboard={ leaderboard }
 				players={ players }
 				scores={ scores }
+				ended
+				winners={ winners }
 			/>
 		</ScrollView>
 	);

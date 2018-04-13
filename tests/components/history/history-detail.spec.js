@@ -27,12 +27,14 @@ describe('Given <HistoryDetail />', () => {
 		{ id: 1, name: 'Tom' },
 		{ id: 2, name: 'Fred' }
 	];
+	const winners = [ 'Fred' ];
 	const props = {
 		history: [
 			{
 				leaderboard,
 				players,
-				scores
+				scores,
+				winners
 			}
 		],
 		navigation
@@ -68,6 +70,14 @@ describe('Given <HistoryDetail />', () => {
 
 		it('should have a `scores` prop', () => {
 			expect(gameSummary.prop('scores')).toEqual(scores);
+		});
+
+		it('should have an `ended` prop', () => {
+			expect(gameSummary.prop('ended')).toBe(true);
+		});
+
+		it('should have a `winners` prop', () => {
+			expect(gameSummary.prop('winners')).toEqual(winners);
 		});
 	});
 });
