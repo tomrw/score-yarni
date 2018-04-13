@@ -1,5 +1,6 @@
 import { NavigationActions } from 'react-navigation';
 
+import { addGameToHistory } from './history';
 import { addPendingScore, addScore } from './score';
 import { changeNavLocation, setWinners } from './status';
 import { types } from '../constants/nav';
@@ -114,6 +115,7 @@ export const checkForEndGame = () => {
 		if (scoresExceedingMax.length) {
 			dispatch(gameEnded());
 			dispatch(calculateWinners());
+			dispatch(addCurrentGameToHistory());
 		}
 	};
 };
@@ -136,3 +138,18 @@ export const calculateWinners = () => {
 export const gameEnded = () => ({
 	type: GAME_ENDED
 });
+
+export const addCurrentGameToHistory = () => {
+	return (dispatch, getState) => {
+		const { currentGame } = getState();
+		const { leaderboard, players, scores, status } = currentGame;
+		const { winners } = status;
+
+		dispatch(addGameToHistory({
+			leaderboard,
+			scores: scores.scores,
+			players,
+			winners
+		}));
+	};
+};

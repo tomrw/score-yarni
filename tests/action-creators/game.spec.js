@@ -4,6 +4,7 @@ import { NavigationActions } from 'react-navigation';
 import { addPendingScore, addScore } from '../../src/action-creators/score';
 import { changeNavLocation, setWinners } from '../../src/action-creators/status';
 import {
+	addCurrentGameToHistory,
 	addPlayer,
 	calculateWinners,
 	checkForEndGame,
@@ -18,6 +19,7 @@ import {
 	setGameConfig,
 	startGame
 } from '../../src/action-creators/game';
+import { addGameToHistory } from '../../src/action-creators/history';
 
 describe('Given the `newGame` action creators', () => {
 	beforeEach(resetPlayerId);
@@ -318,6 +320,40 @@ describe('Given the `newGame` action creators', () => {
 
 				expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 			});
+		});
+	});
+
+	describe('when adding the current game to history', () => {
+		const leaderboard = [ 'a', 'b' ];
+		const players = [ 'c', 'd' ];
+		const scores = {
+			scores: [ 'e', 'f', 'g' ]
+		};
+		const winners = [ 'g' ];
+		const status = {
+			winners
+		};
+		const getState = () => ({
+			currentGame: {
+				leaderboard,
+				players,
+				scores,
+				status
+			}
+		});
+		const dispatch = sinon.stub();
+
+		addCurrentGameToHistory()(dispatch, getState);
+
+		it('should dispatch the `addGameToHistory` action', () => {
+			const expected = addGameToHistory({
+				leaderboard,
+				scores: scores.scores,
+				players,
+				winners
+			});
+
+			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});
 	});
 });
