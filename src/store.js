@@ -11,7 +11,7 @@ import { navigationMiddleware } from './navigation/redux';
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: [ 'settings', 'currentGame' ]
+	whitelist: [ 'settings', 'currentGame', 'history' ]
 };
 const middlewares = [ thunk, logger, navigationMiddleware ];
 const middleware = applyMiddleware(...middlewares);
