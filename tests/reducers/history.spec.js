@@ -12,8 +12,8 @@ describe('Given the game reducer', () => {
 	});
 
 	describe('when moving a game to history', () => {
-		const game = { config: {}, leaderboard: [], players: [], scores: [] };
-		const game2 = { config: {}, leaderboard: [], players: [], scores: [] };
+		const game = { config: { a: 1 }, leaderboard: [], players: [], scores: [] };
+		const game2 = { config: { b: 2 }, leaderboard: [], players: [], scores: [] };
 
 		it('should add a game to the history', () => {
 			const newState = reduce(initialState, addGameToHistory(game));
