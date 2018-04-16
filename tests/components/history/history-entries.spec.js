@@ -67,4 +67,29 @@ describe('Given <HistoryEntries />', () => {
 			});
 		});
 	});
+
+	describe('when reversed', () => {
+		const newProps = {
+			...props,
+			reverse: true
+		};
+		const renderedComponent = shallow(<HistoryEntries { ...newProps } />);
+
+		historyData.forEach((history, i) => {
+			describe(`when rendering the history item at index ${ i }`, () => {
+				const entry = renderedComponent.childAt(i);
+
+				it('should call `navigateTo` with an `entryId` when pressed', () => {
+					const onPress = entry.prop('onPress');
+					const expectedEntry = {
+						entryId: historyData.length - i - 1
+					};
+
+					onPress();
+
+					expect(navigateTo.withArgs('HISTORY_DETAIL', expectedEntry).calledOnce).toBe(true);
+				});
+			});
+		});
+	});
 });
