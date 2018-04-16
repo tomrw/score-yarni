@@ -5,8 +5,8 @@ export default [
 		key: 'reverseScoreboard'
 	},
 	{
-		text: 'Past games to store',
-		description: 'The number of previous games to keep record of',
-		key: 'previousGameStorageCount'
+		text: 'Show history in reverse order',
+		description: 'Show the latest games first',
+		key: 'historyLatestGamesFirst'
 	}
 ];
