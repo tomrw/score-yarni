@@ -24,8 +24,9 @@ const canResumeGame = currentGame => {
 		return false;
 	}
 
-	const { players, status } = currentGame;
-	const canResume = status && status.location && players && players.length;
+	const { players, status = {} } = currentGame;
+	const { ended, location } = status;
+	const canResume = status && location && !ended && players && players.length;
 
 	return canResume;
 };

@@ -46,7 +46,8 @@ describe('Given <GameSelect />', () => {
 	describe('when resuming the game', () => {
 		const currentGame = {
 			status: {
-				location: 'NEW_GAME'
+				location: 'NEW_GAME',
+				ended: false
 			},
 			players: [
 				{ id: 1, name: 'Tom' },
@@ -96,6 +97,28 @@ describe('Given <GameSelect />', () => {
 
 	describe('when resuming the game with no location', () => {
 		const currentGame = {
+			players: [
+				{ id: 1, name: 'Tom' },
+				{ id: 2, name: 'Fred' }
+			]
+		};
+		const newProps = {
+			...props,
+			currentGame
+		};
+		const renderedComponent = shallow(<GameSelect { ...newProps } />);
+
+		it('should NOT be rendered', () => {
+			expect(renderedComponent.children()).toHaveLength(1);
+		});
+	});
+
+	describe('when resuming a game that HAS ended', () => {
+		const currentGame = {
+			status: {
+				location: 'NEW_GAME',
+				ended: true
+			},
 			players: [
 				{ id: 1, name: 'Tom' },
 				{ id: 2, name: 'Fred' }
