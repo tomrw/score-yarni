@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ScrollView } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 
 import GameSummary from '../in-game/game-summary';
+import IconButton from '../common/icon-button';
+import { removeGameFromHistory } from '../../action-creators/history';
 
 export const HistoryDetail = ({ history, navigation }) => {
 	const entryId = getEntryId(navigation);
@@ -40,8 +42,28 @@ const getEntryId = navigation => {
 	return entryId;
 };
 
-HistoryDetail.navigationOptions = {
-	title: 'Hello!'
+HistoryDetail.navigationOptions = ({ navigation }) => {
+	const confirmRemoval = () => {
+		const entryId = navigation.getParam('entryId');
+
+		navigation.dispatch(removeGameFromHistory(entryId));
+		navigation.goBack(null);
+	};
+	const onRemove = () => {
+		Alert.alert(
+			'Remove Game',
+			'Are you sure you want to remove this game? It will be removed from history.',
+			[
+				{ text: 'Cancel' },
+				{ text: 'OK', onPress: () => confirmRemoval() }
+			]
+		);
+	};
+
+	return {
+		title: 'Hello!',
+		headerRight: <IconButton name="delete" onPress={ onRemove } />
+	};
 };
 
 HistoryDetail.propTypes = {

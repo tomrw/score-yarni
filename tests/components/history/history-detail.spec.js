@@ -1,4 +1,5 @@
 import React from 'react';
+import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { ScrollView } from 'react-native';
 
@@ -6,7 +7,11 @@ import GameSummary from '../../../src/components/in-game/game-summary';
 import { HistoryDetail } from '../../../src/components/history/history-detail';
 
 describe('Given <HistoryDetail />', () => {
+	const dispatch = sinon.stub();
+	const goBack = sinon.stub();
 	const navigation = {
+		dispatch,
+		goBack,
 		state: {
 			params: {
 				entryId: 0
@@ -46,10 +51,12 @@ describe('Given <HistoryDetail />', () => {
 	});
 
 	describe('and its navigation options', () => {
+		const options = HistoryDetail.navigationOptions({ navigation });
+
 		it('should have the correct `title`', () => {
 			const expectedTitle = 'Hello!';
 
-			expect(HistoryDetail.navigationOptions.title).toEqual(expectedTitle);
+			expect(options.title).toEqual(expectedTitle);
 		});
 	});
 
