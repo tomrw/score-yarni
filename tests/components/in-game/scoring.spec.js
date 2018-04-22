@@ -1,10 +1,10 @@
 import React from 'react';
 import sinon from 'sinon';
 import { Icon } from 'react-native-elements';
-import { Text } from 'react-native';
 import { shallow } from 'enzyme';
 
 import AddScores from '../../../src/components/in-game/add-scores';
+import CannotAddScores from '../../../src/components/in-game/cannot-add-scores';
 import { Scoring } from '../../../src/components/in-game/scoring';
 
 describe('Given <Scoring />', () => {
@@ -74,14 +74,8 @@ describe('Given <Scoring />', () => {
 		};
 		const renderedComponent = shallow(<Scoring { ...newProps } />);
 
-		it('should be a `Text`', () => {
-			expect(renderedComponent.is(Text)).toBe(true);
-		});
-
-		it('should have the correct text', () => {
-			const expectedText = 'Ended!';
-
-			expect(renderedComponent.props().children).toEqual(expectedText);
+		it('should be a `CannotAddScores`', () => {
+			expect(renderedComponent.is(CannotAddScores)).toBe(true);
 		});
 	});
 });

@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Alert, Text } from 'react-native';
+import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 
 import AddScores from './add-scores';
+import CannotAddScores from './cannot-add-scores';
 import CloseButton from '../common/close-button';
 import { addPendingScore, confirmAllPendingScores } from '../../action-creators/score';
 import { goHomeAndResetGame } from '../../action-creators/game';
 
 export const Scoring = ({ addPendingScore, confirmAllPendingScores, ended, players, pendingScores, navigation }) => {
 	if (ended) {
-		return <Text>Ended!</Text>;
+		return <CannotAddScores />;
 	}
 
 	const navigateTo = navigation.navigate;
