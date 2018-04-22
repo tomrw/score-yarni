@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from 'react-native';
 import { connect } from 'react-redux';
@@ -10,25 +10,44 @@ import IconButton from '../common/icon-button';
 import { addPendingScore, confirmAllPendingScores } from '../../action-creators/score';
 import { goHomeAndResetGame } from '../../action-creators/game';
 
-export const Scoring = ({ addPendingScore, confirmAllPendingScores, ended, players, pendingScores, navigation }) => {
-	if (ended) {
-		return <CannotAddScores />;
+export class Scoring extends Component {
+	componentDidUpdate({ ended }) {
+		if (this.props.ended && !ended) {
+			this.props.navigation.setParams({
+				ended: this.props.ended
+			});
+		}
 	}
 
-	const navigateTo = navigation.navigate;
-	const props = {
-		addPendingScore,
-		confirmAllPendingScores,
-		players,
-		pendingScores,
-		navigateTo
-	};
+	render() {
+		if (this.props.ended) {
+			return <CannotAddScores />;
+		}
 
-	return <AddScores { ...props } />;
-};
+		const { addPendingScore, confirmAllPendingScores, players, pendingScores, navigation } = this.props;
+		const navigateTo = navigation.navigate;
+		const props = {
+			addPendingScore,
+			confirmAllPendingScores,
+			players,
+			pendingScores,
+			navigateTo
+		};
+
+		return <AddScores { ...props } />;
+	}
+}
 
 Scoring.navigationOptions = ({ navigation }) => {
+	const gameEnded = navigation.getParam('ended');
+	const iconName = gameEnded ? 'home' : 'close';
 	const onClose = () => {
+		if (gameEnded) {
+			navigation.dispatch(goHomeAndResetGame());
+
+			return;
+		}
+
 		Alert.alert(
 			'Quit Game',
 			'Are you sure you want to quit the game? It will be reset.',
@@ -44,7 +63,7 @@ Scoring.navigationOptions = ({ navigation }) => {
 		tabBarLabel: 'Add Scores',
 		tabBarIcon: <Icon name="library-add" />,
 		headerLeft: null,
-		headerRight: <IconButton name="close" onPress={ onClose } />
+		headerRight: <IconButton name={ iconName } onPress={ onClose } />
 	};
 };
 
@@ -53,7 +72,8 @@ Scoring.propTypes = {
 	confirmAllPendingScores: PropTypes.func.isRequired,
 	ended: PropTypes.bool,
 	navigation: PropTypes.shape({
-		navigate: PropTypes.func.isRequired
+		navigate: PropTypes.func.isRequired,
+		setParams: PropTypes.func.isRequired
 	}).isRequired,
 	pendingScores: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number.isRequired,

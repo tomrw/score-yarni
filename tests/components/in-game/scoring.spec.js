@@ -12,9 +12,13 @@ describe('Given <Scoring />', () => {
 	const confirmAllPendingScores = sinon.stub();
 	const dispatch = sinon.stub();
 	const navigate = sinon.stub();
+	const getParam = sinon.stub();
+	const setParams = sinon.stub();
 	const navigation = {
 		dispatch,
-		navigate
+		getParam,
+		navigate,
+		setParams
 	};
 	const pendingScores = [
 		{ id: 1, score: 10 },
@@ -32,6 +36,8 @@ describe('Given <Scoring />', () => {
 		navigation
 	};
 	const renderedComponent = shallow(<Scoring { ...props } />);
+
+	afterEach(() => setParams.reset());
 
 	it('should be a `AddScores`', () => {
 		expect(renderedComponent.is(AddScores)).toBe(true);
@@ -76,6 +82,21 @@ describe('Given <Scoring />', () => {
 
 		it('should be a `CannotAddScores`', () => {
 			expect(renderedComponent.is(CannotAddScores)).toBe(true);
+		});
+	});
+
+	describe('when the component updates', () => {
+		it('should call `setParams` if the game has NOT ended', () => {
+			renderedComponent.setProps({ ended: true });
+
+			expect(setParams.withArgs({ ended: true }).calledOnce).toBe(true);
+		});
+
+		it('should NOT call `setParams` if the game has already ended', () => {
+			renderedComponent.setProps({ ended: false });
+			renderedComponent.instance().componentDidUpdate({ ended: false });
+
+			expect(setParams.notCalled).toBe(true);
 		});
 	});
 });
