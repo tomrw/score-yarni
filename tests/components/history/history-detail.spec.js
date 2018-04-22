@@ -80,4 +80,22 @@ describe('Given <HistoryDetail />', () => {
 			expect(gameSummary.prop('winners')).toEqual(winners);
 		});
 	});
+
+	describe('when the history entry does NOT exist', () => {
+		const newProps = {
+			...props,
+			navigation: {
+				state: {
+					params: {
+						entryId: 100
+					}
+				}
+			}
+		};
+		const renderedComponent = shallow(<HistoryDetail { ...newProps } />);
+
+		it('should return `null`', () => {
+			expect(renderedComponent.instance()).toBeNull();
+		});
+	});
 });

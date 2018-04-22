@@ -8,6 +8,11 @@ import GameSummary from '../in-game/game-summary';
 export const HistoryDetail = ({ history, navigation }) => {
 	const entryId = getEntryId(navigation);
 	const historyEntry = history[ entryId ];
+
+	if (!historyEntry) {
+		return null;
+	}
+
 	const {
 		leaderboard,
 		players,
