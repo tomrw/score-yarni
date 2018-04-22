@@ -8,10 +8,14 @@ import { GameInfo } from '../../../src/components/in-game/game-info';
 
 describe('Given <GameInfo />', () => {
 	const dispatch = sinon.stub();
+	const getParam = sinon.stub();
 	const navigate = sinon.stub();
+	const setParams = sinon.stub();
 	const navigation = {
 		dispatch,
-		navigate
+		getParam,
+		navigate,
+		setParams
 	};
 	const ended = true;
 	const player1 = { name: 'Tom', id: 1 };
@@ -31,12 +35,15 @@ describe('Given <GameInfo />', () => {
 	const props = {
 		ended,
 		leaderboard,
+		navigation,
 		players,
 		scores,
 		settings,
 		winners
 	};
 	const renderedComponent = shallow(<GameInfo { ...props } />);
+
+	afterEach(() => setParams.reset());
 
 	it('should be a `GameSummary`', () => {
 		expect(renderedComponent.is(GameSummary)).toBe(true);
@@ -87,6 +94,22 @@ describe('Given <GameInfo />', () => {
 
 				expect(icon).toEqual(expectedIcon);
 			});
+		});
+	});
+
+	describe('when the component updates', () => {
+		it('should call `setParams` if the game has NOT ended', () => {
+			renderedComponent.setProps({ ended: true });
+			renderedComponent.instance().componentDidUpdate({ ended: false });
+
+			expect(setParams.withArgs({ ended: true }).calledOnce).toBe(true);
+		});
+
+		it('should NOT call `setParams` if the game has already ended', () => {
+			renderedComponent.setProps({ ended: false });
+			renderedComponent.instance().componentDidUpdate({ ended: false });
+
+			expect(setParams.notCalled).toBe(true);
 		});
 	});
 });
