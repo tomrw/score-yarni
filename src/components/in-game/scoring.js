@@ -6,7 +6,7 @@ import { Icon } from 'react-native-elements';
 
 import AddScores from './add-scores';
 import CannotAddScores from './cannot-add-scores';
-import CloseButton from '../common/close-button';
+import IconButton from '../common/icon-button';
 import { addPendingScore, confirmAllPendingScores } from '../../action-creators/score';
 import { goHomeAndResetGame } from '../../action-creators/game';
 
@@ -44,7 +44,7 @@ Scoring.navigationOptions = ({ navigation }) => {
 		tabBarLabel: 'Add Scores',
 		tabBarIcon: <Icon name="library-add" />,
 		headerLeft: null,
-		headerRight: <CloseButton onClose={ onClose } />
+		headerRight: <IconButton name="close" onPress={ onClose } />
 	};
 };
 

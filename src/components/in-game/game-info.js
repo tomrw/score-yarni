@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 
-import CloseButton from '../common/close-button';
+import IconButton from '../common/icon-button';
 import GameSummary from './game-summary';
 import { goHomeAndResetGame } from '../../action-creators/game';
 
@@ -37,7 +37,7 @@ GameInfo.navigationOptions = ({ navigation }) => {
 		title: 'Leaderboard',
 		tabBarIcon: <Icon name="format-list-numbered" />,
 		headerLeft: null,
-		headerRight: <CloseButton onClose={ onClose } />
+		headerRight: <IconButton name="close" onPress={ onClose } />
 	};
 };
 
