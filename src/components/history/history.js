@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 import { ScrollView } from 'react-native';
 
 import HistoryEntries from './history-entries';
+import NoPastGames from './no-past-games';
 
 export const History = ({ history, navigation, settings = {} }) => {
 	const historyData = getHistoryData(history);
+
+	if (!historyData.length) {
+		return <NoPastGames />;
+	}
 
 	return (
 		<ScrollView>

@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native';
 import { shallow } from 'enzyme';
 
 import HistoryEntries from '../../../src/components/history/history-entries';
+import NoPastGames from '../../../src/components/history/no-past-games';
 import { History } from '../../../src/components/history/history';
 
 describe('Given <History />', () => {
@@ -70,6 +71,18 @@ describe('Given <History />', () => {
 
 		it('should have a `navigateTo` prop', () => {
 			expect(historyEntries.prop('navigateTo')).toEqual(navigate);
+		});
+	});
+
+	describe('when there are NOT any past games', () => {
+		const newProps = {
+			...props,
+			history: []
+		};
+		const renderedComponent = shallow(<History { ...newProps } />);
+
+		it('should be a `<NoPastGames`', () => {
+			expect(renderedComponent.is(NoPastGames)).toBe(true);
 		});
 	});
 });
