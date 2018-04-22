@@ -1,24 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Alert } from 'react-native';
-import { connect } from 'react-redux';
-import { Icon, List } from 'react-native-elements';
+import { List } from 'react-native-elements';
 import { View } from 'react-native';
 
 import AddPlayerScore from './add-player-score';
 import ConfirmScores from './confirm-scores';
-import CloseButton from '../common/close-button';
-import { addPendingScore, confirmAllPendingScores } from '../../action-creators/score';
-import { goHomeAndResetGame } from '../../action-creators/game';
 
 import styles from './styles/add-scores';
 
-export const AddScores = ({ addPendingScore, confirmAllPendingScores, navigation, players, pendingScores }) => {
+const AddScores = ({ addPendingScore, confirmAllPendingScores, navigateTo, players, pendingScores }) => {
 	const data = getData(players, pendingScores);
 	const confirmScores = () => {
 		confirmAllPendingScores();
 
-		navigation.navigate('gameInfo');
+		navigateTo('gameInfo');
 	};
 
 	return (
@@ -55,33 +50,10 @@ const getData = (players, pendingScores) => {
 	});
 };
 
-AddScores.navigationOptions = ({ navigation }) => {
-	const onClose = () => {
-		Alert.alert(
-			'Quit Game',
-			'Are you sure you want to quit the game? It will be reset.',
-			[
-				{ text: 'Cancel' },
-				{ text: 'OK', onPress: () => navigation.dispatch(goHomeAndResetGame()) }
-			]
-		);
-	};
-
-	return {
-		title: 'Add Scores',
-		tabBarLabel: 'Add Scores',
-		tabBarIcon: <Icon name="library-add" />,
-		headerLeft: null,
-		headerRight: <CloseButton onClose={ onClose } />
-	};
-};
-
 AddScores.propTypes = {
 	addPendingScore: PropTypes.func.isRequired,
 	confirmAllPendingScores: PropTypes.func.isRequired,
-	navigation: PropTypes.shape({
-		navigate: PropTypes.func.isRequired
-	}).isRequired,
+	navigateTo: PropTypes.func.isRequired,
 	pendingScores: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number.isRequired,
 		score: PropTypes.number.isRequired
@@ -92,14 +64,4 @@ AddScores.propTypes = {
 	})).isRequired
 };
 
-const mapStateToProps = ({ currentGame }) => ({
-	pendingScores: currentGame.scores.pendingScores,
-	players: currentGame.players
-});
-
-const mapDispatchToProps = {
-	addPendingScore,
-	confirmAllPendingScores
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddScores);
+export default AddScores;
