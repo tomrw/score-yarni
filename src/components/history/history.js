@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import HistoryEntries from './history-entries';
 
@@ -9,12 +9,12 @@ export const History = ({ history, navigation, settings = {} }) => {
 	const historyData = getHistoryData(history);
 
 	return (
-		<View>
+		<ScrollView>
 			<HistoryEntries
 				historyData={ historyData }
 				navigateTo={ navigation.navigate }
 				reverse={ settings.historyLatestGamesFirst } />
-		</View>
+		</ScrollView>
 	);
 };
 

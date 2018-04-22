@@ -1,5 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
+import { ScrollView } from 'react-native';
 import { shallow } from 'enzyme';
 
 import HistoryEntries from '../../../src/components/history/history-entries';
@@ -39,8 +40,8 @@ describe('Given <History />', () => {
 	};
 	const renderedComponent = shallow(<History { ...props } />);
 
-	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+	it('should be a `ScrollView`', () => {
+		expect(renderedComponent.is(ScrollView)).toBe(true);
 	});
 
 	describe('and its navigation options', () => {
