@@ -1,17 +1,17 @@
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
-import AddScores from '../components/in-game/add-scores';
 import GameInfo from '../components/in-game/game-info';
 import History from '../components/history/history';
 import HistoryDetail from '../components/history/history-detail';
 import HomePage from '../components/home-page';
 import NewGame from '../components/new-game';
+import Scoring from '../components/in-game/scoring';
 import Settings from '../components/settings/settings';
 import { types } from '../constants/nav';
 
 export const gameInProgressTabs = {
 	gameInfo: { screen: GameInfo },
-	addScores: { screen: AddScores }
+	scoring: { screen: Scoring }
 };
 
 export const screens = {

@@ -8,12 +8,14 @@ import CloseButton from '../common/close-button';
 import GameSummary from './game-summary';
 import { goHomeAndResetGame } from '../../action-creators/game';
 
-export const GameInfo = ({ leaderboard, players, scores, settings }) => {
+export const GameInfo = ({ ended, leaderboard, players, scores, settings, winners }) => {
 	const props = {
+		ended,
 		leaderboard,
 		players,
 		scores,
-		settings
+		settings,
+		winners
 	};
 
 	return <GameSummary { ...props } />;
@@ -40,6 +42,7 @@ GameInfo.navigationOptions = ({ navigation }) => {
 };
 
 GameInfo.propTypes = {
+	ended: PropTypes.bool,
 	leaderboard: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number.isRequired,
 		position: PropTypes.number.isRequired,
@@ -53,14 +56,17 @@ GameInfo.propTypes = {
 		id: PropTypes.number.isRequired,
 		score: PropTypes.number.isRequired
 	})).isRequired,
-	settings: PropTypes.object
+	settings: PropTypes.object,
+	winners: PropTypes.arrayOf(PropTypes.string)
 };
 
 const mapStateToProps = ({ currentGame, settings }) => ({
+	ended: currentGame.status.ended,
 	leaderboard: currentGame.leaderboard,
 	scores: currentGame.scores.scores,
 	players: currentGame.players,
-	settings
+	settings,
+	winners: currentGame.status.winners
 });
 
 export default connect(mapStateToProps)(GameInfo);

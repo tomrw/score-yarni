@@ -1,8 +1,15 @@
-import { CHANGE_STATUS } from '../constants/game';
+import { CHANGE_NAV_LOCATION, SET_WINNERS } from '../constants/game';
 
-export const changeStatus = location => ({
-	type: CHANGE_STATUS,
+export const changeNavLocation = location => ({
+	type: CHANGE_NAV_LOCATION,
 	payload: {
 		location
+	}
+});
+
+export const setWinners = winners => ({
+	type: SET_WINNERS,
+	payload: {
+		winners
 	}
 });

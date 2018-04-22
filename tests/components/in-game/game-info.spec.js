@@ -13,6 +13,7 @@ describe('Given <GameInfo />', () => {
 		dispatch,
 		navigate
 	};
+	const ended = true;
 	const player1 = { name: 'Tom', id: 1 };
 	const player2 = { name: 'Fred', id: 2 };
 	const players = [ player1, player2 ];
@@ -26,16 +27,23 @@ describe('Given <GameInfo />', () => {
 		{ id: 2, score: 40 }
 	];
 	const settings = {};
+	const winners = [ 'a', 'b' ];
 	const props = {
+		ended,
 		leaderboard,
 		players,
 		scores,
-		settings
+		settings,
+		winners
 	};
 	const renderedComponent = shallow(<GameInfo { ...props } />);
 
 	it('should be a `GameSummary`', () => {
 		expect(renderedComponent.is(GameSummary)).toBe(true);
+	});
+
+	it('should have an `ended` prop', () => {
+		expect(renderedComponent.prop('ended')).toEqual(ended);
 	});
 
 	it('should have a `leaderboard` prop', () => {
@@ -52,6 +60,10 @@ describe('Given <GameInfo />', () => {
 
 	it('should have a `settings` prop', () => {
 		expect(renderedComponent.prop('settings')).toEqual(settings);
+	});
+
+	it('should have a `winners` prop', () => {
+		expect(renderedComponent.prop('winners')).toEqual(winners);
 	});
 
 	describe('and its navigation options', () => {

@@ -5,12 +5,15 @@ import { View } from 'react-native';
 
 import HistoryEntries from './history-entries';
 
-export const History = ({ history, navigation }) => {
+export const History = ({ history, navigation, settings = {} }) => {
 	const historyData = getHistoryData(history);
 
 	return (
 		<View>
-			<HistoryEntries historyData={ historyData } navigateTo={ navigation.navigate } />
+			<HistoryEntries
+				historyData={ historyData }
+				navigateTo={ navigation.navigate }
+				reverse={ settings.historyLatestGamesFirst } />
 		</View>
 	);
 };
@@ -34,11 +37,13 @@ History.propTypes = {
 	})).isRequired,
 	navigation: PropTypes.shape({
 		navigate: PropTypes.func.isRequired
-	}).isRequired
+	}).isRequired,
+	settings: PropTypes.object
 };
 
-const mapStateToProps = ({ history }) => ({
-	history
+const mapStateToProps = ({ history, settings }) => ({
+	history,
+	settings
 });
 
 export default connect(mapStateToProps)(History);

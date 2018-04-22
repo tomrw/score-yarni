@@ -5,12 +5,15 @@ import { List } from 'react-native-elements';
 import HistoryEntry from './history-entry';
 import { types } from '../../constants/nav';
 
-const HistoryEntries = ({ historyData, navigateTo }) => {
+const HistoryEntries = ({ historyData, navigateTo, reverse }) => {
+	const entries = reverse ? historyData.reverse() : historyData;
+
 	return (
 		<List>
 			{
-				historyData.map((game, i) => {
-					const onPress = () => navigateTo(types.HISTORY_DETAIL, { entryId: i });
+				entries.map((game, i) => {
+					const entryId = reverse ? entries.length - i - 1 : i ;
+					const onPress = () => navigateTo(types.HISTORY_DETAIL, { entryId });
 
 					return <HistoryEntry
 						key={ i }
@@ -30,7 +33,8 @@ HistoryEntries.propTypes = {
 			name: PropTypes.string.isRequired
 		})).isRequired
 	})).isRequired,
-	navigateTo: PropTypes.func.isRequired
+	navigateTo: PropTypes.func.isRequired,
+	reverse: PropTypes.bool
 };
 
 export default HistoryEntries;

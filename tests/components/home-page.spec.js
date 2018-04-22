@@ -2,18 +2,29 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import Logo from '../../src/components/home-page/logo';
+import GameSelect from '../../src/components/home-page/game-select';
 import HomePageButton from '../../src/components/home-page/home-page-button';
+import Logo from '../../src/components/home-page/logo';
 import { HomePage } from '../../src/components/home-page';
 
 import homePageStyles from '../../src/components/styles/home-page';
 
 describe('Given <HomePage />', () => {
+	const currentGame = {
+		status: {
+			location: 'NEW_GAME'
+		},
+		players: [
+			{ id: 1, name: 'Tom' },
+			{ id: 2, name: 'Fred' }
+		]
+	};
 	const moveToAddPlayers = sinon.stub();
 	const navigate = sinon.stub();
 	const navigation = { navigate };
 	const resumeGame = sinon.stub();
 	const props = {
+		currentGame,
 		moveToAddPlayers,
 		navigation,
 		resumeGame
@@ -60,20 +71,22 @@ describe('Given <HomePage />', () => {
 		});
 
 		describe('and its second child', () => {
-			const newGameButton = wrapperChild.childAt(1);
+			const gameSelect = wrapperChild.childAt(1);
 
-			it('should be a <HomePageButton />', () => {
-				expect(newGameButton.is(HomePageButton)).toBe(true);
+			it('should be a <GameSelect />', () => {
+				expect(gameSelect.is(GameSelect)).toBe(true);
 			});
 
-			describe('when the `onPress` prop is called', () => {
-				it('should call `moveToAddPlayers`', () => {
-					const onPress = newGameButton.prop('onPress');
+			it('should have a `currentGame` prop', () => {
+				expect(gameSelect.prop('currentGame')).toEqual(currentGame);
+			});
 
-					onPress();
+			it('should have a `resumeGame` prop', () => {
+				expect(gameSelect.prop('resumeGame')).toEqual(resumeGame);
+			});
 
-					expect(moveToAddPlayers.calledOnce).toBe(true);
-				});
+			it('should have an `onNewGame` prop', () => {
+				expect(gameSelect.prop('onNewGame')).toEqual(moveToAddPlayers);
 			});
 		});
 
@@ -109,47 +122,6 @@ describe('Given <HomePage />', () => {
 					onPress();
 
 					expect(navigate.withArgs('HISTORY').calledOnce).toBe(true);
-				});
-			});
-		});
-	});
-
-	describe('when resuming the game', () => {
-		const currentGame = {
-			status: {
-				location: 'NEW_GAME'
-			},
-			players: [
-				{ id: 1, name: 'Tom' },
-				{ id: 2, name: 'Fred' }
-			]
-		};
-		const newProps = {
-			...props,
-			currentGame
-		};
-		const renderedComponent = shallow(<HomePage { ...newProps } />);
-		const wrapperChild = renderedComponent.childAt(0);
-		const resumeGameButton = wrapperChild.childAt(2);
-
-		describe('the resume button child', () => {
-			it('should be a <HomePageButton />', () => {
-				expect(resumeGameButton.is(HomePageButton)).toBe(true);
-			});
-
-			it('should have the correct text', () => {
-				const expectedText = 'Resume Last Game';
-
-				expect(resumeGameButton.prop('text')).toEqual(expectedText);
-			});
-
-			describe('when the `onPress` prop is called', () => {
-				it('should call `resumeGame`', () => {
-					const onPress = resumeGameButton.prop('onPress');
-
-					onPress();
-
-					expect(resumeGame.calledOnce).toBe(true);
 				});
 			});
 		});

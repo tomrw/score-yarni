@@ -1,10 +1,12 @@
 import { NavigationActions } from 'react-navigation';
 
+import { addGameToHistory } from './history';
 import { addPendingScore, addScore } from './score';
-import { changeStatus } from './status';
+import { changeNavLocation, setWinners } from './status';
 import { types } from '../constants/nav';
 import {
 	ADD_PLAYER,
+	GAME_ENDED,
 	REMOVE_PLAYER,
 	RESET_GAME,
 	SET_GAME_CONFIG
@@ -45,7 +47,7 @@ export const resetGame = () => ({
 export const moveToAddPlayers = () => {
 	return dispatch => {
 		dispatch(resetGame());
-		dispatch(changeStatus(types.NEW_GAME));
+		dispatch(changeNavLocation(types.NEW_GAME));
 
 		dispatch(NavigationActions.navigate({
 			routeName: types.NEW_GAME
@@ -55,7 +57,7 @@ export const moveToAddPlayers = () => {
 
 export const moveToGameConfig = () => {
 	return dispatch => {
-		dispatch(changeStatus(types.GAME_CONFIG));
+		dispatch(changeNavLocation(types.GAME_CONFIG));
 
 		dispatch(NavigationActions.navigate({
 			routeName: types.GAME_CONFIG,
@@ -75,7 +77,7 @@ export const startGame = () => {
 			dispatch(addPendingScore(id, 0));
 		});
 
-		dispatch(changeStatus(types.GAME_IN_PROGRESS));
+		dispatch(changeNavLocation(types.GAME_IN_PROGRESS));
 
 		dispatch(NavigationActions.navigate({
 			routeName: types.GAME_IN_PROGRESS
@@ -97,6 +99,57 @@ export const resumeGame = () => {
 
 		dispatch(NavigationActions.navigate({
 			routeName: status.location
+		}));
+	};
+};
+
+export const checkForEndGame = () => {
+	return (dispatch, getState) => {
+		const { currentGame } = getState();
+		const { config, leaderboard } = currentGame;
+		const { maxGameScore } = config;
+		const scoresExceedingMax = leaderboard.filter(({ score }) => {
+			return score >= maxGameScore;
+		});
+
+		if (scoresExceedingMax.length) {
+			dispatch(gameEnded());
+			dispatch(calculateWinners());
+			dispatch(addCurrentGameToHistory());
+		}
+	};
+};
+
+export const calculateWinners = () => {
+	return (dispatch, getState) => {
+		const { currentGame } = getState();
+		const { leaderboard, players } = currentGame;
+		const lastLeaderboardentry = leaderboard[ leaderboard.length - 1 ];
+		const { score: winningScore } = lastLeaderboardentry;
+		const winners = leaderboard.filter(({ score }) => winningScore === score);
+		const playerNames = winners.map(({ id }) => {
+			return players.find(player => player.id === id).name;
+		});
+
+		dispatch(setWinners(playerNames));
+	};
+};
+
+export const gameEnded = () => ({
+	type: GAME_ENDED
+});
+
+export const addCurrentGameToHistory = () => {
+	return (dispatch, getState) => {
+		const { currentGame } = getState();
+		const { leaderboard, players, scores, status } = currentGame;
+		const { winners } = status;
+
+		dispatch(addGameToHistory({
+			leaderboard,
+			scores: scores.scores,
+			players,
+			winners
 		}));
 	};
 };

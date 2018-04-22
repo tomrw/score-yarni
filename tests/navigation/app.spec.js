@@ -1,9 +1,9 @@
-import AddScores from '../../src/components/in-game/add-scores';
 import GameInfo from '../../src/components/in-game/game-info';
 import History from '../../src/components/history/history';
 import HistoryDetail from '../../src/components/history/history-detail';
 import HomePage from '../../src/components/home-page';
 import NewGame from '../../src/components/new-game';
+import Scoring from '../../src/components/in-game/scoring';
 import Settings from '../../src/components/settings/settings';
 import {
 	config,
@@ -70,12 +70,12 @@ describe('Given <AppNavigator />', () => {
 				expect(gameInProgressTabs.gameInfo).toEqual(expectedScreen);
 			});
 
-			it('should have an `add scores` screen', () => {
+			it('should have a `scoring` screen', () => {
 				const expectedScreen = {
-					screen: AddScores
+					screen: Scoring
 				};
 
-				expect(gameInProgressTabs.addScores).toEqual(expectedScreen);
+				expect(gameInProgressTabs.scoring).toEqual(expectedScreen);
 			});
 		});
 	});
