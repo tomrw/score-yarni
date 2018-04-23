@@ -8,7 +8,7 @@ import styles from './styles/scoreboard';
 
 const Scoreboard = ({ scoreboardData, reverse }) => {
 	return (
-		<ScrollView style={ styles.container } horizontal>
+		<ScrollView style={ styles.container } horizontal alwaysBounceHorizontal={ false }>
 			{
 				scoreboardData.map(({ name, scores }, i) => (
 					<ScoreboardEntry

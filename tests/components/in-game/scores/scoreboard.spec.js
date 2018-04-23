@@ -29,6 +29,10 @@ describe('Given <Scoreboard />', () => {
 		expect(renderedComponent.prop('horizontal')).toBe(true);
 	});
 
+	it('should have a `alwaysBounceHorizontal/false` prop', () => {
+		expect(renderedComponent.prop('alwaysBounceHorizontal')).toBe(false);
+	});
+
 	it('should have the expected number of children', () => {
 		expect(renderedComponent.children()).toHaveLength(scoreboardData.length);
 	});
