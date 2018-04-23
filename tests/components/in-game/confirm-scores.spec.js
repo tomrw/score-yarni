@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import ConfirmScores from '../../../src/components/in-game/confirm-scores';
+import confirmScoreStyles from '../../../src/components/in-game/styles/confirm-scores';
 
 describe('Given <ConfirmScores />', () => {
 	const onConfirmScores = sinon.stub();
@@ -13,6 +14,10 @@ describe('Given <ConfirmScores />', () => {
 
 	it('should be a `Button`', () => {
 		expect(renderedComponent.is('Button')).toBe(true);
+	});
+
+	it('should have the `container` styles', () => {
+		expect(renderedComponent.prop('containerViewStyle')).toEqual(confirmScoreStyles.container);
 	});
 
 	it('should call the `onConfirmScores` prop when pressed', () => {

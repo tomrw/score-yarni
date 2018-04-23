@@ -2,9 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		height: '100%'
-	},
-	list: {
-		marginBottom: 65
+		position: 'absolute',
+		bottom: 10,
+		left: 0,
+		right: 0
 	}
 });

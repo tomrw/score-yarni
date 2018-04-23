@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'react-native-elements';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import AddPlayerScore from './add-player-score';
 import ConfirmScores from './confirm-scores';
@@ -17,21 +17,23 @@ const AddScores = ({ addPendingScore, confirmAllPendingScores, navigateTo, playe
 	};
 
 	return (
-		<View>
-			<List containerStyle={ styles.container }>
-				{
-					data.map(({ id, name, score }, i) => {
-						const props = {
-							addPendingScore,
-							id,
-							name,
-							score
-						};
+		<View style={ styles.container }>
+			<ScrollView style={ styles.list } alwaysBounceVertical={ false }>
+				<List>
+					{
+						data.map(({ id, name, score }, i) => {
+							const props = {
+								addPendingScore,
+								id,
+								name,
+								score
+							};
 
-						return <AddPlayerScore key={ i } { ...props } />;
-					})
-				}
-			</List>
+							return <AddPlayerScore key={ i } { ...props } />;
+						})
+					}
+				</List>
+			</ScrollView>
 			<ConfirmScores onConfirmScores={ confirmScores } />
 		</View>
 	);
