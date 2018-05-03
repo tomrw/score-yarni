@@ -87,7 +87,8 @@ HistoryDetail.propTypes = {
 		scores: PropTypes.arrayOf(PropTypes.shape({
 			id: PropTypes.number.isRequired,
 			score: PropTypes.number.isRequired
-		})).isRequired
+		})).isRequired,
+		winners: PropTypes.arrayOf(PropTypes.string).isRequired
 	})).isRequired
 };
 
