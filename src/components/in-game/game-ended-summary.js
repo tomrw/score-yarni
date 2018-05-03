@@ -20,9 +20,9 @@ const getWinnerText = winners => {
 	if (winners.length === 2) {
 		text = `${ winners[0] } & ${ winners[1] } win!`;
 	} else if (winners.length > 2) {
-		const lastWinner = winners.pop();
+		const lastWinner = winners[ winners.length - 1];
 
-		text = `${ winners.join(', ') } & ${ lastWinner } win!`;
+		text = `${ winners.slice(0, -1).join(', ') } & ${ lastWinner } win!`;
 	}
 
 	return text;
