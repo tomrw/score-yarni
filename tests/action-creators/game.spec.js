@@ -245,7 +245,7 @@ describe('Given the `newGame` action creators', () => {
 
 		afterEach(() => dispatch.reset());
 
-		it('should dispatch a `GAME_ENDED` action if a players score equals the `maxGameScore', () => {
+		it('should dispatch a `GAME_ENDED` action if a players score equals the `maxGameScore`', () => {
 			runTest(true);
 
 			const expected = gameEnded();
@@ -253,7 +253,7 @@ describe('Given the `newGame` action creators', () => {
 			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});
 
-		it('should dispatch a `GAME_ENDED` action if a players score exceeds the `maxGameScore', () => {
+		it('should dispatch a `GAME_ENDED` action if a players score exceeds the `maxGameScore`', () => {
 			runTest(false);
 
 			const expected = gameEnded();
@@ -261,7 +261,7 @@ describe('Given the `newGame` action creators', () => {
 			expect(dispatch.withArgs(expected).calledOnce).toBe(true);
 		});
 
-		it('should NOT dispatch a `GAME_ENDED` action if a players score is less than `maxGameScore', () => {
+		it('should NOT dispatch a `GAME_ENDED` action if a players score is less than `maxGameScore`', () => {
 			runTest(null, true);
 
 			expect(dispatch.notCalled).toBe(true);
