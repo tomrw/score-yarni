@@ -108,11 +108,13 @@ export const checkForEndGame = () => {
 		const { currentGame } = getState();
 		const { config, leaderboard } = currentGame;
 		const { maxGameScore } = config;
-		const scoresExceedingMax = leaderboard.filter(({ score }) => {
-			return score >= maxGameScore;
-		});
+		const hasGameEnded = leaderboard
+			.reduce((scoresList, { scores }) => scoresList.concat(scores), [])
+			.some(({ score }) => {
+				return score >= maxGameScore;
+			});
 
-		if (scoresExceedingMax.length) {
+		if (hasGameEnded) {
 			dispatch(gameEnded());
 			dispatch(calculateWinners());
 			dispatch(addCurrentGameToHistory());
@@ -125,9 +127,7 @@ export const calculateWinners = () => {
 		const { currentGame } = getState();
 		const { leaderboard, players } = currentGame;
 		const lastLeaderboardentry = leaderboard[ leaderboard.length - 1 ];
-		const { score: winningScore } = lastLeaderboardentry;
-		const winners = leaderboard.filter(({ score }) => winningScore === score);
-		const playerNames = winners.map(({ id }) => {
+		const playerNames = lastLeaderboardentry.scores.map(({ id }) => {
 			return players.find(player => player.id === id).name;
 		});
 

@@ -76,9 +76,11 @@ HistoryDetail.propTypes = {
 	}).isRequired,
 	history: PropTypes.arrayOf(PropTypes.shape({
 		leaderboard: PropTypes.arrayOf(PropTypes.shape({
-			id: PropTypes.number.isRequired,
 			position: PropTypes.number.isRequired,
-			score: PropTypes.number.isRequired
+			scores: PropTypes.arrayOf(PropTypes.shape({
+				id: PropTypes.number.isRequired,
+				score: PropTypes.number.isRequired
+			})).isRequired
 		})).isRequired,
 		players: PropTypes.arrayOf(PropTypes.shape({
 			id: PropTypes.number.isRequired,

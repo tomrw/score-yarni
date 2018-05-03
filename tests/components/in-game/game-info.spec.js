@@ -23,7 +23,10 @@ describe('Given <GameInfo />', () => {
 	const players = [ player1, player2 ];
 	const score1 = { id: player1.id, position: 1, score: 100 };
 	const score2 = { id: player2.id, position: 2, score: 10 };
-	const leaderboard = [ score1, score2 ];
+	const leaderboard = [
+		{ position: 1, scores: [ score1 ] },
+		{ position: 2, scores: [ score2 ] }
+	];
 	const scores = [
 		{ id: 1, score: 10 },
 		{ id: 2, score: 20 },

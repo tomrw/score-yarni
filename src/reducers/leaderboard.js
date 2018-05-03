@@ -4,14 +4,16 @@ import { RESET_GAME } from '../constants/game';
 const INITIAL_STATE = [];
 
 const updateLeaderboard = (leaderboard, { id, score }) => {
-	const playerScore = leaderboard.find(el => el.id === id);
-	const newLeaderboard = [ ...leaderboard ];
+	const scores = leaderboard.reduce((result, item) => {
+		return result.concat(...item.scores);
+	}, []);
+	const playerScore = scores.find(el => el.id === id);
 
 	if (!playerScore) {
-		newLeaderboard.push({ id, score: 0 });
+		scores.push({ id, score: 0 });
 	}
 
-	return newLeaderboard
+	const sortedScores = scores
 		.map(item => {
 			const newScore = item.id === id ? item.score + score : item.score;
 
@@ -19,14 +21,43 @@ const updateLeaderboard = (leaderboard, { id, score }) => {
 				id: item.id,
 				score: newScore
 			};
-		})
-		.sort((a, b) => a.score < b.score)
-		.map((item, index) => {
-			return {
-				...item,
-				position: index + 1
-			};
 		});
+
+	sortedScores.sort((a, b) => {
+		if (a.score > b.score) {
+			return -1;
+		} else if (a.score === b.score) {
+			return 0;
+		}
+
+		return 1;
+	});
+
+	const groupedScores = sortedScores.reduce((result, item) => {
+		const lastIndex = result.length - 1;
+
+		if (result.length && result[ lastIndex ][0].score === item.score) {
+			result[ lastIndex ].push(item);
+		} else {
+			result.push([ item ]);
+		}
+
+		return result;
+	}, []);
+
+	let positionCount = 1;
+	const leaderboardWithPositions = groupedScores.map(item => {
+		const position = positionCount;
+
+		positionCount += item.length;
+
+		return {
+			scores: item,
+			position
+		};
+	});
+
+	return leaderboardWithPositions;
 };
 
 const resetLeaderboard = () => INITIAL_STATE;

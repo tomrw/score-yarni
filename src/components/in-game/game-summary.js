@@ -27,17 +27,29 @@ const GameSummary = ({ ended, leaderboard, players, scores, settings = {}, winne
 };
 
 const getLeaderboardData = (leaderboard, players) => {
-	const leaderboardData = leaderboard.map(({ id, position, score }) => {
-		const { name } = players.find(el => el.id === id);
+	const leaderboardData = leaderboard.map(({ position, scores }) => {
+		const scoresWithNames = getScoresForPosition(scores, players);
 
 		return {
-			name,
 			position,
-			score
+			scores: scoresWithNames
 		};
 	});
 
 	return leaderboardData;
+};
+
+const getScoresForPosition = (scores, players) => {
+	const scoresWithNames = scores.map(({ id, score }) => {
+		const { name } = players.find(el => el.id === id);
+
+		return {
+			name,
+			score
+		};
+	});
+
+	return scoresWithNames;
 };
 
 const getScoreboardData = (players, scores) => {
@@ -56,9 +68,11 @@ const getScoreboardData = (players, scores) => {
 GameSummary.propTypes = {
 	ended: PropTypes.bool,
 	leaderboard: PropTypes.arrayOf(PropTypes.shape({
-		id: PropTypes.number.isRequired,
 		position: PropTypes.number.isRequired,
-		score: PropTypes.number.isRequired
+		scores: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			score: PropTypes.number.isRequired
+		})).isRequired
 	})).isRequired,
 	players: PropTypes.arrayOf(PropTypes.shape({
 		id: PropTypes.number.isRequired,

@@ -19,8 +19,9 @@ describe('Given <HistoryDetail />', () => {
 		}
 	};
 	const leaderboard = [
-		{ id: 1, position: 1, score: 130 },
-		{ id: 2, position: 2, score: 90 }
+		{ position: 1, scores: [ { id: 1, score: 130 } ] },
+		{ position: 2, scores: [ { id: 2, score: 90 } ] }
+
 	];
 	const scores = [
 		{ id: 1, score: 100 },

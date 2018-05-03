@@ -229,9 +229,15 @@ describe('Given the `newGame` action creators', () => {
 				maxGameScore: 100
 			};
 			const leaderboard = [
-				{ id: 1, position: 1, score: position1Score },
-				{ id: 2, position: 2, score: 20 },
-				{ id: 3, position: 3, score: 5 }
+				{ position: 1, scores: [ { id: 1, score: position1Score } ] },
+				{ position: 2, scores: [ { id: 2, score: 20 } ] },
+				{
+					position: 3,
+					scores: [
+						{ id: 3, score: 5 },
+						{ id: 4, score: 5 }
+					]
+				}
 			];
 			const getState = () => ({
 				currentGame: {
@@ -281,9 +287,9 @@ describe('Given the `newGame` action creators', () => {
 
 		it('should dispatch the `setWinners` action with the winner', () => {
 			const leaderboard = [
-				{ id: 1, position: 1, score: 100 },
-				{ id: 2, position: 2, score: 20 },
-				{ id: 3, position: 3, score: 5 }
+				{ position: 1, scores: [ { id: 1, score: 100 } ] },
+				{ position: 2, scores: [ { id: 2, score: 20 } ] },
+				{ position: 3, scores: [ { id: 3, score: 5 } ] }
 			];
 			const getState = () => ({
 				currentGame: {
@@ -302,10 +308,14 @@ describe('Given the `newGame` action creators', () => {
 		describe('when there is a tie', () => {
 			it('should dispatch the `setWinners` action with the winners', () => {
 				const leaderboard = [
-					{ id: 1, position: 1, score: 100 },
-					{ id: 2, position: 2, score: 20 },
-					{ id: 3, position: 3, score: 20 },
-					{ id: 4, position: 4, score: 20 }
+					{ position: 1, scores: [ { id: 1, score: 100 } ] },
+					{
+						position: 2,
+						scores: [
+							{ id: 2, score: 5 },
+							{ id: 3, score: 5 }
+						]
+					}
 				];
 				const getState = () => ({
 					currentGame: {
@@ -313,7 +323,7 @@ describe('Given the `newGame` action creators', () => {
 						players
 					}
 				});
-				const expectedWinners = [ players[1].name, players[2].name, players[3].name ];
+				const expectedWinners = [ players[1].name, players[2].name ];
 				const expected = setWinners(expectedWinners);
 
 				calculateWinners()(dispatch, getState);

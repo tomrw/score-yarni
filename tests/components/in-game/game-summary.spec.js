@@ -10,9 +10,12 @@ describe('Given <GameSummary />', () => {
 	const player1 = { name: 'Tom', id: 1 };
 	const player2 = { name: 'Fred', id: 2 };
 	const players = [ player1, player2 ];
-	const score1 = { id: player1.id, position: 1, score: 100 };
-	const score2 = { id: player2.id, position: 2, score: 10 };
-	const leaderboard = [ score1, score2 ];
+	const score1 = { id: player1.id, score: 100 };
+	const score2 = { id: player2.id, score: 10 };
+	const leaderboard = [
+		{ position: 1, scores: [ score1 ] },
+		{ position: 2, scores: [ score2 ] }
+	];
 	const scores = [
 		{ id: 1, score: 10 },
 		{ id: 2, score: 20 },
@@ -51,8 +54,14 @@ describe('Given <GameSummary />', () => {
 
 		it('should have a `leaderboardData` prop', () => {
 			const expectedData = [
-				{ name: player1.name, position: score1.position, score: score1.score },
-				{ name: player2.name, position: score2.position, score: score2.score }
+				{
+					position: 1,
+					scores: [ { name: player1.name, score: score1.score } ]
+				},
+				{
+					position: 2,
+					scores: [ { name: player2.name, score: score2.score } ]
+				}
 			];
 
 			expect(leaderboard.prop('leaderboardData')).toEqual(expectedData);

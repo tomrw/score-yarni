@@ -53,9 +53,11 @@ GameInfo.navigationOptions = ({ navigation }) => {
 GameInfo.propTypes = {
 	ended: PropTypes.bool,
 	leaderboard: PropTypes.arrayOf(PropTypes.shape({
-		id: PropTypes.number.isRequired,
 		position: PropTypes.number.isRequired,
-		score: PropTypes.number.isRequired
+		scores: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			score: PropTypes.number.isRequired
+		})).isRequired
 	})).isRequired,
 	navigation: PropTypes.shape({
 		dispatch: PropTypes.func.isRequired,
