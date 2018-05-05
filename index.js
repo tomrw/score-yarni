@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
 import App from './src/index';
 
-AppRegistry.registerComponent('cardGameScorerNative', () => App);
+AppRegistry.registerComponent('yarni', () => App);
