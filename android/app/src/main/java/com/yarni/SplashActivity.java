@@ -1,4 +1,4 @@
-package com.cardgamescorernative;
+package com.yarni;
 
 import android.content.Intent;
 import android.os.Bundle;

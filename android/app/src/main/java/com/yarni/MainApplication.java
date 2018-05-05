@@ -1,4 +1,4 @@
-package com.cardgamescorernative;
+package com.yarni;
 
 import android.app.Application;
 
@@ -25,8 +25,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SplashScreenReactPackage(),
-            new VectorIconsPackage()
+          new VectorIconsPackage(),
+          new SplashScreenReactPackage()
       );
     }
 
