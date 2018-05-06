@@ -1,6 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import { View } from 'react-native';
 
 import GameConfig from '../../src/components/new-game/game-config';
 import GameSetup from '../../src/components/new-game/game-setup';
@@ -51,7 +52,7 @@ describe('Given <NewGame />', () => {
 	const renderedComponent = shallow(<NewGame { ...props } />);
 
 	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+		expect(renderedComponent.is(View)).toBe(true);
 	});
 
 	it('should have the `container` styles', () => {

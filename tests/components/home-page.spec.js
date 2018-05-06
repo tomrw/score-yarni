@@ -1,6 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import { View } from 'react-native';
 
 import GameSelect from '../../src/components/home-page/game-select';
 import HomePageButton from '../../src/components/home-page/home-page-button';
@@ -32,7 +33,7 @@ describe('Given <HomePage />', () => {
 	const renderedComponent = shallow(<HomePage { ...props } />);
 
 	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+		expect(renderedComponent.is(View)).toBe(true);
 	});
 
 	it('should have the `container` styles', () => {
@@ -51,7 +52,7 @@ describe('Given <HomePage />', () => {
 		const wrapperChild = renderedComponent.childAt(0);
 
 		it('should be a `View`', () => {
-			expect(wrapperChild.is('View')).toBe(true);
+			expect(wrapperChild.is(View)).toBe(true);
 		});
 
 		it('should have the `home-page-content-wrapper` styles', () => {

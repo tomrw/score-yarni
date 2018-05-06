@@ -1,6 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import { View } from 'react-native';
 
 import GameConfig from '../../../src/components/new-game/game-config';
 import GameOptions from '../../../src/components/new-game/game-config/game-options';
@@ -17,7 +18,7 @@ describe('Given <GameConfig />', () => {
 	const renderedComponent = shallow(<GameConfig { ...props } />);
 
 	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+		expect(renderedComponent.is(View)).toBe(true);
 	});
 
 	describe('and its game options', () => {

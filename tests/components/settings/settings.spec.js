@@ -1,6 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import { View } from 'react-native';
 
 import SettingOptions from '../../../src/components/settings/setting-options';
 import { Settings } from '../../../src/components/settings/settings';
@@ -24,7 +25,7 @@ describe('Given <Settings />', () => {
 	const renderedComponent = shallow(<Settings { ...props } />);
 
 	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+		expect(renderedComponent.is(View)).toBe(true);
 	});
 
 	describe('and its navigation options', () => {

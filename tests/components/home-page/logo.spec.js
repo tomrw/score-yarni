@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { View } from 'react-native';
 
 import Logo from '../../../src/components/home-page/logo';
 import logoStyles from '../../../src/components/home-page/styles/logo';
@@ -8,7 +9,7 @@ describe('Given <Logo />', () => {
 	const renderedComponent = shallow(<Logo />);
 
 	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+		expect(renderedComponent.is(View)).toBe(true);
 	});
 
 	it('should have the `container` styles', () => {

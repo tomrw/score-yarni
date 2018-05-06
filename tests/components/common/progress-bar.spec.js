@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { View } from 'react-native';
 
 import ProgressBar from '../../../src/components/common/progress-bar';
 import progressBarStyles from '../../../src/components/common/styles/progress-bar';
@@ -12,7 +13,7 @@ describe('Given <ProgressBar />', () => {
 	const renderedComponent = shallow(<ProgressBar { ...props } />);
 
 	it('should be a `View', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+		expect(renderedComponent.is(View)).toBe(true);
 	});
 
 	it('should have the `container` style', () => {
@@ -23,7 +24,7 @@ describe('Given <ProgressBar />', () => {
 		const bar = renderedComponent.childAt(0);
 
 		it('should be a `View`', () => {
-			expect(bar.is('View')).toBe(true);
+			expect(bar.is(View)).toBe(true);
 		});
 
 		it('should have the `bar` styles', () => {

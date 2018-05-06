@@ -1,6 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import { View } from 'react-native';
 
 import NewPlayerForm from '../../../../src/components/new-game/game-setup/new-player-form';
 import newPlayerFormStyles from '../../../../src/components/new-game/game-setup/styles/new-player-form';
@@ -18,7 +19,7 @@ describe('Given <NewPlayerForm />', () => {
 	});
 
 	it('should be a `View`', () => {
-		expect(renderedComponent.is('View')).toBe(true);
+		expect(renderedComponent.is(View)).toBe(true);
 	});
 
 	it('should have the `container` styles', () => {
