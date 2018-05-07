@@ -26,8 +26,7 @@ class AddPlayerScore extends Component {
 				textInputSelectTextOnFocus
 				textInputStyle={ styles.textInputStyle }
 				textInputOnChangeText={ setScore }
-				textInputValue={ score.toString() }
-			/>
+				textInputValue={ score.toString() } />
 		);
 	}
 }

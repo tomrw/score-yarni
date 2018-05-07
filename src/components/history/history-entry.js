@@ -11,8 +11,7 @@ const HistoryEntry = ({ onPress, players }) => {
 			title={ title }
 			titleNumberOfLines={ 0 }
 			leftIcon={ leftIcon }
-			onPress={ onPress }
-		/>
+			onPress={ onPress } />
 	);
 };
 

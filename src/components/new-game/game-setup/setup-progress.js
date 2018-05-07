@@ -13,8 +13,7 @@ const SetupProgress = ({ active, complete, onPress }) => {
 		disabled={ !active }
 		disabledTextStyle={ styles.disabled }
 		onPress={ onSetupPress }
-		title={ text.toUpperCase() }
-	/>;
+		title={ text.toUpperCase() } />;
 };
 
 SetupProgress.propTypes = {

@@ -29,8 +29,7 @@ export const HistoryDetail = ({ history, navigation }) => {
 				players={ players }
 				scores={ scores }
 				ended
-				winners={ winners }
-			/>
+				winners={ winners } />
 		</ScrollView>
 	);
 };

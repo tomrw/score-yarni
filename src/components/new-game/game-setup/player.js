@@ -10,8 +10,7 @@ const Player = ({ id, name, removePlayer }) => {
 		<ListItem
 			title={ name }
 			rightIcon={ rightIcon }
-			onPressRightIcon={ onPress }
-		/>
+			onPressRightIcon={ onPress } />
 	);
 };
 

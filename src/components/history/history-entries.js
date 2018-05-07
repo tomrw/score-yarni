@@ -18,8 +18,7 @@ const HistoryEntries = ({ historyData, navigateTo, reverse }) => {
 					return <HistoryEntry
 						key={ i }
 						onPress={ onPress }
-						players={ game.players }
-					/>;
+						players={ game.players } />;
 				})
 			}
 		</List>

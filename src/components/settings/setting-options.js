@@ -16,8 +16,7 @@ const SettingOptions = ({ changeSetting, config }) => {
 						switched={ value }
 						onSwitch={ onSwitch }
 						title={ text }
-						subtitle={ description }
-					/>;
+						subtitle={ description } />;
 				})
 			}
 		</List>

@@ -26,14 +26,14 @@
 		"redux-persist": "^5.9.1"
 	},
 	"devDependencies": {
-		"@tom.rw/eslint-config-tomrw": "^0.2.0",
+		"@tom.rw/eslint-config-tomrw": "^0.3.8",
 		"babel-jest": "^22.0.4",
 		"babel-preset-react-native": "4.0.0",
 		"enzyme": "^3.2.0",
 		"enzyme-adapter-react-16": "^1.1.0",
-		"eslint": "^4.12.1",
-		"eslint-plugin-import": "^2.8.0",
-		"eslint-plugin-react": "^7.5.1",
+		"eslint": "^4.19.1",
+		"eslint-plugin-import": "^2.11.0",
+		"eslint-plugin-react": "^7.7.0",
 		"jest": "^22.0.5",
 		"redux-thunk": "^2.2.0",
 		"sinon": "^4.1.2"

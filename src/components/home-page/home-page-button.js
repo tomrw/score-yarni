@@ -13,8 +13,7 @@ const HomePageButton = ({ text, onPress }) => {
 			borderRadius={ 5 }
 			containerViewStyle={ styles.container }
 			onPress={ onButtonPress }
-			title={ text }
-		/>
+			title={ text } />
 	);
 };
 

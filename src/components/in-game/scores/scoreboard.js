@@ -15,8 +15,7 @@ const Scoreboard = ({ scoreboardData, reverse }) => {
 						reverse={ reverse }
 						key={ i }
 						name={ name }
-						scores={ scores }
-					/>
+						scores={ scores } />
 				))
 			}
 		</ScrollView>

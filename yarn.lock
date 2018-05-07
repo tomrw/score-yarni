@@ -434,9 +434,9 @@
   dependencies:
     samsam "1.3.0"
 
-"@tom.rw/eslint-config-tomrw@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@tom.rw/eslint-config-tomrw/-/eslint-config-tomrw-0.2.0.tgz#a2c65fddea54b7ce901cd3a55aafd6b305bdcd59"
+"@tom.rw/eslint-config-tomrw@^0.3.8":
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/@tom.rw/eslint-config-tomrw/-/eslint-config-tomrw-0.3.8.tgz#eb6d9c610dec270a0dc5a5df7b8d4846e36d55f5"
 
 "@types/node@*":
   version "10.0.4"
@@ -2117,7 +2117,7 @@ eslint-module-utils@^2.2.0:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
 
-eslint-plugin-import@^2.8.0:
+eslint-plugin-import@^2.11.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.11.0.tgz#15aeea37a67499d848e8e981806d4627b5503816"
   dependencies:
@@ -2142,7 +2142,7 @@ eslint-plugin-react-native@^3.2.1:
   dependencies:
     eslint-plugin-react-native-globals "^0.1.1"
 
-eslint-plugin-react@^7.5.1:
+eslint-plugin-react@^7.7.0:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.7.0.tgz#f606c719dbd8a1a2b3d25c16299813878cca0160"
   dependencies:
@@ -2162,7 +2162,7 @@ eslint-visitor-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
 
-eslint@^4.12.1:
+eslint@^4.19.1:
   version "4.19.1"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.19.1.tgz#32d1d653e1d90408854bfb296f076ec7e186a300"
   dependencies:

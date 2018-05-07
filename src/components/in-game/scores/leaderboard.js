@@ -7,13 +7,15 @@ import LeaderboardEntry from './leaderboard-entry';
 import styles from './styles/leaderboard';
 
 const Leaderboard = ({ leaderboardData }) => {
-	return <List containerStyle={ styles.container }>
-		{
-			leaderboardData.map(({ position, scores }) => {
-				return getEntriesForPosition(position, scores);
-			})
-		}
-	</List>;
+	return (
+		<List containerStyle={ styles.container }>
+			{
+				leaderboardData.map(({ position, scores }) => {
+					return getEntriesForPosition(position, scores);
+				})
+			}
+		</List>
+	);
 };
 
 const getEntriesForPosition = (position, scores) => {

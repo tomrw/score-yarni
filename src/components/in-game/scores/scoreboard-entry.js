@@ -27,8 +27,7 @@ const getScores = (scores, reverse) => {
 			hideChevron
 			key={ i }
 			title={ scoreSubtotal }
-			rightTitle={ score.toString() }
-		/>;
+			rightTitle={ score.toString() } />;
 	});
 
 	if (reverse) {
